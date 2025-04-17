@@ -27,6 +27,7 @@ import '../../../features/user_module/notice_user/screens/add_notice.dart';
 import '../../../features/user_module/notice_user/screens/dashboard_notice.dart';
 import '../../../features/user_module/notice_user/screens/edit_notice.dart';
 import '../../../features/user_module/payroll_user/screens/dashboard_payroll_user.dart';
+import '../../../features/user_module/payroll_user/screens/view_payroll_user.dart';
 import '../../../features/user_module/profile/screens/profile_user.dart';
 import '../../../features/user_module/user_dashboard/screens/edit_user.dart';
 import '../../../features/user_module/user_dashboard/screens/user_dashboard_screen.dart';
@@ -65,6 +66,7 @@ class RouteGenerator {
   static const kDashboardAttendanceUser = "/DashboardAttendanceUser";
   static const kDashboardEvent = "/DashboardEvent";
   static const kDashboardPayrollUser = "/DashboardPayrollUser";
+  static const kViewPayrollUser = "/ViewPayrollUser";
 
 
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -133,6 +135,8 @@ case kDashboardEvent:
         return _animatedPageRoute(DashboardEvent());
 case kDashboardPayrollUser:
         return _animatedPageRoute(DashboardPayrollUser());
+case kViewPayrollUser:
+        return _animatedPageRoute(ViewPayrollUser());
 
 
       default:

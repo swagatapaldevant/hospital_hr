@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../../../../core/utils/commonWidgets/common_dialog.dart';
-import '../../../../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/commonWidgets/common_header.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 
@@ -116,23 +114,15 @@ class _DashboardPayrollUserState extends State<DashboardPayrollUser> {
                                     icon: Icon(Icons.more_vert, color: Colors.black87),
                                     onSelected: (value) {
                                       if (value == 1) {
-                                        Navigator.pushNamed(context, "/ViewDashboardAdmin");
-                                        // showNoticeChangeDialog(context);
+                                        Navigator.pushNamed(context, "/ViewPayrollUser");
                                       }
-                                      // else if (value == 2) {
-                                      //   Navigator.pushNamed(context, "/EditNoticeAdmin");
-                                      //   // Edit functionality here
-                                      // }
+
                                     },
                                     itemBuilder: (BuildContext context) => [
                                       PopupMenuItem<int>(
                                         value: 1,
                                         child: Text('View'),
                                       ),
-                                      // PopupMenuItem<int>(
-                                      //   value: 2,
-                                      //   child: Text('Edit'),
-                                      // ),
                                     ],
                                   ),],),
 
@@ -161,16 +151,6 @@ class _DashboardPayrollUserState extends State<DashboardPayrollUser> {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.pushNamed(context, "/AddNoticeAdmin");
-      //
-      //   },
-      //   backgroundColor: AppColors.white, // Customize the button color
-      //   child: Icon(Icons.save, color: Colors.pinkAccent), // Save icon
-      // ),
-      //floatingActionButtonLocation: FloatingActionButtonLocation.endFloat, // Place FAB at the center of the screen
     );
-
   }
 }
