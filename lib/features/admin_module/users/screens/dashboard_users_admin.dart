@@ -1,201 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
-import 'package:simple_gradient_text/simple_gradient_text.dart';
-import '../../../../../core/utils/commonWidgets/common_dialog.dart';
-import '../../../../../core/utils/commonWidgets/dashboard_drawer_menu.dart';
-import '../../../../core/utils/constants/app_colors.dart';
+import '../../../../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
-import '../../../../core/utils/helper/screen_utils.dart'; // For time formatting
+import '../../../../core/utils/helper/screen_utils.dart';
 
-
-class AdminHomeScreen extends StatefulWidget {
-  const AdminHomeScreen({super.key});
-
+class DashboardUsersAdmin extends StatefulWidget {
   @override
-  State<AdminHomeScreen> createState() => _AdminHomeScreenState();
+  _DashboardUsersAdminState createState() => _DashboardUsersAdminState();
 }
 
-class _AdminHomeScreenState extends State<AdminHomeScreen> {
+class _DashboardUsersAdminState extends State<DashboardUsersAdmin> {
+
+  TextEditingController projectNameController = TextEditingController();
+  TextEditingController startDateController = TextEditingController();
+  TextEditingController dueDateController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final _advancedDrawerController = AdvancedDrawerController();
-  TextEditingController searchController = TextEditingController();
 
   bool agreeWithTerm = false;
   bool isLoading = false;
   bool startEditing = false;
 
-  @override
-  void dispose() {
-    searchController.dispose();
-    super.dispose();
-  }
 
+
+  // Function to update start date
+  void _updateStartDate(String date) {
+    setState(() {
+      startDateController.text = date;
+    });
+  }
 
 
   @override
   Widget build(BuildContext context) {
     AppDimensions.init(context);
-    return AdvancedDrawer(
-      backdrop: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: AppColors.darkBlue,
-        // decoration: BoxDecoration(
-        //   gradient: LinearGradient(
-        //     begin: Alignment.topLeft,
-        //     end: Alignment.bottomRight,
-        //     colors: [ Color(0xffB4D1D8),
-        //       AppColors.colorPrimaryText2,
-        //       Color(0xff467483),],
-        //   ),
-        // ),
-      ),
-      controller: _advancedDrawerController,
-      animationCurve: Curves.easeInOut,
-      animationDuration: const Duration(milliseconds: 300),
-      animateChildDecoration: true,
-      rtlOpening: false,
-      // openScale: 1.0,
-      disabledGestures: false,
-      childDecoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            // color:  Colors.blueGrey.withOpacity(0.4),
-              color: AppColors.darkBlue.withOpacity(0.2),
-              offset: const Offset(0.0, 3.0),
-              blurRadius: 8.0)
-        ],
-        borderRadius: const BorderRadius.all(Radius.circular(25)),
-      ),
-      drawer: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Aligning the Educare ERP text at the top
-              Padding(
-                padding: EdgeInsets.all(
-                  ScreenUtils().screenWidth(context) * 0.05,
-                ),
-                child: GradientText(
-                  "Hospital Admin",
-                  style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                    fontSize: ScreenUtils().screenWidth(context) * 0.07,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: "Philosopher",
-                  ),
-                  gradientType: GradientType.linear,
-                  gradientDirection: GradientDirection.ttb,
-                  radius: 2.5,
-                  colors: [
-                    AppColors.white,
-                    AppColors.gray3,
-                    AppColors.gray7,
-                  ],
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-
-              // Adding space between title and logout menu
-              SizedBox(
-                  height: ScreenUtils().screenHeight(context) *
-                      0.01), // Adjust height as needed
-
-              SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-
-                    MenuItem(
-                      title: 'Dashboard',
-                      icon: Icons.home,
-                      onClicked: () {
-                        Navigator.pushNamed(context, "/DashboardAdmin");
-                      },
-                    ),
-
-                    MenuItem(
-                      title: 'Users',
-                      icon: Icons.person,
-                      onClicked: () {
-                        Navigator.pushNamed(context, "/DashboardUsersAdmin");
-                      },
-                    ),
-                    MenuItem(
-                      title: 'Departments',
-                      icon: Icons.design_services,
-                      onClicked: () {
-                        Navigator.pushNamed(context, "/DashboardDepartmentsAdmin");
-                      },
-                    ),
-                    MenuItem(
-                      title: 'Designations',
-                      icon: Icons.work,
-                      onClicked: () {
-                        Navigator.pushNamed(context, "/WorkModuleScreenEmployee");
-                      },
-
-                    ),
-                    MenuItem(
-                      title: 'Events',
-                      icon: Icons.calendar_month,
-                      onClicked: () {
-                        Navigator.pushNamed(context, "/DashboardEventAdmin");
-
-                      },
-                    ),
-                    MenuItem(
-                      title: 'Attendance',
-                      icon: Icons.groups,
-                      onClicked: () {
-                        Navigator.pushNamed(context, "/DashboardAttendanceAdmin");
-                      },
-                    ),
-                    MenuItem(
-                      title: 'Payroll',
-                      icon: Icons.payment,
-                      onClicked: () {
-                        Navigator.pushNamed(context, "/DashboardPayrollAdmin");
-
-                      },
-                    ),
-                    MenuItem(
-                      title: 'Notice',
-                      icon: Icons.note_alt,
-                      onClicked: () {
-                        Navigator.pushNamed(context, "/DashboardNoticeAdmin");
-
-                      },
-                    ),
-                    MenuItem(
-                      title: 'Log Out',
-                      icon: Icons.logout,
-                      onClicked: () {
-                        CommonDialog(
-                            icon: Icons.logout,
-                            title: "Log Out",
-                            msg:
-                            "You are about to logout of your account. Please confirm.",
-                            activeButtonLabel: "Log Out",
-                            context: context,
-                            activeButtonOnClicked: () {
-                              //_pref.clearOnLogout();
-
-                            }, activeButtonName: 'Confirm', activeButtonSolidColor: AppColors.colorGreen);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-
-      child: Scaffold(
+    return
+      Scaffold(
 
           body: SafeArea(
               child: Padding(
@@ -219,16 +60,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                     color: AppColors.white,
                                   ),
                                 ),
-                                ),
-
-
-                                Text(
-                                  '  Add User',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.white,
-                                  ),
                                 ),
                               ],
                             ),
@@ -300,7 +131,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                                   ),
                                                   SizedBox(height: 4),
                                                   Text(
-                                                    'EId: 213',
+                                                    'EId: 2134',
                                                     style: TextStyle(
                                                       fontSize: 16,
                                                       color: Color(0xFF004d40),
@@ -312,9 +143,9 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                                 icon: Icon(Icons.more_vert, color: Colors.black87),
                                                 onSelected: (value) {
                                                   if (value == 1) {
-                                                    Navigator.pushNamed(context, "/ViewDashboardAdmin");
+                                                    Navigator.pushNamed(context, "/ViewUserAdmin");
                                                   } else if (value == 2) {
-                                                    Navigator.pushNamed(context, "/EditDashboardAdmin");
+                                                    Navigator.pushNamed(context, "/EditUserAdmin");
                                                     // Edit functionality here
                                                   }
                                                 },
@@ -400,8 +231,20 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             SizedBox(
                               height: ScreenUtils().screenHeight(context) * 0.05,
                             ),
-                          ]))))),
-    );
+                          ]
+                      )
+                  )
+              )
+          ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, "/AddUserAdmin");
+
+          },
+          backgroundColor: AppColors.white, // Customize the button color
+          child: Icon(Icons.save, color: Colors.pinkAccent), // Save icon
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      );
   }
 }
-
