@@ -3,15 +3,26 @@ import 'package:flutter/material.dart';
 import '../../../features/admin_module/admin_dashboard/screens/admin_dashboard_screen.dart';
 import '../../../features/admin_module/admin_dashboard/screens/edit_dashboard_admin.dart';
 import '../../../features/admin_module/admin_dashboard/screens/view_dashboard_admin.dart';
+import '../../../features/admin_module/attendance_admin/screens/dashboard_attendance_admin.dart';
 import '../../../features/admin_module/auth_admin/screens/forgot_password.dart';
 import '../../../features/admin_module/auth_admin/screens/admin_log_in.dart';
 import '../../../features/admin_module/auth_admin/screens/otp.dart';
 import '../../../features/admin_module/auth_admin/screens/reset_password.dart';
+import '../../../features/admin_module/dashboard_admin/screens/dashboard_admin.dart';
 import '../../../features/admin_module/departments_admin/screens/add_department_admin.dart';
 import '../../../features/admin_module/departments_admin/screens/dashboard_departments_admin.dart';
+import '../../../features/admin_module/events_admin/screens/add_events_admin.dart';
+import '../../../features/admin_module/events_admin/screens/dashboard_event_admin.dart';
+import '../../../features/admin_module/events_admin/screens/edit_events_admin.dart';
 import '../../../features/admin_module/notice_admin/screens/add_notice_admin.dart';
 import '../../../features/admin_module/notice_admin/screens/dashboard_notice_admin.dart';
 import '../../../features/admin_module/notice_admin/screens/edit_notice_admin.dart';
+import '../../../features/admin_module/payroll_admin/screens/dashboard_payroll_admin.dart';
+import '../../../features/admin_module/payroll_admin/screens/view_payroll_admin.dart';
+import '../../../features/admin_module/users/screens/add_user_admin.dart';
+import '../../../features/admin_module/users/screens/dashboard_users_admin.dart';
+import '../../../features/admin_module/users/screens/edit_user_admin.dart';
+import '../../../features/admin_module/users/screens/view_user_admin.dart';
 import '../../../features/login_type/screen/login_type.dart';
 import '../../../features/splash/screens/splash_screen.dart';
 import '../../../features/user_module/attendance_user/screens/dashboard_attendance_user.dart';
@@ -69,6 +80,17 @@ class RouteGenerator {
   static const kDashboardPayrollUser = "/DashboardPayrollUser";
   static const kViewPayrollUser = "/ViewPayrollUser";
   static const kDashboardUser = "/DashboardUser";
+  static const kDashboardUsersAdmin = "/DashboardUsersAdmin";
+  static const kAddUserAdmin = "/AddUserAdmin";
+  static const kEditUserAdmin= "/EditUserAdmin";
+  static const kViewUserAdmin= "/ViewUserAdmin";
+  static const kDashboardAttendanceAdmin= "/DashboardAttendanceAdmin";
+  static const kDashboardEventAdmin= "/DashboardEventAdmin";
+  static const kEditEventsAdmin= "/EditEventsAdmin";
+  static const kAddEventsAdmin= "/AddEventsAdmin";
+  static const kDashboardPayrollAdmin= "/DashboardPayrollAdmin";
+  static const kViewPayrollAdmin= "/ViewPayrollAdmin";
+  static const kDashboardAdmin= "/DashboardAdmin";
 
 
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -141,6 +163,28 @@ case kViewPayrollUser:
         return _animatedPageRoute(ViewPayrollUser());
 case kDashboardUser:
         return _animatedPageRoute(DashboardUser());
+case kDashboardUsersAdmin:
+        return _animatedPageRoute(DashboardUsersAdmin());
+case kAddUserAdmin:
+        return _animatedPageRoute(AddUserAdmin());
+case kEditUserAdmin:
+        return _animatedPageRoute(EditUserAdmin());
+case kViewUserAdmin:
+        return _animatedPageRoute(ViewUserAdmin());
+case kDashboardAttendanceAdmin:
+        return _animatedPageRoute(DashboardAttendanceAdmin());
+case kDashboardEventAdmin:
+        return _animatedPageRoute(DashboardEventAdmin());
+case kEditEventsAdmin:
+        return _animatedPageRoute(EditEventsAdmin());
+case kAddEventsAdmin:
+        return _animatedPageRoute(AddEventsAdmin());
+case kDashboardPayrollAdmin:
+        return _animatedPageRoute(DashboardPayrollAdmin());
+case kViewPayrollAdmin:
+        return _animatedPageRoute(ViewPayrollAdmin());
+case kDashboardAdmin:
+        return _animatedPageRoute(DashboardAdmin());
 
 
       default:
