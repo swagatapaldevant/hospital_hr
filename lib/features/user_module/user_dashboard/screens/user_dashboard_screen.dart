@@ -3,12 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hospital_hr/core/utils/commonWidgets/common_dialog.dart';
+import 'package:hospital_hr/core/utils/commonWidgets/dashboard_drawer_menu.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
-import '../../../../../core/utils/commonWidgets/common_dialog.dart';
-import '../../../../../core/utils/commonWidgets/dashboard_drawer_menu.dart';
-import '../../../../core/utils/commonWidgets/common_header.dart';
-import '../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 import '../../../../core/utils/helper/screen_utils.dart'; // For time formatting
 
