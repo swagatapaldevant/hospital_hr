@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:hospital_hr/core/utils/commonWidgets/common_dialog.dart';
+import 'package:hospital_hr/core/utils/commonWidgets/dashboard_drawer_menu.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
-import '../../../../../core/utils/commonWidgets/common_dialog.dart';
-import '../../../../../core/utils/commonWidgets/dashboard_drawer_menu.dart';
 import '../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
-import '../../../../core/utils/helper/screen_utils.dart'; // For time formatting
-
+import '../../../../core/utils/helper/screen_utils.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({super.key});
@@ -41,15 +40,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         width: double.infinity,
         height: double.infinity,
         color: AppColors.darkBlue,
-        // decoration: BoxDecoration(
-        //   gradient: LinearGradient(
-        //     begin: Alignment.topLeft,
-        //     end: Alignment.bottomRight,
-        //     colors: [ Color(0xffB4D1D8),
-        //       AppColors.colorPrimaryText2,
-        //       Color(0xff467483),],
-        //   ),
-        // ),
       ),
       controller: _advancedDrawerController,
       animationCurve: Curves.easeInOut,
@@ -61,7 +51,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       childDecoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            // color:  Colors.blueGrey.withOpacity(0.4),
               color: AppColors.darkBlue.withOpacity(0.2),
               offset: const Offset(0.0, 3.0),
               blurRadius: 8.0)
@@ -113,7 +102,11 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       title: 'Dashboard',
                       icon: Icons.home,
                       onClicked: () {
-                        Navigator.pushNamed(context, "/DashboardAdmin");
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          "/AdminHomeScreen",
+                              (Route<dynamic> route) => false,
+                        );
                       },
                     ),
 
@@ -182,7 +175,11 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             activeButtonLabel: "Log Out",
                             context: context,
                             activeButtonOnClicked: () {
-                              //_pref.clearOnLogout();
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                "/LogInTypeScreens",
+                                    (Route<dynamic> route) => false,
+                              );
 
                             }, activeButtonName: 'Confirm', activeButtonSolidColor: AppColors.colorGreen);
                       },
@@ -196,211 +193,198 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       ),
 
       child: Scaffold(
+        backgroundColor: Colors.blue[900],
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
 
-          body: SafeArea(
-              child: Padding(
-                  padding: EdgeInsets.all(AppDimensions.screenContentPadding),
-                  child: SingleChildScrollView(
+                // Admin Info
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  decoration: _boxDecoration(),
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundImage: NetworkImage('https://i.pravatar.cc/300'),
+                      ),
+                    SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                      Text('Admin Name',
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                      Text('HR Manager',
+                          style: TextStyle(color: Colors.grey[700], fontSize: 16)),
+                    ],
+                  ),
+                ),
 
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+               SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(child:
-                                Text(
-                                  'Users List',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.white,
-                                  ),
+                // Employee Overview
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  decoration: _boxDecoration(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _sectionHeader(Icons.people, '  Employee Overview'),
+                      const Divider(),
+                      _detailRow('Total Employees', '57'),
+                      _detailRow('New Joinees This Month', '3'),
+                      _detailRow('Pending Onboarding', '2'),
+                    ],
+                  ),
+                ),
+
+    SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+
+                // Leave Requests
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  decoration: _boxDecoration(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _sectionHeader(Icons.assignment_turned_in, '  Leave Requests'),
+                      const Divider(),
+                      _detailRow('Pending Approvals', '4'),
+                      _detailRow('Approved Today', '2'),
+                      _detailRow('Rejected Today', '1'),
+                    ],
+                  ),
+                ),
+
+                    SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+
+                // Events
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  decoration: _boxDecoration(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _sectionHeader(Icons.event, '  Upcoming Events'),
+                      SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                      ...List.generate(3, (index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Event ${index + 1}',
+                                  style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text('Details of event ${index + 1}'),
+                              Text('Date: 2025-04-${index + 20}'),
+                              const Divider(),
+                            ],
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+                ),
+
+    SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+
+                // Notices
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  decoration: _boxDecoration(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _sectionHeader(Icons.notifications_active, '  Notices'),
+                      SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                      ...List.generate(3, (index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(Icons.circle, size: 8, color: Colors.black54),
+    SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Notice ${index + 1}',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600, fontSize: 16)),
+    SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                                    Text(
+                                        'Details for notice ${index + 1}. Could be an announcement, update, or alert.'),
+                                    Text(
+                                      'Date: 2025-04-${index + 10}',
+                                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                                    ),
+                                    const Divider(),
+                                  ],
                                 ),
-                                ),
-
-
-                                Text(
-                                  '  Add User',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-
-
-
-                            TextField(
-                              controller: searchController,
-                              decoration: InputDecoration(
-                                hintText: 'Search users...',
-                                hintStyle: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500), // Hint text in black
-                                prefixIcon: Icon(Icons.search, color: Colors.black), // Search icon in black
-                                filled: true,
-                                fillColor: Colors.white, // White background
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: Colors.black),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: Colors.black),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: Colors.black, width: 1.5),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(horizontal: 16),
                               ),
-                            ),
-
-                            SizedBox(height: 10),
-
-
-                            ListView.builder(itemCount: 10, shrinkWrap: true, physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (BuildContext context, int index) {
-                                return Padding(
-                                  padding:  EdgeInsets.only(bottom:10 ),
-                                  child: Container(
-                                    padding: EdgeInsets.all(20),
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFFe0f7fa), // Light blue background
-                                      borderRadius: BorderRadius.circular(16),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black26,
-                                          blurRadius: 10,
-                                          offset: Offset(0, 6),
-                                        ),
-                                      ],
-                                    ),
-                                    child: SingleChildScrollView(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Sourav Mondal',
-                                                    style: TextStyle(
-                                                      fontSize: 22,
-                                                      fontWeight: FontWeight.w600,
-                                                      color: Color(0xFF006064),
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 4),
-                                                  Text(
-                                                    'EId: 213',
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Color(0xFF004d40),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              PopupMenuButton<int>(
-                                                icon: Icon(Icons.more_vert, color: Colors.black87),
-                                                onSelected: (value) {
-                                                  if (value == 1) {
-                                                    Navigator.pushNamed(context, "/ViewDashboardAdmin");
-                                                  } else if (value == 2) {
-                                                    Navigator.pushNamed(context, "/EditDashboardAdmin");
-                                                    // Edit functionality here
-                                                  }
-                                                },
-                                                itemBuilder: (BuildContext context) => [
-                                                  PopupMenuItem<int>(
-                                                    value: 1,
-                                                    child: Text('View'),
-                                                  ),
-                                                  PopupMenuItem<int>(
-                                                    value: 2,
-                                                    child: Text('Edit'),
-                                                  ),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                          SizedBox(height: 16),
-                                          Row(
-                                            children: [
-                                              Icon(Icons.email, color: Colors.teal[800]),
-                                              SizedBox(width: 8),
-                                              Text(
-                                                'sourav.dits@gmail.com',
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Color(0xFF004d40),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(height: 8),
-                                          Row(
-                                            children: [
-                                              Icon(Icons.phone, color: Colors.teal[800]),
-                                              SizedBox(width: 8),
-                                              Text(
-                                                '9807654321',
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Color(0xFF004d40),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(height: 8),
-                                          Row(
-                                            children: [
-                                              Icon(Icons.work_outline, color: Colors.teal[800]),
-                                              SizedBox(width: 8),
-                                              Text(
-                                                'Software Engineer',
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Color(0xFF004d40),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(height: 8),
-                                          Row(
-                                            children: [
-                                              Icon(Icons.check_circle, color: Colors.green),
-                                              SizedBox(width: 8),
-                                              Text(
-                                                'Status: Active',
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Color(0xFF00796B),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-
-                            SizedBox(height: 12),
-
-                            SizedBox(
-                              height: ScreenUtils().screenHeight(context) * 0.05,
-                            ),
-                          ]))))),
+                            ],
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+                ),
+    SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+  Widget _sectionHeader(IconData icon, String title) {
+    return Row(
+      children: [
+        Icon(icon, color: AppColors.primaryColor, size: 24),
+        SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+        Text(
+          title,
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.primaryColor),
+        ),
+      ],
+    );
+  }
+  Widget _detailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label,
+              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16)),
+          Text(value,
+              style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  color: AppColors.primaryColor)),
+        ],
+      ),
+    );
+  }
+  BoxDecoration _boxDecoration() {
+    return BoxDecoration(
+      color: AppColors.white,
+      borderRadius: BorderRadius.circular(16),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.05),
+          blurRadius: 10,
+          offset: const Offset(0, 4),
+        ),
+      ],
     );
   }
 }

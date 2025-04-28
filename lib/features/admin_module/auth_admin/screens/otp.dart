@@ -16,15 +16,8 @@ class AdminOTP extends StatefulWidget {
 
 class _AdminOTPState extends State<AdminOTP> {
   TextEditingController emailController =TextEditingController();
-  //TextEditingController passwordController=TextEditingController();
-  //final LogInUsecase _logInUsecase = getIt<LogInUsecase>();
-  //final SharedPref _pref = getIt<SharedPref>();
-
   bool agreeWithTerm = false;
   bool isLoading = false;
-  //bool obscurePassword = true;
-  //bool obscureConfirmPassword = true;
-  //bool passwordsMatch = true;
   bool startEditing = false;
 
   @override
@@ -36,8 +29,6 @@ class _AdminOTPState extends State<AdminOTP> {
           padding:  EdgeInsets.all(AppDimensions.screenContentPadding),
           child: SingleChildScrollView(
             child: Column(
-              //crossAxisAlignment: CrossAxisAlignment.start,
-              //mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Align(
                     alignment: Alignment.topLeft,

@@ -5,18 +5,14 @@ import '../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 import '../../../../core/utils/helper/screen_utils.dart';
 
-
-class DashboardAttendanceUser extends StatefulWidget {
-  const DashboardAttendanceUser({super.key});
+class MyAttendanceAdmin extends StatefulWidget {
+  const MyAttendanceAdmin({super.key});
 
   @override
-  _DashboardAttendanceUserState createState() => _DashboardAttendanceUserState();
+  State<MyAttendanceAdmin> createState() => _MyAttendanceAdminState();
 }
 
-class _DashboardAttendanceUserState extends State<DashboardAttendanceUser> {
-
-
-
+class _MyAttendanceAdminState extends State<MyAttendanceAdmin> {
   final List<String> monthList = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -40,7 +36,7 @@ class _DashboardAttendanceUserState extends State<DashboardAttendanceUser> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CommonHeader(headerName: 'Attendance Details',),
+              CommonHeader(headerName: 'My Attendance ',),
               SizedBox(height: ScreenUtils().screenHeight(context)*0.03,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,12 +56,16 @@ class _DashboardAttendanceUserState extends State<DashboardAttendanceUser> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
-                        monthIndex--;
+                        if (monthIndex > 0) {
+                          monthIndex--;
+                        } else {
+                          monthIndex = 11; // Go to December if currently January
+                        }
                       });
-
                     },
+
                     child: CircleAvatar(
                         backgroundColor: AppColors.white,
                         child: Center(child: Icon(Icons.arrow_back_ios_new ))),
@@ -75,12 +75,16 @@ class _DashboardAttendanceUserState extends State<DashboardAttendanceUser> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500,fontFamily: "Poppins", color: AppColors.white),
                   ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
-                        monthIndex++;
+                        if (monthIndex < 11) {
+                          monthIndex++;
+                        } else {
+                          monthIndex = 0; // Go to January if currently December
+                        }
                       });
-
                     },
+
                     child: CircleAvatar(
                         backgroundColor: AppColors.white,
                         child: Center(child: Icon(Icons.arrow_forward_ios))),
@@ -124,3 +128,4 @@ class _DashboardAttendanceUserState extends State<DashboardAttendanceUser> {
     );
   }
 }
+

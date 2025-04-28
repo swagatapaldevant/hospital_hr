@@ -1,27 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'dart:io';
+import 'package:hospital_hr/core/utils/constants/app_colors.dart';
 import '../../../../core/utils/commonWidgets/common_dialog.dart';
 import '../../../../core/utils/commonWidgets/common_header.dart';
 import '../../../../core/utils/commonWidgets/custom_button.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 import '../../../../core/utils/helper/screen_utils.dart';
-
-class AppColors {
-  static const primaryColor = Color(0xFF6200EE); // Your primary color
-  static const cardBackgroundColor = Colors.white; // Background color for cards
-  static const white = Colors.white;
-  static const black = Colors.black;
-  static const white70 = Colors.white70;
-
-  // ✅ Add actual values for the missing color variables
-  static const gray3 = Color(0xFFB0BEC5); // example color
-  static const gray7 = Color(0xFF455A64); // example color
-  static const darkBlue = Color(0xFF003366); // example color
-  static const colorGreen = Color(0xFF4CAF50); // example color
-}
-
 
 class AddDepartment extends StatefulWidget {
   const AddDepartment({super.key});
@@ -40,16 +23,6 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 
 class _AddDepartmentState extends State<AddDepartment> {
-  // File? _image;
-  // final ImagePicker _picker = ImagePicker();
-  //
-  // get children => null;
-
-  // Function to Pick Image
-
-
-  // Function to Show Bottom Sheet
-
 
   Widget editableField(String label, TextEditingController controller) {
     return Padding(
@@ -82,15 +55,6 @@ class _AddDepartmentState extends State<AddDepartment> {
                 CommonHeader(headerName: 'Add Department'),
                 SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 
-                // Profile Picture with Edit Icon
-
-
-                SizedBox(height: 10),
-
-
-                SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
-
-
                 buildEditableSection(
                   icon: Icons.home_work,
                   title: 'Add Department',
@@ -113,11 +77,9 @@ class _AddDepartmentState extends State<AddDepartment> {
                         activeButtonLabel: "Confirm",
                         context: context,
                         activeButtonOnClicked: () {
-                          //_pref.clearOnLogout();
                           Navigator.pop(context);
                           Navigator.pop(context);
                         }, activeButtonName: 'Confirm');
-                    //Navigator.pushNamed(context, "/HrModuleScreen");
                   },
                   fontSize: 18,
                   borderRadius: 12,

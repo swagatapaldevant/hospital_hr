@@ -1,13 +1,11 @@
-import 'dart:ui';
-import 'dart:ui';
-
-import 'package:flutter/animation.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hospital_hr/core/network/apiHelper/locator.dart';
 
 import 'core/services/routeGenerator/route_generator.dart';
-// test
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  initializeDependency();
   runApp(const MyApp());
 }
 
@@ -21,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Hospital HR',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           color: Colors.black,
           iconTheme: IconThemeData(color: Colors.white),
         ),

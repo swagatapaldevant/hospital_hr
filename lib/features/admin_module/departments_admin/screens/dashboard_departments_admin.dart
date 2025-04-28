@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../../../core/utils/commonWidgets/common_dialog.dart';
-import '../../../../../../../core/utils/constants/app_colors.dart';
+import 'package:hospital_hr/core/utils/constants/app_colors.dart';
 import '../../../../core/utils/commonWidgets/common_header.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 
@@ -57,7 +56,7 @@ class _DashboardDepartmentsAdminState extends State<DashboardDepartmentsAdmin> {
               CommonHeader(
                 headerName: 'Departments List',
               ),
-              SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
 
 
@@ -85,7 +84,7 @@ class _DashboardDepartmentsAdminState extends State<DashboardDepartmentsAdmin> {
                 ),
               ),
 
-              SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
 
               Expanded(
@@ -105,13 +104,13 @@ class _DashboardDepartmentsAdminState extends State<DashboardDepartmentsAdmin> {
                               Text('Sl. No.: $slno',
                                   style: TextStyle(
                                       fontSize: 16, fontWeight: FontWeight.bold)),
-                              SizedBox(height: 8),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                               Text('Department Name: $departmentname',
                                   style: TextStyle(fontSize: 16)),
-                              SizedBox(height: 8),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                               Text('Department Code: $departmentcode',
                                   style: TextStyle(fontSize: 16)),
-                              SizedBox(height: 8),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
                             ],
                           ),
@@ -129,7 +128,7 @@ class _DashboardDepartmentsAdminState extends State<DashboardDepartmentsAdmin> {
 
         },
         backgroundColor: AppColors.white, // Customize the button color
-        child: Icon(Icons.save, color: Colors.pinkAccent), // Save icon
+        child: Icon(Icons.add, color: Colors.pinkAccent), // Save icon
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat, // Place FAB at the center of the screen
     );

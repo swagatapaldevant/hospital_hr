@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_hr/core/utils/constants/app_colors.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:io';
@@ -8,24 +9,8 @@ import '../../../../core/utils/commonWidgets/custom_button.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 import '../../../../core/utils/helper/screen_utils.dart';
 
-class AppColors {
-  static const primaryColor = Color(0xFF6200EE); // Your primary color
-  static const cardBackgroundColor = Colors.white; // Background color for cards
-  static const white = Colors.white;
-  static const black = Colors.black;
-  static const white70 = Colors.white70;
-
-  // ✅ Add actual values for the missing color variables
-  static const gray3 = Color(0xFFB0BEC5); // example color
-  static const gray7 = Color(0xFF455A64); // example color
-  static const darkBlue = Color(0xFF003366); // example color
-  static const colorGreen = Color(0xFF4CAF50); // example color
-}
-
-
 class AddDepartmentAdmin extends StatefulWidget {
   const AddDepartmentAdmin({super.key});
-
 
   @override
   _AddDepartmentAdminState createState() => _AddDepartmentAdminState();
@@ -40,16 +25,6 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 
 class _AddDepartmentAdminState extends State<AddDepartmentAdmin> {
-  // File? _image;
-  // final ImagePicker _picker = ImagePicker();
-  //
-  // get children => null;
-
-  // Function to Pick Image
-
-
-  // Function to Show Bottom Sheet
-
 
   Widget editableField(String label, TextEditingController controller) {
     return Padding(
@@ -84,13 +59,6 @@ class _AddDepartmentAdminState extends State<AddDepartmentAdmin> {
 
                 // Profile Picture with Edit Icon
 
-
-                SizedBox(height: 10),
-
-
-                SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
-
-
                 buildEditableSection(
                   icon: Icons.home_work,
                   title: 'Add Department',
@@ -101,7 +69,7 @@ class _AddDepartmentAdminState extends State<AddDepartmentAdmin> {
                   ],
                 ),
 
-                SizedBox(height: 12),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 CommonButton(
                   onTap: (){
                     CommonDialog(
@@ -158,7 +126,7 @@ class _AddDepartmentAdminState extends State<AddDepartmentAdmin> {
           Row(
             children: [
               Icon(icon, color: AppColors.primaryColor, size: 28),
-              SizedBox(width: 8),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.01),
               Text(
                 title,
                 style: TextStyle(
@@ -169,7 +137,7 @@ class _AddDepartmentAdminState extends State<AddDepartmentAdmin> {
               ),
             ],
           ),
-          SizedBox(height: 16),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
           Divider(),
           ...fields,
         ],
@@ -200,7 +168,7 @@ class _AddDepartmentAdminState extends State<AddDepartmentAdmin> {
               color: AppColors.primaryColor,
             ),
           ),
-          SizedBox(height: 24),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
         ],
       ),
     );

@@ -17,15 +17,8 @@ class AdminForgotPassword extends StatefulWidget {
 
 class _AdminForgotPasswordState extends State<AdminForgotPassword> {
   TextEditingController emailController =TextEditingController();
-  //TextEditingController passwordController=TextEditingController();
-  //final LogInUsecase _logInUsecase = getIt<LogInUsecase>();
-  //final SharedPref _pref = getIt<SharedPref>();
-
   bool agreeWithTerm = false;
   bool isLoading = false;
-  //bool obscurePassword = true;
-  //bool obscureConfirmPassword = true;
-  //bool passwordsMatch = true;
   bool startEditing = false;
 
   @override

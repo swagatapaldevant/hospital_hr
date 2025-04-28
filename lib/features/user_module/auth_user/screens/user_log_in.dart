@@ -17,9 +17,6 @@ class UserLogInScreens extends StatefulWidget {
 class _UserLogInScreensState extends State<UserLogInScreens> {
   TextEditingController emailController =TextEditingController();
   TextEditingController passwordController=TextEditingController();
-  //final LogInUsecase _logInUsecase = getIt<LogInUsecase>();
-  //final SharedPref _pref = getIt<SharedPref>();
-
   bool agreeWithTerm = false;
   bool isLoading = false;
   bool obscurePassword = true;
@@ -93,11 +90,6 @@ class _UserLogInScreensState extends State<UserLogInScreens> {
                     borderRadius: 12,
                     height: 50, width: ScreenUtils().screenWidth(context),
                     buttonColor: AppColors.white, buttonName: 'Login', buttonTextColor: Colors.pinkAccent,)
-
-
-                  //crossAxisAlignment: CrossAxisAlignment.start,
-                  //mainAxisAlignment: MainAxisAlignment.center,
-
 
                 ],
               ),

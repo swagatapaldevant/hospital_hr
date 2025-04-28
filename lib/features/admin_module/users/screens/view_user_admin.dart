@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_hr/core/network/apiHelper/locator.dart';
+import 'package:hospital_hr/core/network/apiHelper/resource.dart';
+import 'package:hospital_hr/core/network/apiHelper/status.dart';
+import 'package:hospital_hr/core/services/localStorage/shared_pref.dart';
+import 'package:hospital_hr/core/utils/helper/common_utils.dart';
+import 'package:hospital_hr/features/admin_module/users/data/users_usecase.dart';
+import 'package:hospital_hr/features/admin_module/users/model/user_details_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:io';
@@ -8,23 +15,10 @@ import '../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 import '../../../../core/utils/helper/screen_utils.dart';
 
-class AppColors {
-  static const primaryColor = Color(0xFF6200EE); // Your primary color
-  static const cardBackgroundColor = Colors.white; // Background color for cards
-  static const white = Colors.white;
-  static const black = Colors.black;
-  static const white70 = Colors.white70;
-
-  // ✅ Add actual values for the missing color variables
-  static const gray3 = Color(0xFFB0BEC5); // example color
-  static const gray7 = Color(0xFF455A64); // example color
-  static const darkBlue = Color(0xFF003366); // example color
-  static const colorGreen = Color(0xFF4CAF50); // example color
-}
-
 
 class ViewUserAdmin extends StatefulWidget {
-  const ViewUserAdmin({super.key});
+  final int userId;
+  const ViewUserAdmin({super.key, required this.userId});
 
   @override
   _ViewUserAdminState createState() => _ViewUserAdminState();
@@ -33,8 +27,11 @@ class ViewUserAdmin extends StatefulWidget {
 class _ViewUserAdminState extends State<ViewUserAdmin> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
-
+  final UsersUseCase _usersUseCase = getIt<UsersUseCase>();
+  final SharedPref _pref = getIt<SharedPref>();
   get children => null;
+  bool isLoading = false;
+  UserDetailsModel? userDetails;
 
   // Function to Pick Image
   Future<void> _pickImage(ImageSource source) async {
@@ -60,16 +57,16 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
       builder: (context) => Wrap(
         children: [
           ListTile(
-            leading: Icon(Icons.camera_alt, color: Colors.blue),
-            title: Text('Take a Photo'),
+            leading: const Icon(Icons.camera_alt, color: Colors.blue),
+            title: const Text('Take a Photo'),
             onTap: () {
               Navigator.pop(context);
               _pickImage(ImageSource.camera);
             },
           ),
           ListTile(
-            leading: Icon(Icons.photo_library, color: Colors.green),
-            title: Text('Choose from Gallery'),
+            leading: const Icon(Icons.photo_library, color: Colors.green),
+            title: const Text('Choose from Gallery'),
             onTap: () {
               Navigator.pop(context);
               _pickImage(ImageSource.gallery);
@@ -78,6 +75,12 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    userDetailsApi();
   }
 
   @override
@@ -90,7 +93,7 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CommonHeader(headerName: 'User Details'),
+                const CommonHeader(headerName: 'User Details'),
                 SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 
                 // Profile Picture with Edit Icon
@@ -101,7 +104,7 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                         radius: 60,
                         backgroundImage: _image != null
                             ? FileImage(_image!)
-                            : NetworkImage('https://picsum.photos/200/300?random=2') as ImageProvider,
+                            : const NetworkImage('https://picsum.photos/200/300?random=2') as ImageProvider,
                         backgroundColor: Colors.transparent,
                       ),
                       // Positioned Edit Icon
@@ -125,13 +128,14 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                   ),
                 ),
 
-                SizedBox(height: 10),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 Center(
                   child: Column(
                     children: [
                       Text(
-                        'Sourav Mondal',
-                        style: TextStyle(
+                  '${userDetails?.salutation?.toString() ?? ''} ${userDetails?.name?.toString() ?? ''}',
+
+            style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: AppColors.white,
@@ -172,7 +176,7 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                       Row(
                         children: [
                           Icon(Icons.person_outline, color: AppColors.primaryColor, size: 28),
-                          SizedBox(width: 8),
+                          SizedBox(width: MediaQuery.of(context).size.width * 0.01),
                           Text(
                             'Personal Details',
                             style: TextStyle(
@@ -183,23 +187,24 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
                       Divider(),
 
                       // Detail Rows
-                      _detailRow('Employee ID', '2134'),
-                      _detailRow('Gender', 'Male'),
-                      _detailRow('Date of Birth', '18-12-2012'),
-                      _detailRow('Joining Date', '12-02-2022'),
-                      _detailRow('Father Name', 'Father'),
-                      _detailRow('Mother Name', 'Mother'),
-                      _detailRow('Marital Status', 'Single'),
-                      _detailRow('Blood Group', 'AB+'),
+                      _detailRow('Employee ID', userDetails?.empId.toString()??""),
+                      _detailRow('Gender', userDetails?.gender.toString()??""),
+                      _detailRow('Date of Birth', userDetails?.dob.toString()??""),
+                      _detailRow('Joining Date', userDetails?.joiningDate.toString()??""),
+                      _detailRow('Father Name', userDetails?.fatherName.toString()??""),
+                      _detailRow('Mother Name', userDetails?.motherName.toString()??""),
+                      _detailRow('Marital Status', userDetails?.maritalStatus.toString()??""),
+                      _detailRow('Blood Group', userDetails?.bloodGroup.toString()??""),
+                      _detailRow('Signature', userDetails?.signature.toString()??""),
                     ],
                   ),
                 ),
-                SizedBox(height: 12),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
                 Container(
                   width: double.infinity,
@@ -222,7 +227,7 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                       Row(
                         children: [
                           Icon(Icons.work_history, color: AppColors.primaryColor, size: 28),
-                          SizedBox(width: 8),
+                          SizedBox(width: MediaQuery.of(context).size.width * 0.01),
                           Text(
                             'Work & Education',
                             style: TextStyle(
@@ -233,20 +238,26 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
                       Divider(),
 
                       // Detail Rows
-                      _detailRow('Qualification', 'MBBS'),
-                      _detailRow('Work Experience', '2 years'),
-                      _detailRow('Specialist', 'Heart Specialist'),
-                      _detailRow('Note', 'null'),
+                      _detailRow('Qualification', userDetails?.qualification.toString()??""),
+                      _detailRow('Work Experience', userDetails?.experience.toString()??""),
+                      _detailRow('User Type', userDetails?.userType.toString()??""),
+                      _detailRow('Specialist', userDetails?.specialization.toString()??""),
+                      _detailRow('Doctor Type', userDetails?.doctorType.toString()??""),
+                      _detailRow('Doctor Fees', userDetails?.doctorFees.toString()??""),
+                      _detailRow('Commission Type', userDetails?.commissionType.toString()??""),
+                      _detailRow('Commission Amount', userDetails?.commissionAmount.toString()??""),
+                      _detailRow('Basic Salary', userDetails?.basicSalary.toString()??""),
+                      _detailRow('Note', userDetails?.note.toString()??""),
 
                     ],
                   ),
                 ),
-                SizedBox(height: 12),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
                 Container(
                   width: double.infinity,
@@ -269,7 +280,7 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                       Row(
                         children: [
                           Icon(Icons.location_city, color: AppColors.primaryColor, size: 28),
-                          SizedBox(width: 8),
+                          SizedBox(width: MediaQuery.of(context).size.width * 0.01),
                           Text(
                             'Address',
                             style: TextStyle(
@@ -280,17 +291,17 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
                       Divider(),
 
                       // Detail Rows
-                      _detailRow('Current Address', 'Kolkata'),
-                      _detailRow('Permanent Address', 'Kolkata'),
+                      _detailRow('Current Address', userDetails?.currentAddress.toString()??""),
+                      _detailRow('Permanent Address', userDetails?.permanentAddress.toString()??""),
                     ],
                   ),
                 ),
-                SizedBox(height: 12),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
                 Container(
                   width: double.infinity,
@@ -313,7 +324,7 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                       Row(
                         children: [
                           Icon(Icons.contact_page, color: AppColors.primaryColor, size: 28),
-                          SizedBox(width: 8),
+                          SizedBox(width: ScreenUtils().screenHeight(context) * 0.01),
                           Text(
                             'Contact',
                             style: TextStyle(
@@ -324,20 +335,20 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
                       Divider(),
 
                       // Detail Rows
-                      _detailRow('Email Id', 'sourav.dits@gmail.com'),
-                      _detailRow('Mobile No', '1234567890'),
-                      _detailRow('WhatsApp No', '1234567890'),
-                      _detailRow('Emg No', '2134567890'),
+                      _detailRow('Email Id', userDetails?.email.toString()??""),
+                      _detailRow('Mobile No', userDetails?.phoneNo.toString()??""),
+                      _detailRow('WhatsApp No', userDetails?.whatsappNo.toString()??""),
+                      _detailRow('Emg No', userDetails?.emgNo.toString()??""),
 
                     ],
                   ),
                 ),
-                SizedBox(height: 12),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
                 Container(
                   width: double.infinity,
@@ -360,7 +371,7 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                       Row(
                         children: [
                           Icon(Icons.perm_identity, color: AppColors.primaryColor, size: 28),
-                          SizedBox(width: 8),
+                          SizedBox(width: ScreenUtils().screenHeight(context) * 0.01),
                           Text(
                             'Identification',
                             style: TextStyle(
@@ -371,19 +382,18 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
                       Divider(),
 
                       // Detail Rows
-                      _detailRow('PAN Number', 'ASEFR2435Y'),
-                      _detailRow('Identification Name', 'Swagata pal'),
-                      _detailRow('Identification Number', '2134567890'),
+                      _detailRow('PAN Number', userDetails?.panNumber.toString()??""),
+                      _detailRow('Identification Number', userDetails?.identificationNumber.toString()??""),
 
                     ],
                   ),
                 ),
-                SizedBox(height: 12),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               ],
             ),
           ),
@@ -418,5 +428,37 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
       ),
     );
   }
+
+  userDetailsApi() async {
+    setState(() {
+      isLoading = true;
+    });
+    Map<String, dynamic> requestData = {
+        "id": widget.userId,
+    };
+
+    Resource resource = await _usersUseCase.userDetails(requestData: requestData);
+
+    if (resource.status == STATUS.SUCCESS) {
+      userDetails = UserDetailsModel.fromJson(resource.data);
+
+      setState(() {
+        isLoading = false;
+
+        CommonUtils().flutterSnackBar(
+          context: context,
+          mes: resource.message ?? "",
+          messageType: 1,
+        );
+      });
+    } else {
+      CommonUtils().flutterSnackBar(
+        context: context,
+        mes: resource.message ?? "",
+        messageType: 4,
+      );
+    }
+  }
+
 
 }

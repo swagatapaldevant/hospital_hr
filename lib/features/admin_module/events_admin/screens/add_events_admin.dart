@@ -1,24 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_hr/core/utils/constants/app_colors.dart';
 import '../../../../core/utils/commonWidgets/common_dialog.dart';
 import '../../../../core/utils/commonWidgets/common_header.dart';
 import '../../../../core/utils/commonWidgets/custom_button.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 import '../../../../core/utils/helper/screen_utils.dart';
-
-class AppColors {
-  static const primaryColor = Color(0xFF6200EE); // Your primary color
-  static const cardBackgroundColor = Colors.white; // Background color for cards
-  static const white = Colors.white;
-  static const black = Colors.black;
-  static const white70 = Colors.white70;
-
-  // ✅ Add actual values for the missing color variables
-  static const gray3 = Color(0xFFB0BEC5); // example color
-  static const gray7 = Color(0xFF455A64); // example color
-  static const darkBlue = Color(0xFF003366); // example color
-  static const colorGreen = Color(0xFF4CAF50); // example color
-}
-
 
 class AddEventsAdmin extends StatefulWidget {
   const AddEventsAdmin({super.key});
@@ -38,16 +24,6 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 
 class _AddEventsAdminState extends State<AddEventsAdmin> {
-  // File? _image;
-  // final ImagePicker _picker = ImagePicker();
-  //
-  // get children => null;
-
-  // Function to Pick Image
-
-
-  // Function to Show Bottom Sheet
-
 
   Widget editableField(String label, TextEditingController controller) {
     return Padding(
@@ -80,15 +56,6 @@ class _AddEventsAdminState extends State<AddEventsAdmin> {
                 CommonHeader(headerName: 'Add Event'),
                 SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 
-                // Profile Picture with Edit Icon
-
-
-                SizedBox(height: 10),
-
-
-                SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
-
-
                 buildEditableSection(
                   icon: Icons.event,
                   title: 'Add Event',
@@ -100,7 +67,7 @@ class _AddEventsAdminState extends State<AddEventsAdmin> {
                   ],
                 ),
 
-                SizedBox(height: 12),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 CommonButton(
                   onTap: (){
                     CommonDialog(
@@ -157,7 +124,7 @@ class _AddEventsAdminState extends State<AddEventsAdmin> {
           Row(
             children: [
               Icon(icon, color: AppColors.primaryColor, size: 28),
-              SizedBox(width: 8),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.01),
               Text(
                 title,
                 style: TextStyle(
@@ -168,7 +135,7 @@ class _AddEventsAdminState extends State<AddEventsAdmin> {
               ),
             ],
           ),
-          SizedBox(height: 16),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
           Divider(),
           ...fields,
         ],
@@ -199,7 +166,7 @@ class _AddEventsAdminState extends State<AddEventsAdmin> {
               color: AppColors.primaryColor,
             ),
           ),
-          SizedBox(height: 24),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
         ],
       ),
     );

@@ -5,6 +5,26 @@ abstract class SharedPref {
 
   SharedPref();
 
+  // for user name
+  void setUserName(String userName);
+  Future<String?> getUserName();
+
+  // for profile image
+  void setProfileImage(String profileImage);
+  Future<String?> getProfileImage();
+
+// for authentication token
+  void setUserAuthToken(String authToken);
+  Future<String> getUserAuthToken();
+
+
+
+
+
+
+
+
+
   // for institute id
   void setInstituteId(String id);
   Future<String?>getInstituteId();
@@ -13,9 +33,7 @@ abstract class SharedPref {
   void setLoginStatus(bool status);
   Future<bool> getLoginStatus();
 
-  // for authentication token
-  void setUserAuthToken(String authToken);
-  Future<String> getUserAuthToken();
+
 
   // for candidate id
   void setCandidateId(String candidateId);
@@ -26,8 +44,7 @@ abstract class SharedPref {
   Future<String?> getSchoolName();
 
   // for name(teacher/student/parent)
-  void setUserName(String userName);
-  Future<String?> getUserName();
+
 
   // for userType(teacher/student/parent)
   void setUserType(String userType);
@@ -80,8 +97,7 @@ abstract class SharedPref {
   void setPhone(String data);
   Future<String> getPhone();
 
-  void setProfileImage(String data);
-  Future<String?> getProfileImage();
+
 
 
 }

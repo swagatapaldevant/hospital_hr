@@ -1,28 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'dart:io';
+import 'package:hospital_hr/core/utils/constants/app_colors.dart';
 import '../../../../core/utils/commonWidgets/common_dialog.dart';
 import '../../../../core/utils/commonWidgets/common_header.dart';
 import '../../../../core/utils/commonWidgets/custom_button.dart';
 import '../../../../core/utils/commonWidgets/custom_dropdown.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 import '../../../../core/utils/helper/screen_utils.dart';
-
-class AppColors {
-  static const primaryColor = Color(0xFF6200EE); // Your primary color
-  static const cardBackgroundColor = Colors.white; // Background color for cards
-  static const white = Colors.white;
-  static const black = Colors.black;
-  static const white70 = Colors.white70;
-
-  // ✅ Add actual values for the missing color variables
-  static const gray3 = Color(0xFFB0BEC5); // example color
-  static const gray7 = Color(0xFF455A64); // example color
-  static const darkBlue = Color(0xFF003366); // example color
-  static const colorGreen = Color(0xFF4CAF50); // example color
-}
-
 
 class AddNotice extends StatefulWidget {
   const AddNotice({super.key});
@@ -34,7 +17,6 @@ class AddNotice extends StatefulWidget {
 
 // Define these controllers at the top of your _ViewUserState
 final _enternoticeController = TextEditingController();//(text: 'Test');
-//final _departmentcodeController = TextEditingController(text: '28821');
 TextEditingController priority=TextEditingController();
 Map<String, int> priorityTypeMap = {"High":1, "Medium":2, "Low":3 };
 
@@ -43,16 +25,6 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 
 class _AddNoticeState extends State<AddNotice> {
-  // File? _image;
-  // final ImagePicker _picker = ImagePicker();
-  //
-  // get children => null;
-
-  // Function to Pick Image
-
-
-  // Function to Show Bottom Sheet
-
 
   Widget editableField(String label, TextEditingController controller) {
     return Padding(
@@ -99,8 +71,6 @@ class _AddNoticeState extends State<AddNotice> {
                   title: 'Add Notice',
                   fields: [
                     editableField('Enter Notice', _enternoticeController),
-                    //editableField('Department Code', _departmentcodeController),
-
                   ],
                 ),
 
@@ -123,11 +93,10 @@ class _AddNoticeState extends State<AddNotice> {
                         activeButtonLabel: "Confirm",
                         context: context,
                         activeButtonOnClicked: () {
-                          //_pref.clearOnLogout();
+
                           Navigator.pop(context);
                           Navigator.pop(context);
                         }, activeButtonName: 'Confirm');
-                    //Navigator.pushNamed(context, "/HrModuleScreen");
                   },
                   fontSize: 18,
                   borderRadius: 12,
@@ -168,7 +137,7 @@ class _AddNoticeState extends State<AddNotice> {
           Row(
             children: [
               Icon(icon, color: AppColors.primaryColor, size: 28),
-              SizedBox(width: 8),
+              SizedBox(width: ScreenUtils().screenHeight(context) * 0.01),
               Text(
                 title,
                 style: TextStyle(
@@ -179,7 +148,7 @@ class _AddNoticeState extends State<AddNotice> {
               ),
             ],
           ),
-          SizedBox(height: 16),
+          SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
           Divider(),
           ...fields,
         ],
@@ -210,7 +179,7 @@ class _AddNoticeState extends State<AddNotice> {
               color: AppColors.primaryColor,
             ),
           ),
-          SizedBox(height: 24),
+          SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
         ],
       ),
     );

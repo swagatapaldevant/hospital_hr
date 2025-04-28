@@ -112,15 +112,11 @@ class CommonUtils {
                                                 ? "Something went wrong !"
                                                 : "Did you know ?",
                                 textAlign: TextAlign.left,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayMedium
-                                    ?.copyWith(
-                                      color: Colors.black,
-                                      //fontFamily: AppFontSize.appFontOpenSans,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),

@@ -22,19 +22,6 @@ class _DashboardPayrollAdminState extends State<DashboardPayrollAdmin> {
   TextEditingController searchController = TextEditingController();
 
   void showNoticeChangeDialog(BuildContext context) {
-    // CommonDialog(
-    //   icon: Icons.save,
-    //   activeButtonSolidColor: Colors.green,
-    //   title: "Notice Deleted",
-    //   msg: "You are about to delete notice. Please confirm.",
-    //   activeButtonLabel: "Confirm",
-    //   context: context,
-    //   activeButtonOnClicked: () {
-    //     Navigator.pop(context);
-    //     Navigator.pop(context);
-    //   },
-    //   activeButtonName: 'Confirm',
-    // );
   }
 
 
@@ -59,7 +46,7 @@ class _DashboardPayrollAdminState extends State<DashboardPayrollAdmin> {
               CommonHeader(
                 headerName: 'Payroll List',
               ),
-              SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
               TextField(
                 controller: searchController,
@@ -85,7 +72,7 @@ class _DashboardPayrollAdminState extends State<DashboardPayrollAdmin> {
                 ),
               ),
 
-              SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
               Expanded(
                 child: ListView.builder(
@@ -107,7 +94,7 @@ class _DashboardPayrollAdminState extends State<DashboardPayrollAdmin> {
                                   Text('Month: $month',
                                       style: TextStyle(
                                           fontSize: 16, fontWeight: FontWeight.bold)),
-                                  SizedBox(height: 8),
+                                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
 
                                   PopupMenuButton<int>(
@@ -129,16 +116,16 @@ class _DashboardPayrollAdminState extends State<DashboardPayrollAdmin> {
 
                               Text('Total Days: $totaldays',
                                   style: TextStyle(fontSize: 16)),
-                              SizedBox(height: 8),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                               Text('Gross Pay: $grosspay',
                                   style: TextStyle(fontSize: 16)),
-                              SizedBox(height: 8),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                               Text('Net Pay: $netpay',
                                   style: TextStyle(fontSize: 16)),
-                              SizedBox(height: 8),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                               Text('Deduction: $deduction',
                                   style: TextStyle(fontSize: 16)),
-                              SizedBox(height: 8),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
 
                             ],

@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:hospital_hr/features/admin_module/attendance_admin/screens/my_attendance_admin.dart';
 import '../../../features/admin_module/admin_dashboard/screens/admin_dashboard_screen.dart';
 import '../../../features/admin_module/admin_dashboard/screens/edit_dashboard_admin.dart';
 import '../../../features/admin_module/admin_dashboard/screens/view_dashboard_admin.dart';
@@ -91,6 +92,7 @@ class RouteGenerator {
   static const kDashboardPayrollAdmin= "/DashboardPayrollAdmin";
   static const kViewPayrollAdmin= "/ViewPayrollAdmin";
   static const kDashboardAdmin= "/DashboardAdmin";
+  static const kMyAttendanceAdmin= "/MyAttendanceAdmin";
 
 
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -170,7 +172,7 @@ case kAddUserAdmin:
 case kEditUserAdmin:
         return _animatedPageRoute(EditUserAdmin());
 case kViewUserAdmin:
-        return _animatedPageRoute(ViewUserAdmin());
+        return _animatedPageRoute(ViewUserAdmin(userId: args as int,));
 case kDashboardAttendanceAdmin:
         return _animatedPageRoute(DashboardAttendanceAdmin());
 case kDashboardEventAdmin:
@@ -185,6 +187,8 @@ case kViewPayrollAdmin:
         return _animatedPageRoute(ViewPayrollAdmin());
 case kDashboardAdmin:
         return _animatedPageRoute(DashboardAdmin());
+        case kMyAttendanceAdmin:
+        return _animatedPageRoute(MyAttendanceAdmin());
 
 
       default:

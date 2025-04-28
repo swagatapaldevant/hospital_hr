@@ -1,14 +1,15 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:hospital_hr/core/network/apiClientRepository/api_client.dart';
+import 'package:hospital_hr/core/network/apiHelper/locator.dart';
+import 'package:hospital_hr/core/network/apiHelper/resource.dart';
+import 'package:hospital_hr/core/network/apiHelper/status.dart';
+import 'package:hospital_hr/core/network/networkRepository/network_client.dart';
+import 'package:hospital_hr/core/utils/constants/app_string.dart';
+import 'package:hospital_hr/core/utils/helper/common_utils.dart';
 
-import '../../utils/constants/app_string.dart';
-import '../../utils/helper/common_utils.dart';
-import '../apiHelper/locator.dart';
-import '../apiHelper/resource.dart';
-import '../apiHelper/status.dart';
-import '../networkRepository/network_client.dart';
-import 'api_client.dart';
+
 
 
 class ApiClientImpl extends ApiClient {
@@ -51,13 +52,13 @@ class ApiClientImpl extends ApiClient {
       return Resource(
           status: response.data['status'].toString() == "true" ? STATUS.SUCCESS : STATUS.ERROR,
           data: response.data['data'],
-          message: response.data['msg']);
+          message: response.data['message']);
     } on DioException catch (e) {
       CommonUtils().loadingState(isLoading: false);
 
       if (e.response != null && e.response!.data != null) {
         Map<String,dynamic> responses = e.response?.data ?? {};
-        return Resource(status: STATUS.ERROR, message: responses['msg'] ?? _networkClient.getHttpErrorMessage(statusCode: e.response!.statusCode!));
+        return Resource(status: STATUS.ERROR, message: responses['message'] ?? _networkClient.getHttpErrorMessage(statusCode: e.response!.statusCode!));
       } else {
         return Resource(
             status: STATUS.ERROR, message: AppStrings.somethingWentWrong);
@@ -80,12 +81,12 @@ class ApiClientImpl extends ApiClient {
       return Resource(
           status: response.data['status'].toString()== "true" ? STATUS.SUCCESS : STATUS.ERROR,
           data: response.data['data'],
-          message: response.data['msg']);
+          message: response.data['message']);
     } on DioException catch (e) {
       CommonUtils().loadingState(isLoading: false);
       if (e.response != null) {
         Map<String,dynamic> responses = e.response?.data ?? {};
-        return Resource(status: STATUS.ERROR, message: responses['msg'] ?? _networkClient.getHttpErrorMessage(statusCode: e.response!.statusCode!));
+        return Resource(status: STATUS.ERROR, message: responses['message'] ?? _networkClient.getHttpErrorMessage(statusCode: e.response!.statusCode!));
       } else {
         return Resource(
             status: STATUS.ERROR, message: AppStrings.somethingWentWrong);

@@ -1,29 +1,14 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hospital_hr/core/utils/commonWidgets/common_dialog.dart';
 import 'package:hospital_hr/core/utils/commonWidgets/dashboard_drawer_menu.dart';
+import 'package:hospital_hr/core/utils/constants/app_colors.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
-import '../../../../core/utils/helper/screen_utils.dart'; // For time formatting
-
-
-class AppColors {
-  static const primaryColor = Color(0xFF6200EE); // Your primary color
-  static const cardBackgroundColor = Colors.white; // Background color for cards
-  static const white = Colors.white;
-  static const black = Colors.black;
-  static const white70 = Colors.white70;
-
-  // ✅ Add actual values for the missing color variables
-  static const gray3 = Color(0xFFB0BEC5); // example color
-  static const gray7 = Color(0xFF455A64); // example color
-  static const darkBlue = Color(0xFF003366); // example color
-  static const colorGreen = Color(0xFF4CAF50); // example color
-}
+import '../../../../core/utils/helper/screen_utils.dart';
 
 
 class UserHomeScreen extends StatefulWidget {
@@ -108,15 +93,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         width: double.infinity,
         height: double.infinity,
         color: AppColors.darkBlue,
-        // decoration: BoxDecoration(
-        //   gradient: LinearGradient(
-        //     begin: Alignment.topLeft,
-        //     end: Alignment.bottomRight,
-        //     colors: [ Color(0xffB4D1D8),
-        //       AppColors.colorPrimaryText2,
-        //       Color(0xff467483),],
-        //   ),
-        // ),
       ),
       controller: _advancedDrawerController,
       animationCurve: Curves.easeInOut,
@@ -338,7 +314,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 16),
+                        SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
 
                         // User Info
                         Column(
@@ -352,7 +328,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                 letterSpacing: 0.5,
                               ),
                             ),
-                            SizedBox(height: 6),
+                            SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
                             Text(
                               'Software Engineer',
                               style: TextStyle(
@@ -361,7 +337,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                 color: Colors.grey[700],
                               ),
                             ),
-                            SizedBox(height: 4),
+                            SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                               decoration: BoxDecoration(
@@ -405,7 +381,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         Row(
                           children: [
                             Icon(Icons.person_outline, color: AppColors.primaryColor, size: 28),
-                            SizedBox(width: 8),
+                            SizedBox(width: MediaQuery.of(context).size.width * 0.01,),
                             Text(
                               'Personal Details',
                               style: TextStyle(
@@ -416,14 +392,14 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 16),
+                        SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
                         Divider(),
                         _detailRow('Joining Date', '12-02-2022'),
                         _detailRow('Blood Group', 'AB+'),
                       ],
                     ),
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
 
                   Container(
                     width: double.infinity,
@@ -449,7 +425,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             'Events',
                             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.primaryColor),
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
 
                           // Tab Bar
                           TabBar(
@@ -464,11 +440,11 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               Tab(text: "Past Events"),
                             ],
                           ),
-                          SizedBox(height: 12),
+                          SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
 
                           // Tab Views
                           SizedBox(
-                            height: 260,
+                            height: ScreenUtils().screenHeight(context) * 0.01,
                             child: TabBarView(
                               children: [
                                 // Upcoming Events
@@ -486,9 +462,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                           children: [
                                             Text('Upcoming Event ${index + 1}',
                                                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                                            SizedBox(height: 8),
+                                            SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
                                             Text('Details: Sample details of the event.'),
-                                            SizedBox(height: 4),
+                                            SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
                                             Text('Date: 2025-04-${index + 10}'),
                                           ],
                                         ),
@@ -512,9 +488,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                           children: [
                                             Text('Past Event ${index + 1}',
                                                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                                            SizedBox(height: 8),
+                                            SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
                                             Text('Details: Sample details of the event.'),
-                                            SizedBox(height: 4),
+                                            SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
                                             Text('Date: 2025-04-${index + 5}'),
                                           ],
                                         ),
@@ -551,7 +527,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         Row(
                           children: [
                             Icon(Icons.notifications_active, color: AppColors.primaryColor, size: 28),
-                            SizedBox(width: 8),
+                            SizedBox(width: MediaQuery.of(context).size.width * 0.01,),
                             Text(
                               'Notices',
                               style: TextStyle(
@@ -562,7 +538,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 16),
+                        SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
 
                         // Scrollable List of Notices
                         Container(
@@ -575,7 +551,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Icon(Icons.circle, size: 8, color: Colors.black54),
-                                  SizedBox(width: 8),
+                                  SizedBox(width: MediaQuery.of(context).size.width * 0.01,),
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -588,12 +564,12 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                             color: Colors.black87,
                                           ),
                                         ),
-                                        SizedBox(height: 4),
+                                        SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
                                         Text(
                                           'This is a sample description of notice ${index + 1}. It can be a bit longer to test scrolling.',
                                           style: TextStyle(color: Colors.grey[700], fontSize: 14),
                                         ),
-                                        SizedBox(height: 6),
+                                        SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
                                         Text(
                                           'Date: 2025-04-${10 + index}',
                                           style: TextStyle(fontSize: 12, color: Colors.grey[600]),
@@ -609,7 +585,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 12),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
                   Container(
                     width: double.infinity,
@@ -632,7 +608,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         Row(
                           children: [
                             Icon(Icons.work_history, color: AppColors.primaryColor, size: 28),
-                            SizedBox(width: 8),
+                            SizedBox(width: ScreenUtils().screenHeight(context) * 0.01),
                             Text(
                               'Work',
                               style: TextStyle(
@@ -643,7 +619,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 16),
+                        SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
 
                         Divider(),
                         _detailRow('Work Experience', '2 years'),
@@ -651,7 +627,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
 
                   Container(
                     width: double.infinity,
@@ -674,7 +650,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         Row(
                           children: [
                             Icon(Icons.contact_page, color: AppColors.primaryColor, size: 28),
-                            SizedBox(width: 8),
+                            SizedBox(width: ScreenUtils().screenHeight(context) * 0.01),
                             Text(
                               'Contact',
                               style: TextStyle(
@@ -685,7 +661,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 16),
+                        SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
 
                         Divider(),
                         // Detail Rows
@@ -694,7 +670,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
                 ],
               ),
             ),

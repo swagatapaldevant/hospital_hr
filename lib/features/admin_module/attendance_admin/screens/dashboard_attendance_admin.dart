@@ -1,11 +1,10 @@
-
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:hospital_hr/core/utils/commonWidgets/custom_dropdown.dart';
+import 'package:intl/intl.dart';
 import '../../../../core/utils/commonWidgets/common_header.dart';
 import '../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 import '../../../../core/utils/helper/screen_utils.dart';
-
 
 class DashboardAttendanceAdmin extends StatefulWidget {
   const DashboardAttendanceAdmin({super.key});
@@ -15,113 +14,163 @@ class DashboardAttendanceAdmin extends StatefulWidget {
 }
 
 class _DashboardAttendanceAdminState extends State<DashboardAttendanceAdmin> {
+  Map<String, int> departmentstype = {"Cardiology": 1, "Radiology": 2, "Pediatrics": 3, "General": 4};
 
+  DateTime selectedDate = DateTime.now();
 
-
-  final List<String> monthList = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+  List<Map<String, dynamic>> allUsers = [
+    {'name': 'Dr. Ayesha', 'department': 'Cardiology', 'status': 'Present'},
+    {'name': 'Nurse John', 'department': 'Radiology', 'status': 'Absent'},
+    {'name': 'Dr. Kamal', 'department': 'Pediatrics', 'status': 'Present'},
+    {'name': 'Nurse Tina', 'department': 'Cardiology', 'status': 'Absent'},
+    {'name': 'Dr. Sameer', 'department': 'General', 'status': 'Present'},
   ];
 
-  int monthIndex = 0;
+  Future<void> _pickDate() async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2022),
+      lastDate: DateTime(2100),
+    );
 
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
+  void _toggleStatus(int index) {
+    setState(() {
+      allUsers[index]['status'] =
+      allUsers[index]['status'] == 'Present' ? 'Absent' : 'Present';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     AppDimensions.init(context);
-    DateTime now = DateTime.now();
-    DateTime firstDay = DateTime(now.year, now.month, 1);
-    int daysInMonth = DateTime(now.year, now.month + 1, 0).day;
-    List<DateTime> days = List.generate(daysInMonth, (index) => firstDay.add(Duration(days: index)));
+    String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
 
     return Scaffold(
+      backgroundColor: Colors.blue[900],
       body: SafeArea(
         child: Padding(
-          padding:  EdgeInsets.all(AppDimensions.screenContentPadding),
+          padding: EdgeInsets.all(AppDimensions.screenContentPadding),
           child: Column(
+
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CommonHeader(headerName: 'Attendance Details',),
-              SizedBox(height: ScreenUtils().screenHeight(context)*0.03,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Monthly Attendance : January',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500,fontFamily: "Poppins", color: AppColors.white),
-                  ),
-                  Text(
-                    '  26 Days',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500,fontFamily: "Poppins", color: AppColors.white),
-                  ),
-                ],
-              ),
-              SizedBox(height: ScreenUtils().screenHeight(context)*0.03,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  InkWell(
-                    onTap: (){
-                      setState(() {
-                        monthIndex--;
-                      });
+                  CommonHeader(headerName: 'Attendance Details'),
 
+                  PopupMenuButton<int>(
+                    icon: Icon(Icons.person, color: Colors.white),
+                    onSelected: (value) {
+                      if (value == 1) {
+                        Navigator.pushNamed(context, "/MyAttendanceAdmin");
+                      }
                     },
-                    child: CircleAvatar(
-                        backgroundColor: AppColors.white,
-                        child: Center(child: Icon(Icons.arrow_back_ios_new ))),
-                  ) ,
-                  Text(
-                    monthList[monthIndex],
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500,fontFamily: "Poppins", color: AppColors.white),
-                  ),
-                  InkWell(
-                    onTap: (){
-                      setState(() {
-                        monthIndex++;
-                      });
-
-                    },
-                    child: CircleAvatar(
-                        backgroundColor: AppColors.white,
-                        child: Center(child: Icon(Icons.arrow_forward_ios))),
-                  )
-                ],
-              ),
-              SizedBox(height: ScreenUtils().screenHeight(context)*0.03,),
-              Expanded(
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 7,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0,
-                  ),
-                  itemCount: days.length,
-                  itemBuilder: (context, index) {
-                    DateTime day = days[index];
-                    bool isSunday = day.weekday == DateTime.sunday;
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: isSunday ? Colors.redAccent : Colors.blue[200],
-                        borderRadius: BorderRadius.circular(10),
+                    itemBuilder: (BuildContext context) => [
+                      PopupMenuItem<int>(
+                        value: 1,
+                        child: Text('My Attendance'),
                       ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        DateFormat('d').format(day),
+                    ],
+                  ),
+                ],
+              ),
+
+              SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
+
+              // Date Picker
+              InkWell(
+                onTap: _pickDate,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        formattedDate,
                         style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          fontFamily: "Poppins",
+                          fontSize: 16,
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+                      Icon(Icons.calendar_today, color: AppColors.primaryColor),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
+
+              CustomDropDownForTaskCreation(
+                placeHolderText: 'Choose Department',
+                onValueSelected: (String , int ) {  },
+
+                data: departmentstype,
+
+              ),
+
+              SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
+
+              // Always show all users
+              Expanded(
+                child: ListView.builder(
+                  itemCount: allUsers.length,
+                  itemBuilder: (context, index) {
+                    var user = allUsers[index];
+                    bool isPresent = user['status'] == 'Present';
+
+                    return GestureDetector(
+                      onTap: () => _toggleStatus(index),
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 12),
+                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(user['name'],
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: "Poppins")),
+                                Text(user['department'],
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: "Poppins",
+                                        color: Colors.grey)),
+                              ],
+                            ),
+                            Icon(
+                              isPresent ? Icons.check_circle : Icons.cancel,
+                              color: isPresent ? Colors.green : Colors.red,
+                              size: 28,
+                            )
+                          ],
                         ),
                       ),
                     );
                   },
                 ),
               ),
-
-
-
-
             ],
           ),
         ),

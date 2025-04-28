@@ -1,24 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_hr/core/utils/constants/app_colors.dart';
 import '../../../../core/utils/commonWidgets/common_dialog.dart';
 import '../../../../core/utils/commonWidgets/common_header.dart';
 import '../../../../core/utils/commonWidgets/custom_button.dart';
 import '../../../../core/utils/commonWidgets/custom_dropdown.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 import '../../../../core/utils/helper/screen_utils.dart';
-
-class AppColors {
-  static const primaryColor = Color(0xFF6200EE); // Your primary color
-  static const cardBackgroundColor = Colors.white; // Background color for cards
-  static const white = Colors.white;
-  static const black = Colors.black;
-  static const white70 = Colors.white70;
-
-  // ✅ Add actual values for the missing color variables
-  static const gray3 = Color(0xFFB0BEC5); // example color
-  static const gray7 = Color(0xFF455A64); // example color
-  static const darkBlue = Color(0xFF003366); // example color
-  static const colorGreen = Color(0xFF4CAF50); // example color
-}
 
 class EditNoticeAdmin extends StatefulWidget {
   const EditNoticeAdmin({super.key});
@@ -65,8 +52,6 @@ class _EditNoticeAdminState extends State<EditNoticeAdmin> {
               children: [
                 CommonHeader(headerName: 'Edit Notice'),
                 SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
-                SizedBox(height: 10),
-                SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 
 
                 buildEditableSection(
@@ -84,7 +69,7 @@ class _EditNoticeAdminState extends State<EditNoticeAdmin> {
 
                 ),
 
-                SizedBox(height: 12),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 CommonButton(
                   onTap: (){
                     CommonDialog(
@@ -141,7 +126,7 @@ class _EditNoticeAdminState extends State<EditNoticeAdmin> {
           Row(
             children: [
               Icon(icon, color: AppColors.primaryColor, size: 28),
-              SizedBox(width: 8),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.01),
               Text(
                 title,
                 style: TextStyle(
@@ -152,7 +137,7 @@ class _EditNoticeAdminState extends State<EditNoticeAdmin> {
               ),
             ],
           ),
-          SizedBox(height: 16),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
           Divider(),
           ...fields,
         ],
@@ -182,7 +167,7 @@ class _EditNoticeAdminState extends State<EditNoticeAdmin> {
               color: AppColors.primaryColor,
             ),
           ),
-          SizedBox(height: 24),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
         ],
       ),
     );

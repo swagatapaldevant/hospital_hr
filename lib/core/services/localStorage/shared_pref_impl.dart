@@ -30,6 +30,70 @@ class SharedPrefImpl extends SharedPref {
   final String _premimumStatus = "PremimumStatus";
 
 
+
+  @override
+  Future<String> getUserName() async {
+    final SharedPreferences prefs = await super.prefs;
+    return prefs.getString(_userName) ?? "";
+  }
+
+  @override
+  void setUserName(String userName) async {
+    final SharedPreferences prefs = await super.prefs;
+    prefs.setString(_userName, userName);
+  }
+
+
+  @override
+  Future<String> getProfileImage() async {
+    final SharedPreferences prefs = await super.prefs;
+    return prefs.getString(_profileImage) ?? "";
+  }
+
+  @override
+  void setProfileImage(String profileImage) async {
+    final SharedPreferences prefs = await super.prefs;
+    prefs.setString(_profileImage, profileImage);
+  }
+
+
+  @override
+  Future<String> getUserAuthToken() async {
+    final SharedPreferences prefs = await super.prefs;
+    return prefs.getString(_userAuthToken) ?? "";
+  }
+
+  @override
+  void setUserAuthToken(String token) async {
+    final SharedPreferences prefs = await super.prefs;
+    prefs.setString(_userAuthToken, token);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   @override
   Future<String?> getInstituteId() async {
     final SharedPreferences prefs = await super.prefs;
@@ -54,17 +118,6 @@ class SharedPrefImpl extends SharedPref {
     prefs.setBool(_loginStatus, status);
   }
 
-  @override
-  Future<String> getUserAuthToken() async {
-    final SharedPreferences prefs = await super.prefs;
-    return prefs.getString(_userAuthToken) ?? "";
-  }
-
-  @override
-  void setUserAuthToken(String token) async {
-    final SharedPreferences prefs = await super.prefs;
-    prefs.setString(_userAuthToken, token);
-  }
 
   @override
   Future<String> getCandidateId() async {
@@ -92,17 +145,7 @@ class SharedPrefImpl extends SharedPref {
   }
 
 
-  @override
-  Future<String> getUserName() async {
-    final SharedPreferences prefs = await super.prefs;
-    return prefs.getString(_userName) ?? "";
-  }
 
-  @override
-  void setUserName(String userName) async {
-    final SharedPreferences prefs = await super.prefs;
-    prefs.setString(_userName, userName);
-  }
 
   @override
   Future<String> getUserType() async {
@@ -293,17 +336,7 @@ class SharedPrefImpl extends SharedPref {
     prefs.setString(_phoneNumber, data);
   }
 
-  @override
-  Future<String?> getProfileImage() async{
-    final SharedPreferences prefs = await super.prefs;
-    return prefs.getString(_profileImage);
-  }
 
-  @override
-  void setProfileImage(String data) async{
-    final SharedPreferences prefs = await super.prefs;
-    prefs.setString(_profileImage, data);
-  }
 
 
 

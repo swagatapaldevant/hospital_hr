@@ -15,11 +15,7 @@ class AdminResetPasswordScreens extends StatefulWidget {
 }
 
 class _AdminResetPasswordScreensState extends State<AdminResetPasswordScreens> {
-  //TextEditingController emailController =TextEditingController();
   TextEditingController passwordController=TextEditingController();
-  //final LogInUsecase _logInUsecase = getIt<LogInUsecase>();
-  //final SharedPref _pref = getIt<SharedPref>();
-
   bool agreeWithTerm = false;
   bool isLoading = false;
   bool obscurePassword = true;

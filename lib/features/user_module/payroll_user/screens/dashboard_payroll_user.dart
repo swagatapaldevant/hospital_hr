@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_hr/core/utils/helper/screen_utils.dart';
 import '../../../../core/utils/commonWidgets/common_header.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 
@@ -22,19 +23,6 @@ class _DashboardPayrollUserState extends State<DashboardPayrollUser> {
   TextEditingController searchController = TextEditingController();
 
   void showNoticeChangeDialog(BuildContext context) {
-    // CommonDialog(
-    //   icon: Icons.save,
-    //   activeButtonSolidColor: Colors.green,
-    //   title: "Notice Deleted",
-    //   msg: "You are about to delete notice. Please confirm.",
-    //   activeButtonLabel: "Confirm",
-    //   context: context,
-    //   activeButtonOnClicked: () {
-    //     Navigator.pop(context);
-    //     Navigator.pop(context);
-    //   },
-    //   activeButtonName: 'Confirm',
-    // );
   }
 
 
@@ -59,7 +47,7 @@ class _DashboardPayrollUserState extends State<DashboardPayrollUser> {
               CommonHeader(
                 headerName: 'Payroll',
               ),
-              SizedBox(height: 10),
+              SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 
               TextField(
                 controller: searchController,
@@ -85,7 +73,7 @@ class _DashboardPayrollUserState extends State<DashboardPayrollUser> {
                 ),
               ),
 
-              SizedBox(height: 10),
+              SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 
               Expanded(
                 child: ListView.builder(
@@ -107,7 +95,7 @@ class _DashboardPayrollUserState extends State<DashboardPayrollUser> {
                                   Text('Month: $month',
                                       style: TextStyle(
                                           fontSize: 16, fontWeight: FontWeight.bold)),
-                                  SizedBox(height: 8),
+                                  SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
 
 
                                   PopupMenuButton<int>(
@@ -129,16 +117,16 @@ class _DashboardPayrollUserState extends State<DashboardPayrollUser> {
 
                               Text('Total Days: $totaldays',
                                   style: TextStyle(fontSize: 16)),
-                              SizedBox(height: 8),
+                              SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
                               Text('Gross Pay: $grosspay',
                                   style: TextStyle(fontSize: 16)),
-                              SizedBox(height: 8),
+                              SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
                               Text('Net Pay: $netpay',
                                   style: TextStyle(fontSize: 16)),
-                              SizedBox(height: 8),
+                              SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
                               Text('Deduction: $deduction',
                                   style: TextStyle(fontSize: 16)),
-                              SizedBox(height: 8),
+                              SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
 
 
                             ],

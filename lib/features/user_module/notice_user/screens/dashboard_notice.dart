@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../../../core/utils/commonWidgets/common_dialog.dart';
-import '../../../../../../../core/utils/constants/app_colors.dart';
+import 'package:hospital_hr/core/utils/helper/screen_utils.dart';
 import '../../../../core/utils/commonWidgets/common_header.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 
@@ -21,22 +20,6 @@ class _DashboardNoticeState extends State<DashboardNotice> {
   TextEditingController startDateController = TextEditingController();
   TextEditingController dueDateController = TextEditingController();
   TextEditingController searchController = TextEditingController();
-
-  // void showNoticeChangeDialog(BuildContext context) {
-  //   CommonDialog(
-  //     icon: Icons.save,
-  //     activeButtonSolidColor: Colors.green,
-  //     title: "Notice Deleted",
-  //     msg: "You are about to delete notice. Please confirm.",
-  //     activeButtonLabel: "Confirm",
-  //     context: context,
-  //     activeButtonOnClicked: () {
-  //       Navigator.pop(context);
-  //       Navigator.pop(context);
-  //     },
-  //     activeButtonName: 'Confirm',
-  //   );
-  // }
 
 
   @override
@@ -60,7 +43,7 @@ class _DashboardNoticeState extends State<DashboardNotice> {
               CommonHeader(
                 headerName: 'Notice',
               ),
-              SizedBox(height: 10),
+              SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 
               TextField(
                 controller: searchController,
@@ -86,7 +69,7 @@ class _DashboardNoticeState extends State<DashboardNotice> {
                 ),
               ),
 
-              SizedBox(height: 10),
+              SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 
               Expanded(
                 child: ListView.builder(
@@ -108,45 +91,22 @@ class _DashboardNoticeState extends State<DashboardNotice> {
                               Text('Sl. No: $slno',
                                   style: TextStyle(
                                       fontSize: 16, fontWeight: FontWeight.bold)),
-                              SizedBox(height: 8),
-
-
-                              // PopupMenuButton<int>(
-                              //   icon: Icon(Icons.more_vert, color: Colors.black87),
-                              //   onSelected: (value) {
-                              //     if (value == 1) {
-                              //       showNoticeChangeDialog(context);
-                              //     } else if (value == 2) {
-                              //       Navigator.pushNamed(context, "/EditNotice");
-                              //       // Edit functionality here
-                              //     }
-                              //   },
-                              //   itemBuilder: (BuildContext context) => [
-                              //     PopupMenuItem<int>(
-                              //       value: 1,
-                              //       child: Text('Delete'),
-                              //     ),
-                              //     PopupMenuItem<int>(
-                              //       value: 2,
-                              //       child: Text('Edit'),
-                              //     ),
-                              //   ],
-                              // ),
+                              SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
                               ],),
 
 
                               Text('Notice Content: $noticecontent',
                                   style: TextStyle(fontSize: 16)),
-                              SizedBox(height: 8),
+                              SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
                               Text('Details: $details',
                                   style: TextStyle(fontSize: 16)),
-                              SizedBox(height: 8),
+                              SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
                               Text('Date: $date',
                                   style: TextStyle(fontSize: 16)),
-                              SizedBox(height: 8),
+                              SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
                               Text('Status: $status',
                                   style: TextStyle(fontSize: 16)),
-                              SizedBox(height: 8),
+                              SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
 
 
                             ],
@@ -159,14 +119,6 @@ class _DashboardNoticeState extends State<DashboardNotice> {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.pushNamed(context, "/AddNotice");
-      //
-      //   },
-      //   backgroundColor: AppColors.white, // Customize the button color
-      //   child: Icon(Icons.save, color: Colors.pinkAccent), // Save icon
-      // ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat, // Place FAB at the center of the screen
     );
 

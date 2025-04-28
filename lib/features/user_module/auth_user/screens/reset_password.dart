@@ -15,10 +15,7 @@ class UserResetPasswordScreens extends StatefulWidget {
 }
 
 class _UserResetPasswordScreensState extends State<UserResetPasswordScreens> {
-  //TextEditingController emailController =TextEditingController();
   TextEditingController passwordController=TextEditingController();
-  //final LogInUsecase _logInUsecase = getIt<LogInUsecase>();
-  //final SharedPref _pref = getIt<SharedPref>();
 
   bool agreeWithTerm = false;
   bool isLoading = false;

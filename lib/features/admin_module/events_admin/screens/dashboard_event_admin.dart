@@ -37,7 +37,7 @@ class _DashboardEventAdminState extends State<DashboardEventAdmin> with SingleTi
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CommonHeader(headerName: 'Events'),
-              SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03,),
 
               // Search Box
               TextField(
@@ -63,7 +63,7 @@ class _DashboardEventAdminState extends State<DashboardEventAdmin> with SingleTi
                   contentPadding: EdgeInsets.symmetric(horizontal: 16),
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
               // Tab Bar
               TabBar(
@@ -76,7 +76,7 @@ class _DashboardEventAdminState extends State<DashboardEventAdmin> with SingleTi
                   Tab(text: "Past Events"),
                 ],
               ),
-              SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
               // Tab Views
               Expanded(
@@ -98,7 +98,7 @@ class _DashboardEventAdminState extends State<DashboardEventAdmin> with SingleTi
 
         },
         backgroundColor: AppColors.white, // Customize the button color
-        child: Icon(Icons.save, color: Colors.pinkAccent), // Save icon
+        child: Icon(Icons.add, color: Colors.pinkAccent), // Save icon
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
@@ -139,9 +139,9 @@ class _DashboardEventAdminState extends State<DashboardEventAdmin> with SingleTi
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 Text('Details: Sample details of the event.'),
-                SizedBox(height: 4),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 Text('Date: 2025-04-${index + 10}'),
               ],
             ),
