@@ -30,6 +30,24 @@ class NoticeUsecaseImpl extends NoticeUsecase{
 
   }
 
+  @override
+  Future<Resource> addNotice({required Map<String, dynamic> requestData}) async {
+
+    String token = await _pref.getUserAuthToken();
+    Map<String, String> header = {
+      "Authorization": "Bearer $token",
+    };
+    Resource resource =
+    await _apiClient.postRequest(url:ApiEndPoint.addNotice,header: header, requestData:requestData );
+    if (resource.status == STATUS.SUCCESS) {
+      return resource;
+
+    } else {
+      return resource;
+    }
+
+  }
+
 
 }
 
