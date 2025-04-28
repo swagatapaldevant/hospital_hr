@@ -63,7 +63,7 @@ class _AdminLogInScreensState extends State<AdminLogInScreens> {
                   height: ScreenUtils().screenHeight(context) * 0.1,
                 ),
                 const Text(
-                  "Log in as Admin ",
+                  "Log in",
                   style: TextStyle(
                       fontSize: 28,
                       fontFamily: "Poppins",
@@ -163,11 +163,15 @@ class _AdminLogInScreensState extends State<AdminLogInScreens> {
       _pref.setProfileImage(
           "http://192.168.29.106/rainbow_new/public/assets/images/users/${loginResponseData?.user?.profileImg.toString() ?? ""}");
       _pref.setUserAuthToken(loginResponseData?.accessToken.toString() ?? "");
+      _pref.setUserId(loginResponseData?.user?.id??0);
 
       //print("response data is : ${loginResponseData?.user?.name}");
       setState(() {
         isLoading = false;
-        Navigator.pushNamed(context, "/AdminHomeScreen");
+
+        loginResponseData?.user?.roleId.toString() == "1"?
+        Navigator.pushNamed(context, "/AdminHomeScreen"):
+        Navigator.pushNamed(context, "/UserHomeScreen");
         CommonUtils().flutterSnackBar(
           context: context,
           mes: resource.message ?? "",

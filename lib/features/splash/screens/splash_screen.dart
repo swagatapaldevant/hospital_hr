@@ -14,14 +14,14 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     // Simulate some loading time
-    Timer(Duration(seconds: 3), () {
-      Navigator.pushNamed(context, "/LogInTypeScreens");
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushNamed(context, "/AdminLogInScreens");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Text("Hospital HR \n Application", textAlign: TextAlign.center,style: TextStyle(
             color: Colors.white,

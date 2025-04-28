@@ -17,6 +17,12 @@ abstract class SharedPref {
   void setUserAuthToken(String authToken);
   Future<String> getUserAuthToken();
 
+// set user id
+  void setUserId(int rollId);
+  Future<int> getUserId();
+
+
+
 
 
 
@@ -67,8 +73,7 @@ abstract class SharedPref {
   void setPremimumStatus(bool status);
   Future<bool> getPremimumStatus();
 
-  void setUserId(int rollId);
-  Future<int> getUserId();
+
 
   void setAddress(String token);
   Future<String> getAddress();

@@ -13,6 +13,9 @@ import 'package:hospital_hr/features/admin_module/notice_admin/data/notice_useca
 import 'package:hospital_hr/features/admin_module/users/data/users_usecase.dart';
 import 'package:hospital_hr/features/admin_module/users/data/users_usecase_impl.dart';
 
+import '../../../features/user_module/auth_user/data/auth_user_usecase.dart';
+import '../../../features/user_module/auth_user/data/auth_user_usecase_impl.dart';
+
 
 final getIt = GetIt.instance;
 
@@ -24,6 +27,7 @@ void initializeDependency(){
   getIt.registerFactory<AuthUseCase>(()=> AuthUseCaseImpl());
   getIt.registerFactory<UsersUseCase>(()=> UsersUseCaseImpl());
   getIt.registerFactory<NoticeUsecase>(()=> NoticeUsecaseImpl());
+  getIt.registerFactory<AuthUserUseCase>(()=> AuthUserUseCaseImpl());
 
 
 

@@ -179,14 +179,14 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         Navigator.pushNamed(context, "/DashboardDepartments");
                       },
                     ),
-                    MenuItem(
-                      title: 'Designations',
-                      icon: Icons.work,
-                      onClicked: () {
-                        Navigator.pushNamed(context, "/WorkModuleScreenEmployee");
-                      },
-
-                    ),
+                    // MenuItem(
+                    //   title: 'Designations',
+                    //   icon: Icons.work,
+                    //   onClicked: () {
+                    //     Navigator.pushNamed(context, "/WorkModuleScreenEmployee");
+                    //   },
+                    //
+                    // ),
                     MenuItem(
                       title: 'Events',
                       icon: Icons.calendar_month,

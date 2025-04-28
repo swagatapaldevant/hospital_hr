@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_hr/core/utils/constants/app_colors.dart';
 import 'package:hospital_hr/core/utils/helper/screen_utils.dart';
 import '../../../../core/utils/commonWidgets/common_header.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 
 class DashboardEvent extends StatefulWidget {
+  const DashboardEvent({super.key});
+
   @override
   _DashboardEventState createState() => _DashboardEventState();
 }
@@ -32,11 +35,11 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(AppDimensions.screenContentPadding),
+          padding: EdgeInsets.symmetric(horizontal:AppDimensions.screenContentPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CommonHeader(headerName: 'Events'),
+              const CommonHeader(headerName: 'Events'),
               SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 
               // Search Box
@@ -44,8 +47,8 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
                 controller: searchController,
                 decoration: InputDecoration(
                   hintText: 'Search events...',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  prefixIcon: Icon(Icons.search, color: Colors.black),
+                  hintStyle: const TextStyle(color: Colors.grey),
+                  prefixIcon: const Icon(Icons.search, color: Colors.black),
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -68,16 +71,26 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
               // Tab Bar
               TabBar(
                 controller: _tabController,
-                labelColor: Colors.white,
-                unselectedLabelColor: Colors.black54,
-                indicatorColor: Colors.pinkAccent,
-                tabs: [
+                unselectedLabelStyle: TextStyle(
+                  color: Colors.grey.shade400,
+                  fontFamily: "Poppins",
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600
+                ),
+                labelStyle: const TextStyle(
+                    color: Colors.white,
+                    fontFamily: "Poppins",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600
+                ),
+
+                indicatorColor: Colors.white,
+                tabs: const [
                   Tab(text: "Upcoming Events"),
                   Tab(text: "Past Events"),
                 ],
               ),
               SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
-
               // Tab Views
               Expanded(
                 child: TabBarView(
@@ -97,7 +110,8 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
 
   Widget buildEventList({required bool isUpcoming}) {
     return ListView.builder(
-      itemCount: 5, // Replace with actual count
+      physics: const BouncingScrollPhysics(),
+      itemCount: 5,
       itemBuilder: (context, index) {
         String type = isUpcoming ? "Upcoming" : "Past";
         return Card(
@@ -109,9 +123,9 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('$type Event ${index + 1}',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                 SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
-                Text('Details: Sample details of the event.'),
+                const Text('Details: Sample details of the event.'),
                 SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
                 Text('Date: 2025-04-${index + 10}'),
               ],

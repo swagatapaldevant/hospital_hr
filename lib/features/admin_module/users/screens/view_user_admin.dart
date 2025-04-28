@@ -29,7 +29,6 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
   final ImagePicker _picker = ImagePicker();
   final UsersUseCase _usersUseCase = getIt<UsersUseCase>();
   final SharedPref _pref = getIt<SharedPref>();
-  get children => null;
   bool isLoading = false;
   UserDetailsModel? userDetails;
 

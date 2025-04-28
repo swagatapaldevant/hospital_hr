@@ -23,10 +23,10 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
   String date = "06-04-2025";
   String status = "Active";
   bool isLoading = false;
-  List<NoticeListModel> allNoticeList = [];
+
   TextEditingController searchController = TextEditingController();
   final NoticeUsecase _noticeUseCase = getIt<NoticeUsecase>();
-
+  List<NoticeListModel> allNoticeList = [];
   void showNoticeChangeDialog(BuildContext context) {
     CommonDialog(
       icon: Icons.save,

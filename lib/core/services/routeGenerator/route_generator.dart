@@ -32,13 +32,10 @@ import '../../../features/user_module/auth_user/screens/otp.dart';
 import '../../../features/user_module/auth_user/screens/reset_password.dart';
 import '../../../features/user_module/auth_user/screens/reset_password.dart';
 import '../../../features/user_module/auth_user/screens/user_log_in.dart';
-import '../../../features/user_module/dashboard_user/screens/dashboard_user.dart';
 import '../../../features/user_module/departments_user/screens/add_department.dart';
 import '../../../features/user_module/departments_user/screens/dashboard_departments.dart';
 import '../../../features/user_module/events_user/screens/dashboard_events_user.dart';
-import '../../../features/user_module/notice_user/screens/add_notice.dart';
 import '../../../features/user_module/notice_user/screens/dashboard_notice.dart';
-import '../../../features/user_module/notice_user/screens/edit_notice.dart';
 import '../../../features/user_module/payroll_user/screens/dashboard_payroll_user.dart';
 import '../../../features/user_module/payroll_user/screens/view_payroll_user.dart';
 import '../../../features/user_module/profile/screens/profile_user.dart';
@@ -83,17 +80,16 @@ class RouteGenerator {
   static const kDashboardUser = "/DashboardUser";
   static const kDashboardUsersAdmin = "/DashboardUsersAdmin";
   static const kAddUserAdmin = "/AddUserAdmin";
-  static const kEditUserAdmin= "/EditUserAdmin";
-  static const kViewUserAdmin= "/ViewUserAdmin";
-  static const kDashboardAttendanceAdmin= "/DashboardAttendanceAdmin";
-  static const kDashboardEventAdmin= "/DashboardEventAdmin";
-  static const kEditEventsAdmin= "/EditEventsAdmin";
-  static const kAddEventsAdmin= "/AddEventsAdmin";
-  static const kDashboardPayrollAdmin= "/DashboardPayrollAdmin";
-  static const kViewPayrollAdmin= "/ViewPayrollAdmin";
-  static const kDashboardAdmin= "/DashboardAdmin";
-  static const kMyAttendanceAdmin= "/MyAttendanceAdmin";
-
+  static const kEditUserAdmin = "/EditUserAdmin";
+  static const kViewUserAdmin = "/ViewUserAdmin";
+  static const kDashboardAttendanceAdmin = "/DashboardAttendanceAdmin";
+  static const kDashboardEventAdmin = "/DashboardEventAdmin";
+  static const kEditEventsAdmin = "/EditEventsAdmin";
+  static const kAddEventsAdmin = "/AddEventsAdmin";
+  static const kDashboardPayrollAdmin = "/DashboardPayrollAdmin";
+  static const kViewPayrollAdmin = "/ViewPayrollAdmin";
+  static const kDashboardAdmin = "/DashboardAdmin";
+  static const kMyAttendanceAdmin = "/MyAttendanceAdmin";
 
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -105,91 +101,87 @@ class RouteGenerator {
         return _animatedPageRoute(SplashScreen());
       case kLogInTypeScreens:
         return _animatedPageRoute(LogInTypeScreens());
-        case kAdminLogInScreens:
+      case kAdminLogInScreens:
         return _animatedPageRoute(AdminLogInScreens());
-        case kAdminForgotPassword:
+      case kAdminForgotPassword:
         return _animatedPageRoute(AdminForgotPassword());
-        case kAdminOTP:
+      case kAdminOTP:
         return _animatedPageRoute(AdminOTP());
-        case kAdminResetPasswordScreens:
+      case kAdminResetPasswordScreens:
         return _animatedPageRoute(AdminResetPasswordScreens());
-case kUserLogInScreens:
+      case kUserLogInScreens:
         return _animatedPageRoute(UserLogInScreens());
-        case kUserForgotPassword:
+      case kUserForgotPassword:
         return _animatedPageRoute(UserForgotPassword());
-case kUserOTP:
+      case kUserOTP:
         return _animatedPageRoute(UserOTP());
-        case kUserResetPasswordScreens:
+      case kUserResetPasswordScreens:
         return _animatedPageRoute(UserResetPasswordScreens());
-        case kUserHomeScreen:
+      case kUserHomeScreen:
         return _animatedPageRoute(UserHomeScreen());
-        case kViewUser:
+      case kViewUser:
         return _animatedPageRoute(ViewUser());
-        case kEditUser:
+      case kEditUser:
         return _animatedPageRoute(EditUser());
-        case kDashboardDepartments:
+      case kDashboardDepartments:
         return _animatedPageRoute(DashboardDepartments());
-        case kAddDepartment:
+      case kAddDepartment:
         return _animatedPageRoute(AddDepartment());
       case kDashboardNotice:
         return _animatedPageRoute(DashboardNotice());
-case kAddNotice:
-        return _animatedPageRoute(AddNotice());
-        case kEditNotice:
-        return _animatedPageRoute(EditNotice());
-case kAdminHomeScreen:
+      case kAdminHomeScreen:
         return _animatedPageRoute(AdminHomeScreen());
-case kViewDashboardAdmin:
+      case kViewDashboardAdmin:
         return _animatedPageRoute(ViewDashboardAdmin());
-case kDashboardDepartmentsAdmin:
+      case kDashboardDepartmentsAdmin:
         return _animatedPageRoute(DashboardDepartmentsAdmin());
-case kAddDepartmentAdmin:
+      case kAddDepartmentAdmin:
         return _animatedPageRoute(AddDepartmentAdmin());
-case kDashboardNoticeAdmin:
+      case kDashboardNoticeAdmin:
         return _animatedPageRoute(DashboardNoticeAdmin());
-case kEditNoticeAdmin:
+      case kEditNoticeAdmin:
         return _animatedPageRoute(EditNoticeAdmin());
-case kAddNoticeAdmin:
+      case kAddNoticeAdmin:
         return _animatedPageRoute(AddNoticeAdmin());
-case kEditDashboardAdmin:
+      case kEditDashboardAdmin:
         return _animatedPageRoute(EditDashboardAdmin());
-case kProfileUser:
+      case kProfileUser:
         return _animatedPageRoute(ProfileUser());
-case kDashboardAttendanceUser:
+      case kDashboardAttendanceUser:
         return _animatedPageRoute(DashboardAttendanceUser());
-case kDashboardEvent:
+      case kDashboardEvent:
         return _animatedPageRoute(DashboardEvent());
-case kDashboardPayrollUser:
+      case kDashboardPayrollUser:
         return _animatedPageRoute(DashboardPayrollUser());
-case kViewPayrollUser:
+      case kViewPayrollUser:
         return _animatedPageRoute(ViewPayrollUser());
-case kDashboardUser:
-        return _animatedPageRoute(DashboardUser());
-case kDashboardUsersAdmin:
-        return _animatedPageRoute(DashboardUsersAdmin());
-case kAddUserAdmin:
-        return _animatedPageRoute(AddUserAdmin());
-case kEditUserAdmin:
-        return _animatedPageRoute(EditUserAdmin());
-case kViewUserAdmin:
-        return _animatedPageRoute(ViewUserAdmin(userId: args as int,));
-case kDashboardAttendanceAdmin:
-        return _animatedPageRoute(DashboardAttendanceAdmin());
-case kDashboardEventAdmin:
-        return _animatedPageRoute(DashboardEventAdmin());
-case kEditEventsAdmin:
-        return _animatedPageRoute(EditEventsAdmin());
-case kAddEventsAdmin:
-        return _animatedPageRoute(AddEventsAdmin());
-case kDashboardPayrollAdmin:
-        return _animatedPageRoute(DashboardPayrollAdmin());
-case kViewPayrollAdmin:
-        return _animatedPageRoute(ViewPayrollAdmin());
-case kDashboardAdmin:
-        return _animatedPageRoute(DashboardAdmin());
-        case kMyAttendanceAdmin:
-        return _animatedPageRoute(MyAttendanceAdmin());
 
+      case kDashboardUsersAdmin:
+        return _animatedPageRoute(DashboardUsersAdmin());
+      case kAddUserAdmin:
+        return _animatedPageRoute(AddUserAdmin());
+      case kEditUserAdmin:
+        return _animatedPageRoute(EditUserAdmin());
+      case kViewUserAdmin:
+        return _animatedPageRoute(ViewUserAdmin(
+          userId: args as int,
+        ));
+      case kDashboardAttendanceAdmin:
+        return _animatedPageRoute(DashboardAttendanceAdmin());
+      case kDashboardEventAdmin:
+        return _animatedPageRoute(DashboardEventAdmin());
+      case kEditEventsAdmin:
+        return _animatedPageRoute(EditEventsAdmin());
+      case kAddEventsAdmin:
+        return _animatedPageRoute(AddEventsAdmin());
+      case kDashboardPayrollAdmin:
+        return _animatedPageRoute(DashboardPayrollAdmin());
+      case kViewPayrollAdmin:
+        return _animatedPageRoute(ViewPayrollAdmin());
+      case kDashboardAdmin:
+        return _animatedPageRoute(DashboardAdmin());
+      case kMyAttendanceAdmin:
+        return _animatedPageRoute(MyAttendanceAdmin());
 
       default:
         return _errorRoute(errorMessage: "Route not found: ${settings.name}");

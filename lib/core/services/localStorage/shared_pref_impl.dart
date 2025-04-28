@@ -69,9 +69,17 @@ class SharedPrefImpl extends SharedPref {
     prefs.setString(_userAuthToken, token);
   }
 
+  @override
+  Future<int> getUserId() async {
+    final SharedPreferences prefs = await super.prefs;
+    return prefs.getInt(_userId) ?? 0;
+  }
 
-
-
+  @override
+  void setUserId(int rollId) async {
+    final SharedPreferences prefs = await super.prefs;
+    prefs.setInt(_userId, rollId);
+  }
 
 
 
@@ -224,11 +232,7 @@ class SharedPrefImpl extends SharedPref {
     return prefs.getBool(_premimumStatus) ?? false;
   }
 
-  @override
-  Future<int> getUserId() async {
-    final SharedPreferences prefs = await super.prefs;
-    return prefs.getInt(_userId) ?? 0;
-  }
+
 
   @override
   Future<String> getAddress() async {
@@ -272,11 +276,7 @@ class SharedPrefImpl extends SharedPref {
     prefs.setBool(_premimumStatus, status);
   }
 
-  @override
-  void setUserId(int rollId) async {
-    final SharedPreferences prefs = await super.prefs;
-    prefs.setInt(_userId, rollId);
-  }
+
 
   @override
   void setAddress(String token) async {
