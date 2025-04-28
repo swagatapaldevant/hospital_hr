@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_hr/core/network/apiHelper/locator.dart';
+import 'package:hospital_hr/core/network/apiHelper/resource.dart';
+import 'package:hospital_hr/core/network/apiHelper/status.dart';
 import 'package:hospital_hr/core/utils/constants/app_colors.dart';
+import 'package:hospital_hr/core/utils/helper/common_utils.dart';
+import 'package:hospital_hr/features/admin_module/notice_admin/data/notice_usecase.dart';
+import 'package:hospital_hr/features/admin_module/notice_admin/model/add_notice_model.dart';
 import '../../../../core/utils/commonWidgets/common_dialog.dart';
 import '../../../../core/utils/commonWidgets/common_header.dart';
 import '../../../../core/utils/commonWidgets/custom_button.dart';
@@ -15,30 +21,39 @@ class AddNoticeAdmin extends StatefulWidget {
   @override
   _AddNoticeAdminState createState() => _AddNoticeAdminState();
 }
-
-// Define these controllers at the top of your _ViewUserState
-final _enternoticeController = TextEditingController();//(text: 'Test');
-TextEditingController priority=TextEditingController();
-Map<String, int> priorityTypeMap = {"High":1, "Medium":2, "Low":3 };
-
-final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-
-
 class _AddNoticeAdminState extends State<AddNoticeAdmin> {
 
-  Widget editableField(String label, TextEditingController controller) {
+  final _enternoticeController = TextEditingController();//(text: 'Test');
+  final _enterdetailsController = TextEditingController();//(text: 'Test');
+  TextEditingController priority=TextEditingController();
+  Map<String, int> priorityTypeMap = {"High":1, "Medium":2, "Low":3 };
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
+  TextEditingController searchController = TextEditingController();
+  final NoticeUsecase _noticeUseCase = getIt<NoticeUsecase>();
+  AddNoticeModel?addNotice;
+
+  @override
+  void initState() {
+    super.initState();
+    addNoticeApi();
+  }
+
+
+  Widget editableField(String label, TextEditingController controller, int? maxLines) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
         controller: controller,
+        maxLines: maxLines??1,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: TextStyle(fontWeight: FontWeight.w600),
+          labelStyle: const TextStyle(fontWeight: FontWeight.w600),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         ),
       ),
     );
@@ -55,15 +70,15 @@ class _AddNoticeAdminState extends State<AddNoticeAdmin> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CommonHeader(headerName: 'Add Notice'),
+                const CommonHeader(headerName: 'Add Notice'),
                 SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 
                 buildEditableSection(
                   icon: Icons.assessment,
                   title: 'Add Notice',
                   fields: [
-                    editableField('Enter Notice', _enternoticeController),
-                    editableField('Notice Details', _enternoticeController),
+                    editableField('Enter Notice', _enternoticeController, 1),
+                    editableField('Notice Details', _enterdetailsController, 4),
                   ],
                 ),
 
@@ -86,11 +101,9 @@ class _AddNoticeAdminState extends State<AddNoticeAdmin> {
                         activeButtonLabel: "Confirm",
                         context: context,
                         activeButtonOnClicked: () {
-                          //_pref.clearOnLogout();
                           Navigator.pop(context);
                           Navigator.pop(context);
                         }, activeButtonName: 'Confirm');
-                    //Navigator.pushNamed(context, "/HrModuleScreen");
                   },
                   fontSize: 18,
                   borderRadius: 12,
@@ -112,8 +125,8 @@ class _AddNoticeAdminState extends State<AddNoticeAdmin> {
   }) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(20),
-      margin: EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -178,5 +191,47 @@ class _AddNoticeAdminState extends State<AddNoticeAdmin> {
       ),
     );
   }
+
+  addNoticeApi() async {
+    setState(() {
+      isLoading = true;
+    });
+    Map<String, dynamic> requestData = {
+      "Enter Notice": _enternoticeController.text.trim(),
+      "Notice Details": _enterdetailsController.text.trim()
+    };
+
+    Resource resource =
+    await _noticeUseCase.addNotice(requestData: requestData);
+
+    if (resource.status == STATUS.SUCCESS) {
+      addNotice = AddNoticeModel.fromJson(resource.data);
+
+      // // save ta data in local storage
+      // _pref.setUserName(loginResponseData?.user?.name.toString() ?? "");
+      // _pref.setProfileImage(
+      //     "http://192.168.29.106/rainbow_new/public/assets/images/users/${loginResponseData?.user?.profileImg.toString() ?? ""}");
+      // _pref.setUserAuthToken(loginResponseData?.accessToken.toString() ?? "");
+
+      //print("response data is : ${loginResponseData?.user?.name}");
+      setState(() {
+        isLoading = false;
+        Navigator.pushNamed(context, "/DashboardNoticeAdmin");
+        CommonUtils().flutterSnackBar(
+          context: context,
+          mes: resource.message ?? "",
+          messageType: 1,
+        );
+      });
+    } else {
+      CommonUtils().flutterSnackBar(
+        context: context,
+        mes: resource.message ?? "",
+        messageType: 4,
+      );
+    }
+  }
+
+
 
 }
