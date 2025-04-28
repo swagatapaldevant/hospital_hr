@@ -5,29 +5,27 @@ import 'package:hospital_hr/core/network/apiHelper/status.dart';
 import 'package:hospital_hr/core/utils/commonWidgets/common_dialog.dart';
 import 'package:hospital_hr/core/utils/constants/app_colors.dart';
 import 'package:hospital_hr/core/utils/helper/common_utils.dart';
+import 'package:hospital_hr/core/utils/helper/screen_utils.dart';
 import 'package:hospital_hr/features/admin_module/notice_admin/data/notice_usecase.dart';
 import 'package:hospital_hr/features/admin_module/notice_admin/model/notice_list_model.dart';
 import '../../../../core/utils/commonWidgets/common_header.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 
 class DashboardNoticeAdmin extends StatefulWidget {
+  const DashboardNoticeAdmin({super.key});
+
   @override
   _DashboardNoticeAdminState createState() => _DashboardNoticeAdminState();
 }
 
 class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
-  // Variables to hold project details
-  String slno = "1";
-  String noticecontent = "Test";
-  String details = "Super Admin";
-  String date = "06-04-2025";
-  String status = "Active";
+
   bool isLoading = false;
 
   TextEditingController searchController = TextEditingController();
   final NoticeUsecase _noticeUseCase = getIt<NoticeUsecase>();
   List<NoticeListModel> allNoticeList = [];
-  void showNoticeChangeDialog(BuildContext context) {
+  void showNoticeChangeDialog(BuildContext context, int id) {
     CommonDialog(
       icon: Icons.save,
       activeButtonSolidColor: Colors.green,
@@ -37,7 +35,11 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
       context: context,
       activeButtonOnClicked: () {
         Navigator.pop(context);
-        Navigator.pop(context);
+        setState(() {
+          deleteNoticeApi(id);
+        });
+
+
       },
       activeButtonName: 'Confirm',
     );
@@ -62,14 +64,15 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(AppDimensions.screenContentPadding),
+          padding: EdgeInsets.symmetric(horizontal: AppDimensions.screenContentPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               const CommonHeader(
                 headerName: 'Notice',
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               TextField(
                 controller: searchController,
                 decoration: InputDecoration(
@@ -97,9 +100,14 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Expanded(
-                child: ListView.builder(
+                child: isLoading?const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.white,
+                  ),
+                ): ListView.builder(
+                  physics: const BouncingScrollPhysics(),
                     itemCount: allNoticeList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Card(
@@ -119,6 +127,7 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
                                   Text('Sl. No: ${allNoticeList[index].id}',
                                       style: const TextStyle(
                                           fontSize: 16,
+                                          fontFamily: "Poppins",
                                           fontWeight: FontWeight.bold)),
                                   SizedBox(
                                       height:
@@ -129,10 +138,10 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
                                         color: Colors.black87),
                                     onSelected: (value) {
                                       if (value == 1) {
-                                        showNoticeChangeDialog(context);
+                                        showNoticeChangeDialog(context,allNoticeList[index].id?? 0);
                                       } else if (value == 2) {
                                         Navigator.pushNamed(
-                                            context, "/EditNoticeAdmin");
+                                            context, "/EditNoticeAdmin", arguments:allNoticeList[index].id);
                                         // Edit functionality here
                                       }
                                     },
@@ -153,16 +162,18 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
                                 text: TextSpan(
                                   text: 'Notice Content: ',
                                   style:  const TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    color: AppColors.primaryColor
+                                    color: AppColors.primaryColor,
+                                    fontFamily: "Poppins",
                                   ),
                                   children:  <TextSpan>[
                                     TextSpan(text:  allNoticeList[index].notice,
                                         style:  const TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 14,
                                             fontWeight: FontWeight.w600,
-                                          color: AppColors.colorBlack
+                                          color: AppColors.colorBlack,
+                                          fontFamily: "Poppins",
                                         )),
                                   ],
                                 ),
@@ -176,16 +187,18 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
                                 text: TextSpan(
                                   text: 'Details: ',
                                   style:  const TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      color: AppColors.primaryColor
+                                      color: AppColors.primaryColor,
+                                    fontFamily: "Poppins",
                                   ),
                                   children:  <TextSpan>[
                                     TextSpan(text:  allNoticeList[index].description,
                                         style:  const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.colorBlack
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.colorBlack,
+                                          fontFamily: "Poppins",
                                         )),
                                   ],
                                 ),
@@ -194,12 +207,30 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
                               SizedBox(
                                   height: MediaQuery.of(context).size.height *
                                       0.01),
-
-
-                              Text(
-                                'Date: ${formatDate(allNoticeList[index].createdAt.toString())}',
-                                style: const TextStyle(
-                                  fontSize: 16,
+                              RichText(
+                                text: TextSpan(
+                                  text: 'Priority Level: ',
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.primaryColor,
+                                      fontFamily: "Poppins"),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: allNoticeList[index]
+                                            .priorityLevel
+                                            .toString(),
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: allNoticeList[index]
+                                                .priorityLevel
+                                                .toString() ==
+                                                "high"
+                                                ? AppColors.colorTomato
+                                                : Colors.orange,
+                                            fontFamily: "Poppins")),
+                                  ],
                                 ),
                               ),
                               SizedBox(
@@ -208,19 +239,49 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
 
                               RichText(
                                 text: TextSpan(
-                                  text: 'Status: ',
-                                  style:  const TextStyle(
-                                      fontSize: 18,
+                                  text: 'Posted Date: ',
+                                  style: const TextStyle(
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      color: AppColors.primaryColor
-                                  ),
-                                  children:  <TextSpan>[
-                                    TextSpan(text:  allNoticeList[index].isActive == 1 ? "Active" : "InActive",
-                                        style:   TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700,
-                                            color: allNoticeList[index].isActive == 1? AppColors.colorGreen:AppColors.colorTomato
-                                        )),
+                                      color: AppColors.primaryColor,
+                                      fontFamily: "Poppins"),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: formatDate(allNoticeList[index]
+                                            .createdAt
+                                            .toString()),
+                                        style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.colorBlack,
+                                            fontFamily: "Poppins")),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                  height: ScreenUtils().screenHeight(context) *
+                                      0.01),
+                              RichText(
+                                text: TextSpan(
+                                  text: 'Status: ',
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.primaryColor,
+                                      fontFamily: "Poppins"),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: allNoticeList[index]
+                                            .isActive
+                                            .toString() ==
+                                            "1"
+                                            ? "Active"
+                                            : "Not Active",
+                                        style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.colorBlack,
+                                            fontFamily: "Poppins")),
                                   ],
                                 ),
                               ),
@@ -292,5 +353,36 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
     return '${dateTime.day.toString().padLeft(2, '0')}-'
         '${dateTime.month.toString().padLeft(2, '0')}-'
         '${dateTime.year}';
+  }
+
+
+  deleteNoticeApi(int id) async {
+    setState(() {
+      isLoading = true;
+    });
+    Map<String, dynamic> requestData = {
+      "id": id
+    };
+
+    Resource resource =
+    await _noticeUseCase.deleteNoticeApi(requestData: requestData);
+
+    if (resource.status == STATUS.SUCCESS) {
+      setState(() {
+        isLoading = false;
+
+        CommonUtils().flutterSnackBar(
+          context: context,
+          mes: resource.message ?? "",
+          messageType: 1,
+        );
+      });
+    } else {
+      CommonUtils().flutterSnackBar(
+        context: context,
+        mes: resource.message ?? "",
+        messageType: 4,
+      );
+    }
   }
 }

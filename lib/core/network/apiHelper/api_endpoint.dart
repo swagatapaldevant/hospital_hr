@@ -17,6 +17,9 @@ class ApiEndPoint{
   static const userDetails =  "$baseurl/api/user_details";
   static const noticeList =  "$baseurl/api/notices";
   static const addNotice =  "$baseurl/api/save_notice";
+  static const getNoticeDetails =  "$baseurl/api/edit_notice";
+  static const updateNoticeDetails =  "$baseurl/api/update_notice";
+  static const deleteNoticeApi =  "$baseurl/api/delete_notice";
 
 
 }

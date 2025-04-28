@@ -140,7 +140,7 @@ class RouteGenerator {
       case kDashboardNoticeAdmin:
         return _animatedPageRoute(DashboardNoticeAdmin());
       case kEditNoticeAdmin:
-        return _animatedPageRoute(EditNoticeAdmin());
+        return _animatedPageRoute(EditNoticeAdmin(noticeId: args as int,));
       case kAddNoticeAdmin:
         return _animatedPageRoute(AddNoticeAdmin());
       case kEditDashboardAdmin:

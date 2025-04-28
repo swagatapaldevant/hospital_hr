@@ -49,5 +49,63 @@ class NoticeUsecaseImpl extends NoticeUsecase{
   }
 
 
+
+  @override
+  Future<Resource> getNoticeDetails({required Map<String, dynamic> requestData}) async {
+
+    String token = await _pref.getUserAuthToken();
+    Map<String, String> header = {
+      "Authorization": "Bearer $token",
+    };
+    Resource resource =
+    await _apiClient.postRequest(url:ApiEndPoint.getNoticeDetails,header: header, requestData:requestData );
+    if (resource.status == STATUS.SUCCESS) {
+      return resource;
+
+    } else {
+      return resource;
+    }
+
+  }
+
+
+  @override
+  Future<Resource> updateNoticeDetails({required Map<String, dynamic> requestData}) async {
+
+    String token = await _pref.getUserAuthToken();
+    Map<String, String> header = {
+      "Authorization": "Bearer $token",
+    };
+    Resource resource =
+    await _apiClient.postRequest(url:ApiEndPoint.updateNoticeDetails,header: header, requestData:requestData );
+    if (resource.status == STATUS.SUCCESS) {
+      return resource;
+
+    } else {
+      return resource;
+    }
+
+  }
+
+
+  @override
+  Future<Resource> deleteNoticeApi({required Map<String, dynamic> requestData}) async {
+
+    String token = await _pref.getUserAuthToken();
+    Map<String, String> header = {
+      "Authorization": "Bearer $token",
+    };
+    Resource resource =
+    await _apiClient.postRequest(url:ApiEndPoint.deleteNoticeApi,header: header, requestData:requestData );
+    if (resource.status == STATUS.SUCCESS) {
+      return resource;
+
+    } else {
+      return resource;
+    }
+
+  }
+
+
 }
 
