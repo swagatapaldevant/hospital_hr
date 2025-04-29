@@ -124,14 +124,14 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                         Navigator.pushNamed(context, "/DashboardDepartmentsAdmin");
                       },
                     ),
-                    MenuItem(
-                      title: 'Designations',
-                      icon: Icons.work,
-                      onClicked: () {
-                        Navigator.pushNamed(context, "/WorkModuleScreenEmployee");
-                      },
-
-                    ),
+                    // MenuItem(
+                    //   title: 'Designations',
+                    //   icon: Icons.work,
+                    //   onClicked: () {
+                    //     Navigator.pushNamed(context, "/WorkModuleScreenEmployee");
+                    //   },
+                    //
+                    // ),
                     MenuItem(
                       title: 'Events',
                       icon: Icons.calendar_month,

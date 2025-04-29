@@ -1,166 +1,363 @@
 import 'package:flutter/material.dart';
-import '../../../../core/utils/commonWidgets/common_header.dart';
-import '../../../../core/utils/constants/app_colors.dart';
-import '../../../../core/utils/helper/app_dimensions.dart';
+  import 'package:intl/intl.dart';
+  import 'package:hospital_hr/core/network/apiHelper/locator.dart';
+  import 'package:hospital_hr/core/network/apiHelper/resource.dart';
+  import 'package:hospital_hr/core/network/apiHelper/status.dart';
+  import 'package:hospital_hr/core/utils/helper/common_utils.dart';
+  import 'package:hospital_hr/core/utils/helper/screen_utils.dart';
+  import 'package:hospital_hr/features/admin_module/events_admin/data/events_admin_usecase.dart';
+  import 'package:hospital_hr/features/admin_module/events_admin/models/event_list_model.dart';
+  import '../../../../core/utils/commonWidgets/common_header.dart';
+  import '../../../../core/utils/constants/app_colors.dart';
+  import '../../../../core/utils/helper/app_dimensions.dart';
 
-class DashboardEventAdmin extends StatefulWidget {
-  @override
-  _DashboardEventAdminState createState() => _DashboardEventAdminState();
-}
+  class DashboardEventAdmin extends StatefulWidget {
+    const DashboardEventAdmin({super.key});
 
-class _DashboardEventAdminState extends State<DashboardEventAdmin> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-  TextEditingController searchController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    @override
+    _DashboardEventAdminState createState() => _DashboardEventAdminState();
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    searchController.dispose();
-    super.dispose();
-  }
+  class _DashboardEventAdminState extends State<DashboardEventAdmin> with SingleTickerProviderStateMixin {
+    late TabController _tabController;
+    TextEditingController searchController = TextEditingController();
+    bool isLoading = false;
+    final EventsAdminUsecase _eventsAdminUsecase = getIt<EventsAdminUsecase>();
+    List<EventListModel> eventList = [];
 
-  @override
-  Widget build(BuildContext context) {
-    AppDimensions.init(context);
+    @override
+    void initState() {
+      super.initState();
+      _tabController = TabController(length: 2, vsync: this);
+      getAllEventList();
+      searchController.addListener(() {
+        setState(() {});
+      });
+    }
 
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(AppDimensions.screenContentPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CommonHeader(headerName: 'Events'),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.03,),
+    @override
+    void dispose() {
+      _tabController.dispose();
+      searchController.dispose();
+      super.dispose();
+    }
 
-              // Search Box
-              TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                  hintText: 'Search events...',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  prefixIcon: Icon(Icons.search, color: Colors.black),
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.black, width: 1.5),
-                  ),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+    @override
+    Widget build(BuildContext context) {
+      AppDimensions.init(context);
 
-              // Tab Bar
-              TabBar(
-                controller: _tabController,
-                unselectedLabelStyle: TextStyle(
-                    color: Colors.grey.shade400,
-                    fontFamily: "Poppins",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600
-                ),
-                labelStyle: const TextStyle(
-                    color: Colors.white,
-                    fontFamily: "Poppins",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600
-                ),
-
-                indicatorColor: Colors.white,
-                tabs: const [
-                  Tab(text: "Upcoming Events"),
-                  Tab(text: "Past Events"),
-                ],
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-
-              // Tab Views
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    buildEventList(isUpcoming: true),
-                    buildEventList(isUpcoming: false),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, "/AddEventsAdmin");
-
-        },
-        backgroundColor: AppColors.white, // Customize the button color
-        child: Icon(Icons.add, color: Colors.pinkAccent), // Save icon
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-    );
-  }
-
-  Widget buildEventList({required bool isUpcoming}) {
-    return ListView.builder(
-      itemCount: 5, // Replace with actual count
-      itemBuilder: (context, index) {
-        String type = isUpcoming ? "Upcoming" : "Past";
-        return Card(
-          elevation: 6,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      return Scaffold(
+        body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.symmetric(horizontal: AppDimensions.screenContentPadding),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const CommonHeader(headerName: 'Events'),
+                SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('$type Event ${index + 1}',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                    PopupMenuButton<int>(
-                      icon: Icon(Icons.more_vert, color: Colors.black87),
-                      onSelected: (value) {
-                        if (value == 1) {
-                          Navigator.pushNamed(context, "/EditEventsAdmin");
-                        }
-                      },
-                      itemBuilder: (BuildContext context) => [
-                        PopupMenuItem<int>(
-                          value: 1,
-                          child: Text('Edit'),
-                        ),
-                      ],
+                // Search Box
+                TextField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search events...',
+                    hintStyle: const TextStyle(color: Colors.grey),
+                    prefixIcon: const Icon(Icons.search, color: Colors.black),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Colors.black),
                     ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Colors.black),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Colors.black, width: 1.5),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                  ),
+                ),
+                SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
+
+                // Tab Bar
+                TabBar(
+                  controller: _tabController,
+                  unselectedLabelStyle: TextStyle(
+                    color: Colors.grey.shade400,
+                    fontFamily: "Poppins",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  labelStyle: const TextStyle(
+                    color: Colors.white,
+                    fontFamily: "Poppins",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  indicatorColor: Colors.white,
+                  tabs: const [
+                    Tab(text: "Upcoming Events"),
+                    Tab(text: "Past Events"),
                   ],
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                Text('Details: Sample details of the event.'),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                Text('Date: 2025-04-${index + 10}'),
+                SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
+
+                // Tab Views
+                Expanded(
+                  child: isLoading
+                      ? const Center(child: CircularProgressIndicator(color: AppColors.white))
+                      : TabBarView(
+                    controller: _tabController,
+                    children: [
+                      buildEventList(isUpcoming: true),
+                      buildEventList(isUpcoming: false),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, "/AddEventsAdmin");
+          },
+          backgroundColor: AppColors.white,
+          child: const Icon(Icons.add, color: Colors.pinkAccent, size: 40),
+        ),
+      );
+    }
+
+    Widget buildEventList({required bool isUpcoming}) {
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day);
+
+      // Filter events based on search text
+      final searchText = searchController.text.toLowerCase();
+      List<EventListModel> searchedEvents = eventList.where((event) {
+        return event.event?.toLowerCase().contains(searchText) ?? false;
+      }).toList();
+
+      // Filter events based on date (past/upcoming)
+      List<EventListModel> filteredEvents = searchedEvents.where((event) {
+        if (event.eventDate == null) return false;
+
+        DateTime? eventDate = parseEventDate(event.eventDate!);
+        if (eventDate == null) return false;
+
+        final eventDateOnly = DateTime(eventDate.year, eventDate.month, eventDate.day);
+
+        return isUpcoming
+            ? eventDateOnly.isAfter(today) || eventDateOnly.isAtSameMomentAs(today)
+            : eventDateOnly.isBefore(today);
+      }).toList();
+
+      // Sort events - upcoming in ascending order, past in descending order
+      filteredEvents.sort((a, b) {
+        DateTime? aDate = parseEventDate(a.eventDate ?? '');
+        DateTime? bDate = parseEventDate(b.eventDate ?? '');
+
+        if (aDate == null || bDate == null) return 0;
+        return isUpcoming ? aDate.compareTo(bDate) : bDate.compareTo(aDate);
+      });
+
+      if (filteredEvents.isEmpty) {
+        return Center(
+          child: Text(
+            isUpcoming ? "No upcoming events found." : "No past events found.",
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: AppColors.white,
+              fontFamily: "Poppins",
+            ),
+          ),
         );
-      },
-    );
+      }
 
+      return ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        itemCount: filteredEvents.length,
+        itemBuilder: (context, index) {
+          final event = filteredEvents[index];
+          DateTime? eventDate = parseEventDate(event.eventDate ?? '');
+
+          return Card(
+            elevation: 6,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          event.event ?? 'No Title',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              fontFamily: "Poppins"
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      PopupMenuButton<int>(
+                        icon: const Icon(Icons.more_vert, color: Colors.black87),
+                        onSelected: (value) {
+                          if (value == 1) {
+                            Navigator.pushNamed(
+                              context,
+                              "/EditEventsAdmin",
+                              arguments: event.id,
+                            );
+                          }
+                        },
+                        itemBuilder: (BuildContext context) => [
+                          const PopupMenuItem<int>(
+                            value: 1,
+                            child: Text('Edit'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Details: ',
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
+                          fontFamily: "Poppins"
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: event.description ?? "No Description",
+                          style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.colorBlack,
+                              fontFamily: "Poppins"
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Date: ',
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
+                          fontFamily: "Poppins"
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: eventDate != null
+                              ? DateFormat('dd/MM/yyyy').format(eventDate)
+                              : "Invalid Date",
+                          style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.colorBlack,
+                              fontFamily: "Poppins"
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Status: ',
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
+                          fontFamily: "Poppins"
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: event.isActive == 1?"Active":"Not Active",
+                          style:  TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: event.isActive == 1? AppColors.colorGreen:AppColors.colorTomato,
+                              fontFamily: "Poppins"
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
+
+    DateTime? parseEventDate(String dateString) {
+      try {
+        // Try parsing ISO format (2025-05-10)
+        if (dateString.contains('-')) {
+          return DateTime.parse(dateString);
+        }
+        // Try parsing dd/MM/yyyy or d/M/yyyy format (29/4/2025 or 10/4/2025)
+        else if (dateString.contains('/')) {
+          final parts = dateString.split('/');
+          if (parts.length == 3) {
+            return DateTime(
+              int.parse(parts[2]),
+              int.parse(parts[1]),
+              int.parse(parts[0]),
+            );
+          }
+        }
+      } catch (e) {
+        debugPrint("Error parsing date '$dateString': $e");
+      }
+      return null;
+    }
+
+    getAllEventList() async {
+      setState(() {
+        isLoading = true;
+      });
+
+      Map<String, dynamic> requestData = {};
+      Resource resource = await _eventsAdminUsecase.eventList(requestData: requestData);
+
+      if (resource.status == STATUS.SUCCESS) {
+        eventList = (resource.data as List)
+            .map((x) => EventListModel.fromJson(x))
+            .toList();
+
+        setState(() {
+          isLoading = false;
+          CommonUtils().flutterSnackBar(
+            context: context,
+            mes: resource.message ?? "",
+            messageType: 1,
+          );
+        });
+      } else {
+        setState(() => isLoading = false);
+        CommonUtils().flutterSnackBar(
+          context: context,
+          mes: resource.message ?? "",
+          messageType: 4,
+        );
+      }
+    }
   }
-
-}

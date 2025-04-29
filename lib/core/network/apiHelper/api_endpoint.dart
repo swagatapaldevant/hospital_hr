@@ -21,6 +21,9 @@ class ApiEndPoint{
   static const updateNoticeDetails =  "$baseurl/api/update_notice";
   static const deleteNoticeApi =  "$baseurl/api/delete_notice";
   static const eventListApi =  "$baseurl/api/events";
+  static const addEvent =  "$baseurl/api/save_event";
+  static const getEventDetails =  "$baseurl/api/edit_event";
+  static const updateEventDetails =  "$baseurl/api/update_event";
 
 
 }

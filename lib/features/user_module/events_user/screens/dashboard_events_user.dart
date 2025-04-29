@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:hospital_hr/core/network/apiHelper/locator.dart';
 import 'package:hospital_hr/core/network/apiHelper/resource.dart';
@@ -45,7 +47,7 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal:AppDimensions.screenContentPadding),
+          padding: EdgeInsets.symmetric(horizontal: AppDimensions.screenContentPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -85,15 +87,14 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
                   color: Colors.grey.shade400,
                   fontFamily: "Poppins",
                   fontSize: 16,
-                  fontWeight: FontWeight.w600
+                  fontWeight: FontWeight.w600,
                 ),
                 labelStyle: const TextStyle(
-                    color: Colors.white,
-                    fontFamily: "Poppins",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600
+                  color: Colors.white,
+                  fontFamily: "Poppins",
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                 ),
-
                 indicatorColor: Colors.white,
                 tabs: const [
                   Tab(text: "Upcoming Events"),
@@ -101,9 +102,14 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
                 ],
               ),
               SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
+
               // Tab Views
               Expanded(
-                child: TabBarView(
+                child: isLoading
+                    ? const Center(child: CircularProgressIndicator(
+                  color: AppColors.white,
+                ))
+                    : TabBarView(
                   controller: _tabController,
                   children: [
                     buildEventList(isUpcoming: true),
@@ -119,11 +125,40 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
   }
 
   Widget buildEventList({required bool isUpcoming}) {
+    final now = DateTime.now();
+
+    List<EventListModel> filteredEvents = eventList.where((event) {
+      if (event.eventDate == null) return false;
+      DateTime? eventDate;
+      try {
+        eventDate = DateTime.parse(event.eventDate!);
+      } catch (e) {
+        return false;
+      }
+      return isUpcoming ? eventDate.isAfter(now) : eventDate.isBefore(now);
+    }).toList();
+
+    // Optional: sort the list
+    filteredEvents.sort((a, b) {
+      DateTime aDate = DateTime.tryParse(a.eventDate ?? '') ?? DateTime(1900);
+      DateTime bDate = DateTime.tryParse(b.eventDate ?? '') ?? DateTime(1900);
+      return isUpcoming ? aDate.compareTo(bDate) : bDate.compareTo(aDate);
+    });
+
+    if (filteredEvents.isEmpty) {
+      return const Center(child: Text("No events found.", style: TextStyle(
+          fontWeight: FontWeight.bold, fontSize: 16,
+        color: AppColors.white,
+        fontFamily: "Poppins"
+
+      ),));
+    }
+
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
-      itemCount: 5,
+      itemCount: filteredEvents.length,
       itemBuilder: (context, index) {
-        String type = isUpcoming ? "Upcoming" : "Past";
+        final event = filteredEvents[index];
         return Card(
           elevation: 6,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -132,12 +167,54 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('$type Event ${index + 1}',
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+
+
+
+
+                Text(event.event ?? 'No Title',
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, fontFamily: "Poppins")),
                 SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
-                const Text('Details: Sample details of the event.'),
+
+                RichText(
+                  text: TextSpan(
+                    text: 'Details: ',
+                    style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primaryColor,
+                        fontFamily: "Poppins"),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: event.description ?? "No Description",
+                          style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.colorBlack,
+                              fontFamily: "Poppins")),
+                    ],
+                  ),
+                ),
                 SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
-                Text('Date: 2025-04-${index + 10}'),
+
+                RichText(
+                  text: TextSpan(
+                    text: 'Date: ',
+                    style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primaryColor,
+                        fontFamily: "Poppins"),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: event.eventDate?.split('T').first ?? "No Date",
+                          style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.colorBlack,
+                              fontFamily: "Poppins")),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -146,16 +223,13 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
     );
   }
 
-
-
   getAllEventList() async {
     setState(() {
       isLoading = true;
     });
-    Map<String, dynamic> requestData = {};
 
-    Resource resource =
-    await _eventsAdminUsecase.eventList(requestData: requestData);
+    Map<String, dynamic> requestData = {};
+    Resource resource = await _eventsAdminUsecase.eventList(requestData: requestData);
 
     if (resource.status == STATUS.SUCCESS) {
       eventList = (resource.data as List)
@@ -164,7 +238,6 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
 
       setState(() {
         isLoading = false;
-
         CommonUtils().flutterSnackBar(
           context: context,
           mes: resource.message ?? "",
@@ -172,6 +245,7 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
         );
       });
     } else {
+      setState(() => isLoading = false);
       CommonUtils().flutterSnackBar(
         context: context,
         mes: resource.message ?? "",
@@ -179,5 +253,4 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
       );
     }
   }
-
 }

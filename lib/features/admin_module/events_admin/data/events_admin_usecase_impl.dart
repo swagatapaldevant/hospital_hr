@@ -32,5 +32,63 @@ class EventsAdminUsecaseImpl extends EventsAdminUsecase{
   }
 
 
+  @override
+  Future<Resource> addEvent({required Map<String, dynamic> requestData}) async {
+
+    String token = await _pref.getUserAuthToken();
+    Map<String, String> header = {
+      "Authorization":"Bearer $token",
+    };
+    Resource resource =
+    await _apiClient.postRequest(url:ApiEndPoint.addEvent,header: header, requestData:requestData );
+    if (resource.status == STATUS.SUCCESS) {
+      return resource;
+
+    } else {
+      return resource;
+    }
+
+  }
+
+
+  @override
+  Future<Resource> getEventDetails({required Map<String, dynamic> requestData}) async {
+
+    String token = await _pref.getUserAuthToken();
+    Map<String, String> header = {
+      "Authorization":"Bearer $token",
+    };
+    Resource resource =
+    await _apiClient.postRequest(url:ApiEndPoint.getEventDetails,header: header, requestData:requestData );
+    if (resource.status == STATUS.SUCCESS) {
+      return resource;
+
+    } else {
+      return resource;
+    }
+
+  }
+
+
+  @override
+  Future<Resource> updateEventDetails({required Map<String, dynamic> requestData}) async {
+
+    String token = await _pref.getUserAuthToken();
+    Map<String, String> header = {
+      "Authorization":"Bearer $token",
+    };
+    Resource resource =
+    await _apiClient.postRequest(url:ApiEndPoint.updateEventDetails,header: header, requestData:requestData );
+    if (resource.status == STATUS.SUCCESS) {
+      return resource;
+
+    } else {
+      return resource;
+    }
+
+  }
+
+
+
 }
 

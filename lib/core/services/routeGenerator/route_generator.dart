@@ -2,14 +2,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:hospital_hr/features/admin_module/attendance_admin/screens/my_attendance_admin.dart';
 import '../../../features/admin_module/admin_dashboard/screens/admin_dashboard_screen.dart';
-import '../../../features/admin_module/admin_dashboard/screens/edit_dashboard_admin.dart';
-import '../../../features/admin_module/admin_dashboard/screens/view_dashboard_admin.dart';
+
 import '../../../features/admin_module/attendance_admin/screens/dashboard_attendance_admin.dart';
 import '../../../features/admin_module/auth_admin/screens/forgot_password.dart';
 import '../../../features/admin_module/auth_admin/screens/admin_log_in.dart';
 import '../../../features/admin_module/auth_admin/screens/otp.dart';
 import '../../../features/admin_module/auth_admin/screens/reset_password.dart';
-import '../../../features/admin_module/dashboard_admin/screens/dashboard_admin.dart';
 import '../../../features/admin_module/departments_admin/screens/add_department_admin.dart';
 import '../../../features/admin_module/departments_admin/screens/dashboard_departments_admin.dart';
 import '../../../features/admin_module/events_admin/screens/add_events_admin.dart';
@@ -131,8 +129,7 @@ class RouteGenerator {
         return _animatedPageRoute(DashboardNotice());
       case kAdminHomeScreen:
         return _animatedPageRoute(AdminHomeScreen());
-      case kViewDashboardAdmin:
-        return _animatedPageRoute(ViewDashboardAdmin());
+
       case kDashboardDepartmentsAdmin:
         return _animatedPageRoute(DashboardDepartmentsAdmin());
       case kAddDepartmentAdmin:
@@ -143,8 +140,7 @@ class RouteGenerator {
         return _animatedPageRoute(EditNoticeAdmin(noticeId: args as int,));
       case kAddNoticeAdmin:
         return _animatedPageRoute(AddNoticeAdmin());
-      case kEditDashboardAdmin:
-        return _animatedPageRoute(EditDashboardAdmin());
+
       case kProfileUser:
         return _animatedPageRoute(ProfileUser());
       case kDashboardAttendanceUser:
@@ -171,15 +167,14 @@ class RouteGenerator {
       case kDashboardEventAdmin:
         return _animatedPageRoute(DashboardEventAdmin());
       case kEditEventsAdmin:
-        return _animatedPageRoute(EditEventsAdmin());
+        return _animatedPageRoute(EditEventsAdmin(eventId: args as int,));
       case kAddEventsAdmin:
         return _animatedPageRoute(AddEventsAdmin());
       case kDashboardPayrollAdmin:
         return _animatedPageRoute(DashboardPayrollAdmin());
       case kViewPayrollAdmin:
         return _animatedPageRoute(ViewPayrollAdmin());
-      case kDashboardAdmin:
-        return _animatedPageRoute(DashboardAdmin());
+
       case kMyAttendanceAdmin:
         return _animatedPageRoute(MyAttendanceAdmin());
 
