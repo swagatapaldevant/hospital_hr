@@ -8,6 +8,8 @@ import 'package:hospital_hr/core/services/localStorage/shared_pref.dart';
 import 'package:hospital_hr/core/services/localStorage/shared_pref_impl.dart';
 import 'package:hospital_hr/features/admin_module/auth_admin/data/auth_usecase.dart';
 import 'package:hospital_hr/features/admin_module/auth_admin/data/auth_usecase_impl.dart';
+import 'package:hospital_hr/features/admin_module/events_admin/data/events_admin_usecase.dart';
+import 'package:hospital_hr/features/admin_module/events_admin/data/events_admin_usecase_impl.dart';
 import 'package:hospital_hr/features/admin_module/notice_admin/data/notice_usecase.dart';
 import 'package:hospital_hr/features/admin_module/notice_admin/data/notice_usecase_impl.dart';
 import 'package:hospital_hr/features/admin_module/users/data/users_usecase.dart';
@@ -28,6 +30,7 @@ void initializeDependency(){
   getIt.registerFactory<UsersUseCase>(()=> UsersUseCaseImpl());
   getIt.registerFactory<NoticeUsecase>(()=> NoticeUsecaseImpl());
   getIt.registerFactory<AuthUserUseCase>(()=> AuthUserUseCaseImpl());
+  getIt.registerFactory<EventsAdminUsecase>(()=> EventsAdminUsecaseImpl());
 
 
 

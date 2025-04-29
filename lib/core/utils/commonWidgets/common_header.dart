@@ -24,7 +24,7 @@ class CommonHeader extends StatelessWidget {
           },
         ),
         SizedBox(width: ScreenUtils().screenWidth(context)*0.05,),
-        Text(headerName, style: TextStyle(
+        Text(headerName, style: const TextStyle(
           fontWeight: FontWeight.w600,
           fontFamily: "Poppins",
           color: AppColors.white,

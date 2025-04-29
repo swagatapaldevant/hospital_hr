@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_hr/core/network/apiHelper/locator.dart';
+import 'package:hospital_hr/core/network/apiHelper/resource.dart';
+import 'package:hospital_hr/core/network/apiHelper/status.dart';
 import 'package:hospital_hr/core/utils/constants/app_colors.dart';
+import 'package:hospital_hr/core/utils/helper/common_utils.dart';
 import 'package:hospital_hr/core/utils/helper/screen_utils.dart';
+import 'package:hospital_hr/features/admin_module/events_admin/data/events_admin_usecase.dart';
+import 'package:hospital_hr/features/admin_module/events_admin/models/event_list_model.dart';
 import '../../../../core/utils/commonWidgets/common_header.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 
@@ -14,11 +20,15 @@ class DashboardEvent extends StatefulWidget {
 class _DashboardEventState extends State<DashboardEvent> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   TextEditingController searchController = TextEditingController();
+  bool isLoading = false;
+  final EventsAdminUsecase _eventsAdminUsecase = getIt<EventsAdminUsecase>();
+  List<EventListModel> eventList = [];
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    getAllEventList();
   }
 
   @override
@@ -53,17 +63,17 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.black),
+                    borderSide: const BorderSide(color: Colors.black),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.black),
+                    borderSide: const BorderSide(color: Colors.black),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.black, width: 1.5),
+                    borderSide: const BorderSide(color: Colors.black, width: 1.5),
                   ),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                 ),
               ),
               SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
@@ -135,4 +145,39 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
       },
     );
   }
+
+
+
+  getAllEventList() async {
+    setState(() {
+      isLoading = true;
+    });
+    Map<String, dynamic> requestData = {};
+
+    Resource resource =
+    await _eventsAdminUsecase.eventList(requestData: requestData);
+
+    if (resource.status == STATUS.SUCCESS) {
+      eventList = (resource.data as List)
+          .map((x) => EventListModel.fromJson(x))
+          .toList();
+
+      setState(() {
+        isLoading = false;
+
+        CommonUtils().flutterSnackBar(
+          context: context,
+          mes: resource.message ?? "",
+          messageType: 1,
+        );
+      });
+    } else {
+      CommonUtils().flutterSnackBar(
+        context: context,
+        mes: resource.message ?? "",
+        messageType: 4,
+      );
+    }
+  }
+
 }
