@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     // Simulate some loading time
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushNamed(context, "/AdminLogInScreens");
+      Navigator.pushReplacementNamed(context, "/AdminLogInScreens");
     });
   }
 
@@ -26,7 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Text("Hospital HR \n Application", textAlign: TextAlign.center,style: TextStyle(
             color: Colors.white,
             fontFamily: "Poppins",
-            fontSize: 28
+            fontSize: 28,
+          fontWeight: FontWeight.bold
         ),),
       ),
     );

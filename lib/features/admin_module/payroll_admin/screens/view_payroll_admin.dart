@@ -23,7 +23,7 @@ class _ViewPayrollAdminState extends State<ViewPayrollAdmin> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CommonHeader(headerName: 'Payroll Details'),
+                const CommonHeader(headerName: 'Payroll Details'),
                 SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 
                 Center(

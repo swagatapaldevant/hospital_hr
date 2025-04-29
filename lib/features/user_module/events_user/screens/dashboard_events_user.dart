@@ -9,6 +9,7 @@ import 'package:hospital_hr/core/utils/helper/common_utils.dart';
 import 'package:hospital_hr/core/utils/helper/screen_utils.dart';
 import 'package:hospital_hr/features/admin_module/events_admin/data/events_admin_usecase.dart';
 import 'package:hospital_hr/features/admin_module/events_admin/models/event_list_model.dart';
+import 'package:intl/intl.dart';
 import '../../../../core/utils/commonWidgets/common_header.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 
@@ -51,6 +52,8 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
+
               const CommonHeader(headerName: 'Events'),
               SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 
@@ -126,32 +129,49 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
 
   Widget buildEventList({required bool isUpcoming}) {
     final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
 
-    List<EventListModel> filteredEvents = eventList.where((event) {
-      if (event.eventDate == null) return false;
-      DateTime? eventDate;
-      try {
-        eventDate = DateTime.parse(event.eventDate!);
-      } catch (e) {
-        return false;
-      }
-      return isUpcoming ? eventDate.isAfter(now) : eventDate.isBefore(now);
+    // Filter events based on search text
+    final searchText = searchController.text.toLowerCase();
+    List<EventListModel> searchedEvents = eventList.where((event) {
+      return event.event?.toLowerCase().contains(searchText) ?? false;
     }).toList();
 
-    // Optional: sort the list
+    // Filter events based on date (past/upcoming)
+    List<EventListModel> filteredEvents = searchedEvents.where((event) {
+      if (event.eventDate == null) return false;
+
+      DateTime? eventDate = parseEventDate(event.eventDate!);
+      if (eventDate == null) return false;
+
+      final eventDateOnly = DateTime(eventDate.year, eventDate.month, eventDate.day);
+
+      return isUpcoming
+          ? eventDateOnly.isAfter(today) || eventDateOnly.isAtSameMomentAs(today)
+          : eventDateOnly.isBefore(today);
+    }).toList();
+
+    // Sort events - upcoming in ascending order, past in descending order
     filteredEvents.sort((a, b) {
-      DateTime aDate = DateTime.tryParse(a.eventDate ?? '') ?? DateTime(1900);
-      DateTime bDate = DateTime.tryParse(b.eventDate ?? '') ?? DateTime(1900);
+      DateTime? aDate = parseEventDate(a.eventDate ?? '');
+      DateTime? bDate = parseEventDate(b.eventDate ?? '');
+
+      if (aDate == null || bDate == null) return 0;
       return isUpcoming ? aDate.compareTo(bDate) : bDate.compareTo(aDate);
     });
 
     if (filteredEvents.isEmpty) {
-      return const Center(child: Text("No events found.", style: TextStyle(
-          fontWeight: FontWeight.bold, fontSize: 16,
-        color: AppColors.white,
-        fontFamily: "Poppins"
-
-      ),));
+      return Center(
+        child: Text(
+          isUpcoming ? "No upcoming events found." : "No past events found.",
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            color: AppColors.white,
+            fontFamily: "Poppins",
+          ),
+        ),
+      );
     }
 
     return ListView.builder(
@@ -159,6 +179,8 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
       itemCount: filteredEvents.length,
       itemBuilder: (context, index) {
         final event = filteredEvents[index];
+        DateTime? eventDate = parseEventDate(event.eventDate ?? '');
+
         return Card(
           elevation: 6,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -167,14 +189,25 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        event.event ?? 'No Title',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            fontFamily: "Poppins"
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
 
-
-
-
-                Text(event.event ?? 'No Title',
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, fontFamily: "Poppins")),
+                  ],
+                ),
                 SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
-
                 RichText(
                   text: TextSpan(
                     text: 'Details: ',
@@ -182,20 +215,22 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppColors.primaryColor,
-                        fontFamily: "Poppins"),
+                        fontFamily: "Poppins"
+                    ),
                     children: <TextSpan>[
                       TextSpan(
-                          text: event.description ?? "No Description",
-                          style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.colorBlack,
-                              fontFamily: "Poppins")),
+                        text: event.description ?? "No Description",
+                        style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.colorBlack,
+                            fontFamily: "Poppins"
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
-
                 RichText(
                   text: TextSpan(
                     text: 'Date: ',
@@ -203,15 +238,43 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppColors.primaryColor,
-                        fontFamily: "Poppins"),
+                        fontFamily: "Poppins"
+                    ),
                     children: <TextSpan>[
                       TextSpan(
-                          text: event.eventDate?.split('T').first ?? "No Date",
-                          style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.colorBlack,
-                              fontFamily: "Poppins")),
+                        text: eventDate != null
+                            ? DateFormat('dd/MM/yyyy').format(eventDate)
+                            : "Invalid Date",
+                        style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.colorBlack,
+                            fontFamily: "Poppins"
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                RichText(
+                  text: TextSpan(
+                    text: 'Status: ',
+                    style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primaryColor,
+                        fontFamily: "Poppins"
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: event.isActive == 1?"Active":"Not Active",
+                        style:  TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: event.isActive == 1? AppColors.colorGreen:AppColors.colorTomato,
+                            fontFamily: "Poppins"
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -221,6 +284,29 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
         );
       },
     );
+  }
+
+  DateTime? parseEventDate(String dateString) {
+    try {
+      // Try parsing ISO format (2025-05-10)
+      if (dateString.contains('-')) {
+        return DateTime.parse(dateString);
+      }
+      // Try parsing dd/MM/yyyy or d/M/yyyy format (29/4/2025 or 10/4/2025)
+      else if (dateString.contains('/')) {
+        final parts = dateString.split('/');
+        if (parts.length == 3) {
+          return DateTime(
+            int.parse(parts[2]),
+            int.parse(parts[1]),
+            int.parse(parts[0]),
+          );
+        }
+      }
+    } catch (e) {
+      debugPrint("Error parsing date '$dateString': $e");
+    }
+    return null;
   }
 
   getAllEventList() async {

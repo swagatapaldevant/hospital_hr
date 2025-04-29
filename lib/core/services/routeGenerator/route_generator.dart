@@ -25,11 +25,7 @@ import '../../../features/admin_module/users/screens/view_user_admin.dart';
 import '../../../features/login_type/screen/login_type.dart';
 import '../../../features/splash/screens/splash_screen.dart';
 import '../../../features/user_module/attendance_user/screens/dashboard_attendance_user.dart';
-import '../../../features/user_module/auth_user/screens/forgot_password.dart';
-import '../../../features/user_module/auth_user/screens/otp.dart';
-import '../../../features/user_module/auth_user/screens/reset_password.dart';
-import '../../../features/user_module/auth_user/screens/reset_password.dart';
-import '../../../features/user_module/auth_user/screens/user_log_in.dart';
+
 import '../../../features/user_module/departments_user/screens/add_department.dart';
 import '../../../features/user_module/departments_user/screens/dashboard_departments.dart';
 import '../../../features/user_module/events_user/screens/dashboard_events_user.dart';
@@ -37,9 +33,7 @@ import '../../../features/user_module/notice_user/screens/dashboard_notice.dart'
 import '../../../features/user_module/payroll_user/screens/dashboard_payroll_user.dart';
 import '../../../features/user_module/payroll_user/screens/view_payroll_user.dart';
 import '../../../features/user_module/profile/screens/profile_user.dart';
-import '../../../features/user_module/user_dashboard/screens/edit_user.dart';
 import '../../../features/user_module/user_dashboard/screens/user_dashboard_screen.dart';
-import '../../../features/user_module/user_dashboard/screens/view_user.dart';
 import '../../utils/helper/app_fontSize.dart';
 
 class RouteGenerator {
@@ -107,20 +101,8 @@ class RouteGenerator {
         return _animatedPageRoute(AdminOTP());
       case kAdminResetPasswordScreens:
         return _animatedPageRoute(AdminResetPasswordScreens());
-      case kUserLogInScreens:
-        return _animatedPageRoute(UserLogInScreens());
-      case kUserForgotPassword:
-        return _animatedPageRoute(UserForgotPassword());
-      case kUserOTP:
-        return _animatedPageRoute(UserOTP());
-      case kUserResetPasswordScreens:
-        return _animatedPageRoute(UserResetPasswordScreens());
       case kUserHomeScreen:
         return _animatedPageRoute(UserHomeScreen());
-      case kViewUser:
-        return _animatedPageRoute(ViewUser());
-      case kEditUser:
-        return _animatedPageRoute(EditUser());
       case kDashboardDepartments:
         return _animatedPageRoute(DashboardDepartments());
       case kAddDepartment:

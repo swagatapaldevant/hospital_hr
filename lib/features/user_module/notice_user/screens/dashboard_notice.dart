@@ -49,6 +49,8 @@ class _DashboardNoticeState extends State<DashboardNotice> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
+
               const CommonHeader(
                 headerName: 'Notice',
               ),

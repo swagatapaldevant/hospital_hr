@@ -86,7 +86,11 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: isLoading?const Center(
+          child: CircularProgressIndicator(
+            color: AppColors.white,
+          ),
+        ):SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(AppDimensions.screenContentPadding),
             child: Column(
@@ -100,29 +104,30 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                   child: Stack(
                     children: [
                       CircleAvatar(
-                        radius: 60,
+                        radius: 80,
                         backgroundImage: _image != null
-                            ? FileImage(_image!)
-                            : const NetworkImage('https://picsum.photos/200/300?random=2') as ImageProvider,
-                        backgroundColor: Colors.transparent,
+                            ? FileImage(_image!) as ImageProvider
+                            : (userDetails?.profileImg != null && userDetails!.profileImg!.isNotEmpty
+                            ? NetworkImage("http://192.168.29.106/rainbow_new/public/assets/images/users/${userDetails!.profileImg}")
+                            : const AssetImage("assets/images/placeholder.jpeg")) as ImageProvider,                        backgroundColor: Colors.transparent,
                       ),
                       // Positioned Edit Icon
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: GestureDetector(
-                          onTap: _showImagePickerOptions,
-                          child: const CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.blue,
-                            child: Icon(
-                              Icons.camera_alt,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Positioned(
+                      //   bottom: 0,
+                      //   right: 0,
+                      //   child: GestureDetector(
+                      //     onTap: _showImagePickerOptions,
+                      //     child: const CircleAvatar(
+                      //       radius: 20,
+                      //       backgroundColor: Colors.blue,
+                      //       child: Icon(
+                      //         Icons.camera_alt,
+                      //         color: Colors.white,
+                      //         size: 20,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -140,14 +145,14 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                           color: AppColors.white,
                         ),
                       ),
-                      Text(
-                        'Software Engineer',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey.shade400,
-                        ),
-                      ),
+                      // Text(
+                      //   'Software Engineer',
+                      //   style: TextStyle(
+                      //     fontSize: 16,
+                      //     fontWeight: FontWeight.w500,
+                      //     color: Colors.grey.shade400,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

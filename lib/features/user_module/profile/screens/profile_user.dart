@@ -23,56 +23,15 @@ class ProfileUser extends StatefulWidget {
 
 class _ProfileUserState extends State<ProfileUser> {
   File? _image;
-  final ImagePicker _picker = ImagePicker();
+
   final UsersUseCase _usersUseCase = getIt<UsersUseCase>();
   final SharedPref _pref = getIt<SharedPref>();
   bool isLoading = false;
   UserDetailsModel? userDetails;
 
 
-  // Function to Pick Image
-  Future<void> _pickImage(ImageSource source) async {
-    final pickedFile = await _picker.pickImage(source: source);
-    if (pickedFile != null) {
-      File imageFile = File(pickedFile.path);
-      int imageSize = await imageFile.length();
 
-      if (imageSize > 800 * 1024) {
-        Fluttertoast.showToast(msg: "Image size is greater than 800KB. Please choose a smaller image.");
-      } else {
-        setState(() {
-          _image = imageFile;
-        });
-      }
-    }
-  }
 
-  // Function to Show Bottom Sheet
-  void _showImagePickerOptions() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => Wrap(
-        children: [
-          ListTile(
-            leading: Icon(Icons.camera_alt, color: Colors.blue),
-            title: Text('Take a Photo'),
-            onTap: () {
-              Navigator.pop(context);
-              _pickImage(ImageSource.camera);
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.photo_library, color: Colors.green),
-            title: Text('Choose from Gallery'),
-            onTap: () {
-              Navigator.pop(context);
-              _pickImage(ImageSource.gallery);
-            },
-          ),
-        ],
-      ),
-    );
-  }
 
   @override
   void initState() {
@@ -102,29 +61,31 @@ class _ProfileUserState extends State<ProfileUser> {
                 child: Stack(
                   children: [
                     CircleAvatar(
-                      radius: 60,
+                      radius: 80,
                       backgroundImage: _image != null
-                          ? FileImage(_image!)
-                          : const NetworkImage('https://picsum.photos/200/300?random=2') as ImageProvider,
+                          ? FileImage(_image!) as ImageProvider
+                          : (userDetails?.profileImg != null && userDetails!.profileImg!.isNotEmpty
+                          ? NetworkImage("http://192.168.29.106/rainbow_new/public/assets/images/users/${userDetails!.profileImg}")
+                          : const AssetImage("assets/images/placeholder.jpeg")) as ImageProvider,
                       backgroundColor: Colors.transparent,
                     ),
-                    // Positioned Edit Icon
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: GestureDetector(
-                        onTap: _showImagePickerOptions,
-                        child: const CircleAvatar(
-                          radius: 20,
-                          backgroundColor: Colors.blue,
-                          child: Icon(
-                            Icons.camera_alt,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                        ),
-                      ),
-                    ),
+
+                    // Positioned(
+                    //   bottom: 0,
+                    //   right: 0,
+                    //   child: GestureDetector(
+                    //     onTap: _showImagePickerOptions,
+                    //     child: const CircleAvatar(
+                    //       radius: 20,
+                    //       backgroundColor: Colors.blue,
+                    //       child: Icon(
+                    //         Icons.camera_alt,
+                    //         color: Colors.white,
+                    //         size: 20,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

@@ -52,13 +52,7 @@ class _AdminLogInScreensState extends State<AdminLogInScreens> {
               //crossAxisAlignment: CrossAxisAlignment.start,
               //mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: CommonBackIcon(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    )),
+
                 SizedBox(
                   height: ScreenUtils().screenHeight(context) * 0.1,
                 ),

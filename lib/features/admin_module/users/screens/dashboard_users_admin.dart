@@ -127,6 +127,7 @@ class _DashboardUsersAdminState extends State<DashboardUsersAdmin> {
                                               fontSize: 22,
                                               fontWeight: FontWeight.w600,
                                               color: Color(0xFF006064),
+                                              fontFamily: "Poppins"
                                             ),
                                           ),
 
@@ -139,6 +140,7 @@ class _DashboardUsersAdminState extends State<DashboardUsersAdmin> {
                                             style: const TextStyle(
                                               fontSize: 16,
                                               color: Color(0xFF004d40),
+                                                fontFamily: "Poppins"
                                             ),
                                           ),
                                         ],
@@ -188,6 +190,7 @@ class _DashboardUsersAdminState extends State<DashboardUsersAdmin> {
                                         style: const TextStyle(
                                           fontSize: 16,
                                           color: Color(0xFF004d40),
+                                            fontFamily: "Poppins"
                                         ),
                                       ),
                                     ],
@@ -210,6 +213,7 @@ class _DashboardUsersAdminState extends State<DashboardUsersAdmin> {
                                         style: const TextStyle(
                                           fontSize: 16,
                                           color: Color(0xFF004d40),
+                                            fontFamily: "Poppins"
                                         ),
                                       ),
                                     ],
@@ -232,6 +236,7 @@ class _DashboardUsersAdminState extends State<DashboardUsersAdmin> {
                                         style: const TextStyle(
                                           fontSize: 16,
                                           color: Color(0xFF004d40),
+                                            fontFamily: "Poppins"
                                         ),
                                       ),
                                     ],
@@ -251,10 +256,11 @@ class _DashboardUsersAdminState extends State<DashboardUsersAdmin> {
                                           ),
                                           SizedBox(width: MediaQuery.of(context).size.width * 0.01),
                                           Text(
-                                            'Status: ${allUserList[index].isActive == 1 ? "Active" : "Inactive"}',
+                                            'Login Status: ${allUserList[index].isActive == 1 ? "Active" : "Inactive"}',
                                             style: const TextStyle(
                                               fontSize: 16,
                                               color: Color(0xFF00796B),
+                                                fontFamily: "Poppins"
                                             ),
                                           ),
                                         ],
