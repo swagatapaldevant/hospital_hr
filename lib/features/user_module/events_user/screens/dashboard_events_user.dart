@@ -41,86 +41,101 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
     super.dispose();
   }
 
+  Future<void> _refreshData() async {
+    await Future.delayed(const Duration(seconds: 2)); // Simulate a network call
+      setState(() {
+         getAllEventList();
+
+      });
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     AppDimensions.init(context);
 
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppDimensions.screenContentPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
+        child: RefreshIndicator(
+          backgroundColor: AppColors.white,
+          color: AppColors.colorBlue700,
+          onRefresh: _refreshData,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppDimensions.screenContentPadding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: ScreenUtils().screenHeight(context)*0.01,),
 
-              const CommonHeader(headerName: 'Events'),
-              SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
+                const CommonHeader(headerName: 'Events'),
+                SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 
-              // Search Box
-              TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                  hintText: 'Search events...',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  prefixIcon: const Icon(Icons.search, color: Colors.black),
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.black),
+                // Search Box
+                TextField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search events...',
+                    hintStyle: const TextStyle(color: Colors.grey),
+                    prefixIcon: const Icon(Icons.search, color: Colors.black),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Colors.black),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Colors.black),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Colors.black, width: 1.5),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.black),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.black, width: 1.5),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                 ),
-              ),
-              SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
+                SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 
-              // Tab Bar
-              TabBar(
-                controller: _tabController,
-                unselectedLabelStyle: TextStyle(
-                  color: Colors.grey.shade400,
-                  fontFamily: "Poppins",
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-                labelStyle: const TextStyle(
-                  color: Colors.white,
-                  fontFamily: "Poppins",
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-                indicatorColor: Colors.white,
-                tabs: const [
-                  Tab(text: "Upcoming Events"),
-                  Tab(text: "Past Events"),
-                ],
-              ),
-              SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
-
-              // Tab Views
-              Expanded(
-                child: isLoading
-                    ? const Center(child: CircularProgressIndicator(
-                  color: AppColors.white,
-                ))
-                    : TabBarView(
+                // Tab Bar
+                TabBar(
                   controller: _tabController,
-                  children: [
-                    buildEventList(isUpcoming: true),
-                    buildEventList(isUpcoming: false),
+                  unselectedLabelStyle: TextStyle(
+                    color: Colors.grey.shade400,
+                    fontFamily: "Poppins",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  labelStyle: const TextStyle(
+                    color: Colors.white,
+                    fontFamily: "Poppins",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  indicatorColor: Colors.white,
+                  tabs: const [
+                    Tab(text: "Upcoming Events"),
+                    Tab(text: "Past Events"),
                   ],
                 ),
-              ),
-            ],
+                SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
+
+                // Tab Views
+                Expanded(
+                  child: isLoading
+                      ? const Center(child: CircularProgressIndicator(
+                    color: AppColors.white,
+                  ))
+                      : TabBarView(
+                    controller: _tabController,
+                    children: [
+                      buildEventList(isUpcoming: true),
+                      buildEventList(isUpcoming: false),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -340,3 +355,5 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
     }
   }
 }
+
+
