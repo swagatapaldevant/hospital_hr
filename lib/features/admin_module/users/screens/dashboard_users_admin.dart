@@ -150,21 +150,22 @@ class _DashboardUsersAdminState extends State<DashboardUsersAdmin> {
                                           if (value == 1) {
                                             Navigator.pushNamed(
                                                 context, "/ViewUserAdmin", arguments: allUserList[index].id);
-                                          } else if (value == 2) {
-                                            Navigator.pushNamed(
-                                                context, "/EditUserAdmin");
-                                            // Edit functionality here
                                           }
+                                          // else if (value == 2) {
+                                          //   Navigator.pushNamed(
+                                          //       context, "/EditUserAdmin");
+                                          //
+                                          // }
                                         },
                                         itemBuilder: (BuildContext context) => [
                                           const PopupMenuItem<int>(
                                             value: 1,
                                             child: Text('View'),
                                           ),
-                                          const PopupMenuItem<int>(
-                                            value: 2,
-                                            child: Text('Edit'),
-                                          ),
+                                          // const PopupMenuItem<int>(
+                                          //   value: 2,
+                                          //   child: Text('Edit'),
+                                          // ),
                                         ],
                                       )
                                     ],
@@ -240,24 +241,43 @@ class _DashboardUsersAdminState extends State<DashboardUsersAdmin> {
                                           MediaQuery.of(context).size.height *
                                               0.01),
                                   Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const Icon(Icons.check_circle,
-                                          color: Colors.green),
-                                      SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.01),
-                                      Text(
-                                        'Status: ${allUserList[index].isActive == 1 ? "Active" : "InActive"}',
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Color(0xFF00796B),
-                                        ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            allUserList[index].isActive == 1 ? Icons.check_circle : Icons.cancel,
+                                            color: allUserList[index].isActive == 1 ? Colors.green : Colors.red,
+                                          ),
+                                          SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+                                          Text(
+                                            'Status: ${allUserList[index].isActive == 1 ? "Active" : "Inactive"}',
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              color: Color(0xFF00796B),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-
+                                      Switch(
+                                        value: allUserList[index].isActive == 1,
+                                        onChanged: (bool newValue) {
+                                          setState(() {
+                                            allUserList[index].isActive = newValue ? 1 : 0;
+                                          });
+                                          updateActiveStatus(
+                                            allUserList[index].id ?? 0,
+                                            allUserList[index].isActive ?? 0,
+                                          );
+                                          // TODO: Call your backend API here to update the status
+                                          // await yourApi.updateUserStatus(userId: allUserList[index].id, isActive: newValue ? 1 : 0);
+                                        },
+                                        activeColor: Colors.green,
+                                        inactiveThumbColor: Colors.red,
+                                      ),
                                     ],
-                                  ),
+                                  )
+
                                 ],
                               ),
                             ),
@@ -297,6 +317,39 @@ class _DashboardUsersAdminState extends State<DashboardUsersAdmin> {
       allUserList = (resource.data as List)
           .map((x) => UserListModel.fromJson(x))
           .toList();
+
+      setState(() {
+        isLoading = false;
+
+        CommonUtils().flutterSnackBar(
+          context: context,
+          mes: resource.message ?? "",
+          messageType: 1,
+        );
+      });
+    } else {
+      CommonUtils().flutterSnackBar(
+        context: context,
+        mes: resource.message ?? "",
+        messageType: 4,
+      );
+    }
+  }
+
+
+  updateActiveStatus(int userId, int isActive) async {
+    setState(() {
+      isLoading = true;
+    });
+    Map<String, dynamic> requestData = {
+      "id":userId,
+      "is_active":isActive
+    };
+
+    Resource resource = await _usersUseCase.updateStatus(requestData: requestData);
+
+    if (resource.status == STATUS.SUCCESS) {
+
 
       setState(() {
         isLoading = false;

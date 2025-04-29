@@ -112,7 +112,7 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                         right: 0,
                         child: GestureDetector(
                           onTap: _showImagePickerOptions,
-                          child: CircleAvatar(
+                          child: const CircleAvatar(
                             radius: 20,
                             backgroundColor: Colors.blue,
                             child: Icon(
@@ -134,7 +134,7 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                       Text(
                   '${userDetails?.salutation?.toString() ?? ''} ${userDetails?.name?.toString() ?? ''}',
 
-            style: TextStyle(
+            style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: AppColors.white,
@@ -156,7 +156,7 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
 
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(16),
@@ -174,9 +174,9 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                       // Header
                       Row(
                         children: [
-                          Icon(Icons.person_outline, color: AppColors.primaryColor, size: 28),
+                          const Icon(Icons.person_outline, color: AppColors.primaryColor, size: 28),
                           SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-                          Text(
+                          const Text(
                             'Personal Details',
                             style: TextStyle(
                               fontSize: 22,
@@ -188,12 +188,12 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
-                      Divider(),
+                      const Divider(),
 
                       // Detail Rows
-                      _detailRow('Employee ID', userDetails?.empId.toString()??""),
-                      _detailRow('Gender', userDetails?.gender.toString()??""),
-                      _detailRow('Date of Birth', userDetails?.dob.toString()??""),
+                      _detailRow('Employee ID',  userDetails?.empId != null ? userDetails!.empId.toString() : "N/A"),
+                      _detailRow('Gender',  userDetails?.gender != null ? userDetails!.gender.toString() : "N/A"),
+                      _detailRow('Date of Birth', userDetails?.dob != null ? userDetails!.dob.toString() : "N/A"),
                       _detailRow('Joining Date', userDetails?.joiningDate.toString()??""),
                       _detailRow('Father Name', userDetails?.fatherName.toString()??""),
                       _detailRow('Mother Name', userDetails?.motherName.toString()??""),

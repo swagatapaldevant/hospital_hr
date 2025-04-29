@@ -24,6 +24,7 @@ class ApiEndPoint{
   static const addEvent =  "$baseurl/api/save_event";
   static const getEventDetails =  "$baseurl/api/edit_event";
   static const updateEventDetails =  "$baseurl/api/update_event";
+  static const userActiveStatus =  "$baseurl/api/user_active_deactive";
 
 
 }
