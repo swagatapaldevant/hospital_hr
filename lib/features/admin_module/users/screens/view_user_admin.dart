@@ -194,12 +194,12 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                       _detailRow('Employee ID',  userDetails?.empId != null ? userDetails!.empId.toString() : "N/A"),
                       _detailRow('Gender',  userDetails?.gender != null ? userDetails!.gender.toString() : "N/A"),
                       _detailRow('Date of Birth', userDetails?.dob != null ? userDetails!.dob.toString() : "N/A"),
-                      _detailRow('Joining Date', userDetails?.joiningDate.toString()??""),
-                      _detailRow('Father Name', userDetails?.fatherName.toString()??""),
-                      _detailRow('Mother Name', userDetails?.motherName.toString()??""),
-                      _detailRow('Marital Status', userDetails?.maritalStatus.toString()??""),
-                      _detailRow('Blood Group', userDetails?.bloodGroup.toString()??""),
-                      _detailRow('Signature', userDetails?.signature.toString()??""),
+                      _detailRow('Joining Date', userDetails?.joiningDate != null ? userDetails!.joiningDate.toString() : "N/A"),
+                      _detailRow('Father Name', userDetails?.fatherName != null ? userDetails!.fatherName.toString() : "N/A"),
+                      _detailRow('Mother Name', userDetails?.motherName != null ? userDetails!.motherName.toString() : "N/A"),
+                      _detailRow('Marital Status', userDetails?.maritalStatus != null ? userDetails!.maritalStatus.toString() : "N/A"),
+                      _detailRow('Blood Group', userDetails?.bloodGroup != null ? userDetails!.bloodGroup.toString() : "N/A"),
+                      _detailRow('Signature', userDetails?.signature != null ? userDetails!.signature.toString() : "N/A"),
                     ],
                   ),
                 ),
@@ -242,16 +242,16 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                       Divider(),
 
                       // Detail Rows
-                      _detailRow('Qualification', userDetails?.qualification.toString()??""),
-                      _detailRow('Work Experience', userDetails?.experience.toString()??""),
-                      _detailRow('User Type', userDetails?.userType.toString()??""),
-                      _detailRow('Specialist', userDetails?.specialization.toString()??""),
-                      _detailRow('Doctor Type', userDetails?.doctorType.toString()??""),
-                      _detailRow('Doctor Fees', userDetails?.doctorFees.toString()??""),
-                      _detailRow('Commission Type', userDetails?.commissionType.toString()??""),
-                      _detailRow('Commission Amount', userDetails?.commissionAmount.toString()??""),
-                      _detailRow('Basic Salary', userDetails?.basicSalary.toString()??""),
-                      _detailRow('Note', userDetails?.note.toString()??""),
+                      _detailRow('Qualification', userDetails?.qualification != null ? userDetails!.qualification.toString() : "N/A"),
+                      _detailRow('Work Experience', userDetails?.experience != null ? userDetails!.experience.toString() : "N/A"),
+                      _detailRow('User Type', userDetails?.userType != null ? userDetails!.userType.toString() : "N/A"),
+                      _detailRow('Specialist', userDetails?.specialization != null ? userDetails!.specialization.toString() : "N/A"),
+                      _detailRow('Doctor Type', userDetails?.doctorType != null ? userDetails!.doctorType.toString() : "N/A"),
+                      _detailRow('Doctor Fees', userDetails?.doctorFees != null ? userDetails!.doctorFees.toString() : "N/A"),
+                      _detailRow('Commission Type', userDetails?.commissionType != null ? userDetails!.commissionType.toString() : "N/A"),
+                      _detailRow('Commission Amount', userDetails?.commissionAmount != null ? userDetails!.commissionAmount.toString() : "N/A"),
+                      _detailRow('Basic Salary', userDetails?.basicSalary != null ? userDetails!.basicSalary.toString() : "N/A"),
+                      _detailRow('Note', userDetails?.note != null ? userDetails!.note.toString() : "N/A"),
 
                     ],
                   ),
@@ -295,8 +295,8 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                       Divider(),
 
                       // Detail Rows
-                      _detailRow('Current Address', userDetails?.currentAddress.toString()??""),
-                      _detailRow('Permanent Address', userDetails?.permanentAddress.toString()??""),
+                      _detailRow('Current Address', userDetails?.currentAddress != null ? userDetails!.currentAddress.toString() : "N/A"),
+                      _detailRow('Permanent Address', userDetails?.permanentAddress != null ? userDetails!.permanentAddress.toString() : "N/A"),
                     ],
                   ),
                 ),
@@ -339,10 +339,10 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                       Divider(),
 
                       // Detail Rows
-                      _detailRow('Email Id', userDetails?.email.toString()??""),
-                      _detailRow('Mobile No', userDetails?.phoneNo.toString()??""),
-                      _detailRow('WhatsApp No', userDetails?.whatsappNo.toString()??""),
-                      _detailRow('Emg No', userDetails?.emgNo.toString()??""),
+                      _detailRow('Email Id', userDetails?.email != null ? userDetails!.email.toString() : "N/A"),
+                      _detailRow('Mobile No', userDetails?.phoneNo != null ? userDetails!.phoneNo.toString() : "N/A"),
+                      _detailRow('WhatsApp No', userDetails?.whatsappNo != null ? userDetails!.whatsappNo.toString() : "N/A"),
+                      _detailRow('Emg No', userDetails?.emgNo != null ? userDetails!.emgNo.toString() : "N/A"),
 
                     ],
                   ),
@@ -386,8 +386,8 @@ class _ViewUserAdminState extends State<ViewUserAdmin> {
                       Divider(),
 
                       // Detail Rows
-                      _detailRow('PAN Number', userDetails?.panNumber.toString()??""),
-                      _detailRow('Identification Number', userDetails?.identificationNumber.toString()??""),
+                      _detailRow('PAN Number', userDetails?.panNumber != null ? userDetails!.panNumber.toString() : "N/A"),
+                      _detailRow('Identification Number', userDetails?.identificationNumber != null ? userDetails!.identificationNumber.toString() : "N/A"),
 
                     ],
                   ),
