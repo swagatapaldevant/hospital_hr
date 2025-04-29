@@ -68,10 +68,21 @@ class _DashboardEventAdminState extends State<DashboardEventAdmin> with SingleTi
               // Tab Bar
               TabBar(
                 controller: _tabController,
-                labelColor: Colors.white,
-                unselectedLabelColor: Colors.black54,
-                indicatorColor: Colors.pinkAccent,
-                tabs: [
+                unselectedLabelStyle: TextStyle(
+                    color: Colors.grey.shade400,
+                    fontFamily: "Poppins",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600
+                ),
+                labelStyle: const TextStyle(
+                    color: Colors.white,
+                    fontFamily: "Poppins",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600
+                ),
+
+                indicatorColor: Colors.white,
+                tabs: const [
                   Tab(text: "Upcoming Events"),
                   Tab(text: "Past Events"),
                 ],
