@@ -22,7 +22,6 @@ import '../../../features/admin_module/users/screens/add_user_admin.dart';
 import '../../../features/admin_module/users/screens/dashboard_users_admin.dart';
 import '../../../features/admin_module/users/screens/edit_user_admin.dart';
 import '../../../features/admin_module/users/screens/view_user_admin.dart';
-import '../../../features/login_type/screen/login_type.dart';
 import '../../../features/splash/screens/splash_screen.dart';
 import '../../../features/user_module/attendance_user/screens/dashboard_attendance_user.dart';
 
@@ -91,8 +90,6 @@ class RouteGenerator {
       case kSplashScreen:
         //return MaterialPageRoute(builder: (_)=>SplashScreen());
         return _animatedPageRoute(SplashScreen());
-      case kLogInTypeScreens:
-        return _animatedPageRoute(LogInTypeScreens());
       case kAdminLogInScreens:
         return _animatedPageRoute(AdminLogInScreens());
       case kAdminForgotPassword:
