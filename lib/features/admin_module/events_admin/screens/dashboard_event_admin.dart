@@ -53,6 +53,8 @@ import 'package:flutter/material.dart';
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+
                 const CommonHeader(headerName: 'Events'),
                 SizedBox(height: ScreenUtils().screenHeight(context) * 0.03),
 

@@ -227,10 +227,18 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const CircleAvatar(
-                        radius: 60,
-                        backgroundImage: NetworkImage('https://i.pravatar.cc/300'),
+                       Container(
+                        padding: const EdgeInsets.all(4), // Border width
+                        decoration: const BoxDecoration(
+                          color: Colors.white, // Border color
+                          shape: BoxShape.circle,
+                        ),
+                        child: const CircleAvatar(
+                          radius: 60,
+                          backgroundImage: NetworkImage('https://i.pravatar.cc/300'),
+                        ),
                       ),
+
                       Column(
                         children: [
                           const Text('Admin Name',
