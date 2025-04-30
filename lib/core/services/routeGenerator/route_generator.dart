@@ -38,7 +38,7 @@ import '../../utils/helper/app_fontSize.dart';
 
 class RouteGenerator {
   // general navigation
-  static const kSplashScreen = "/SplashScreen";
+  static const kSplashScreen = "/";
   static const kLogInTypeScreens = "/LogInTypeScreens";
   static const kAdminLogInScreens = "/AdminLogInScreens";
   static const kAdminForgotPassword = "/AdminForgotPassword";

@@ -90,6 +90,8 @@ class _AdminLogInScreensState extends State<AdminLogInScreens> {
                   controller: passwordController,
                   hintText: 'Please enter your password',
                   prefixIcon: Icons.lock,
+                  isPassword: true,
+                  suffixIcon: Icons.visibility,
                 ),
                 SizedBox(
                   height: ScreenUtils().screenHeight(context) * 0.01,
