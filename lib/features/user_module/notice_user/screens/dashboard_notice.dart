@@ -39,7 +39,7 @@ class _DashboardNoticeState extends State<DashboardNotice> {
   }
 
   Future<void> _refreshData() async {
-    await Future.delayed(Duration(seconds: 2)); // Simulate a network call
+    await Future.delayed(const Duration(seconds: 2)); // Simulate a network call
     setState(() {
       allNoticeListApi();
     });

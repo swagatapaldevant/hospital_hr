@@ -219,29 +219,32 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                  InkWell(
+                      onTap: (){
+                        _advancedDrawerController.showDrawer();
+                      },
+                      child: const Icon(Icons.menu, color: AppColors.white,)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const CircleAvatar(
+                        radius: 60,
+                        backgroundImage: NetworkImage('https://i.pravatar.cc/300'),
+                      ),
+                      Column(
+                        children: [
+                          const Text('Admin Name',
+                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.white, fontFamily: "Poppins")),
+                          Text('HR Manager',
+                              style: TextStyle( fontSize: 16, color: AppColors.white.withOpacity(0.8), fontFamily: "Poppins")),
 
-                  // Admin Info
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    decoration: _boxDecoration(),
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 50,
-                          backgroundImage: NetworkImage('https://i.pravatar.cc/300'),
-                        ),
-                      SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
-                        Text('Admin Name',
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                        Text('HR Manager',
-                            style: TextStyle(color: Colors.grey[700], fontSize: 16)),
-                      ],
-                    ),
+                        ],
+                      ),
+
+                    ],
                   ),
 
-                 SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                 SizedBox(height: ScreenUtils().screenHeight(context) * 0.02),
 
                   // Employee Overview
                   Container(
