@@ -26,16 +26,19 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
   bool isLoading = false;
   final EventsAdminUsecase _eventsAdminUsecase = getIt<EventsAdminUsecase>();
   List<EventListModel> eventList = [];
+  List<EventListModel> filteredEventList = [];
 
   @override
   void initState() {
     super.initState();
+    searchController.addListener(_onSearchChanged);
     _tabController = TabController(length: 2, vsync: this);
     getAllEventList();
   }
 
   @override
   void dispose() {
+    searchController.removeListener(_onSearchChanged);
     _tabController.dispose();
     searchController.dispose();
     super.dispose();
@@ -48,6 +51,19 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
 
       });
 
+  }
+
+
+  void _onSearchChanged() {
+    String query = searchController.text.toLowerCase();
+    setState(() {
+      filteredEventList = eventList.where((events) {
+        final name = events.event?.toLowerCase() ?? '';
+        final details = events.description?.toLowerCase() ?? '';
+
+        return name.contains(query) || details.contains(query);
+      }).toList();
+    });
   }
 
 
@@ -336,6 +352,7 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
       eventList = (resource.data as List)
           .map((x) => EventListModel.fromJson(x))
           .toList();
+      filteredEventList = eventList;
 
       setState(() {
         isLoading = false;

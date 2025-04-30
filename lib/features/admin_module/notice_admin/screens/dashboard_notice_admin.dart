@@ -25,6 +25,10 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
   TextEditingController searchController = TextEditingController();
   final NoticeUsecase _noticeUseCase = getIt<NoticeUsecase>();
   List<NoticeListModel> allNoticeList = [];
+  List<NoticeListModel> filteredNoticeList = [];
+
+
+
   void showNoticeChangeDialog(BuildContext context, int id) {
     CommonDialog(
       icon: Icons.save,
@@ -49,13 +53,28 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    searchController.addListener(_onSearchChanged);
     allNoticeListApi();
   }
 
   @override
   void dispose() {
+    searchController.removeListener(_onSearchChanged);
     searchController.dispose();
     super.dispose();
+  }
+
+
+  void _onSearchChanged() {
+    String query = searchController.text.toLowerCase();
+    setState(() {
+      filteredNoticeList = allNoticeList.where((notices) {
+        final notice = notices.notice?.toLowerCase() ?? '';
+        final description = notices.description?.toLowerCase() ?? '';
+
+        return notice.contains(query) || description.contains(query) ;
+      }).toList();
+    });
   }
 
   Future<void> _refreshData() async {
@@ -119,7 +138,7 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
                     ),
                   ): ListView.builder(
                     physics: const BouncingScrollPhysics(),
-                      itemCount: allNoticeList.length,
+                      itemCount: filteredNoticeList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Card(
                           elevation: 8.0,
@@ -135,7 +154,7 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text('Sl. No: ${allNoticeList[index].id}',
+                                    Text('Sl. No: ${filteredNoticeList[index].id}',
                                         style: const TextStyle(
                                             fontSize: 16,
                                             fontFamily: "Poppins",
@@ -149,10 +168,10 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
                                           color: Colors.black87),
                                       onSelected: (value) {
                                         if (value == 1) {
-                                          showNoticeChangeDialog(context,allNoticeList[index].id?? 0);
+                                          showNoticeChangeDialog(context,filteredNoticeList[index].id?? 0);
                                         } else if (value == 2) {
                                           Navigator.pushNamed(
-                                              context, "/EditNoticeAdmin", arguments:allNoticeList[index].id);
+                                              context, "/EditNoticeAdmin", arguments:filteredNoticeList[index].id);
                                           // Edit functionality here
                                         }
                                       },
@@ -171,7 +190,7 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
                                 ),
                                 RichText(
                                   text: TextSpan(
-                                    text: 'Notice Content: ',
+                                    text: 'Notice: ',
                                     style:  const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -179,7 +198,7 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
                                       fontFamily: "Poppins",
                                     ),
                                     children:  <TextSpan>[
-                                      TextSpan(text:  allNoticeList[index].notice,
+                                      TextSpan(text:  filteredNoticeList[index].notice,
                                           style:  const TextStyle(
                                             fontSize: 14,
                                               fontWeight: FontWeight.w600,
@@ -204,7 +223,7 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
                                       fontFamily: "Poppins",
                                     ),
                                     children:  <TextSpan>[
-                                      TextSpan(text:  allNoticeList[index].description,
+                                      TextSpan(text:  filteredNoticeList[index].description,
                                           style:  const TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w500,
@@ -228,13 +247,13 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
                                         fontFamily: "Poppins"),
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: allNoticeList[index]
+                                          text: filteredNoticeList[index]
                                               .priorityLevel
                                               .toString(),
                                           style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
-                                              color: allNoticeList[index]
+                                              color: filteredNoticeList[index]
                                                   .priorityLevel
                                                   .toString() ==
                                                   "high"
@@ -258,7 +277,7 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
                                         fontFamily: "Poppins"),
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: formatDate(allNoticeList[index]
+                                          text: formatDate(filteredNoticeList[index]
                                               .createdAt
                                               .toString()),
                                           style: const TextStyle(
@@ -282,7 +301,7 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
                                         fontFamily: "Poppins"),
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: allNoticeList[index]
+                                          text: filteredNoticeList[index]
                                               .isActive
                                               .toString() ==
                                               "1"
@@ -341,6 +360,7 @@ class _DashboardNoticeAdminState extends State<DashboardNoticeAdmin> {
       allNoticeList = (resource.data as List)
           .map((x) => NoticeListModel.fromJson(x))
           .toList();
+      filteredNoticeList = allNoticeList;
 
       setState(() {
         isLoading = false;

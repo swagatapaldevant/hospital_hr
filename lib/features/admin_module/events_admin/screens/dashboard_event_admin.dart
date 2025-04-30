@@ -24,10 +24,12 @@ import 'package:flutter/material.dart';
     bool isLoading = false;
     final EventsAdminUsecase _eventsAdminUsecase = getIt<EventsAdminUsecase>();
     List<EventListModel> eventList = [];
+    List<EventListModel> filteredEventList = [];
 
     @override
     void initState() {
       super.initState();
+      searchController.addListener(_onSearchChanged);
       _tabController = TabController(length: 2, vsync: this);
       getAllEventList();
       searchController.addListener(() {
@@ -37,10 +39,25 @@ import 'package:flutter/material.dart';
 
     @override
     void dispose() {
+      searchController.removeListener(_onSearchChanged);
       _tabController.dispose();
       searchController.dispose();
       super.dispose();
     }
+
+
+    void _onSearchChanged() {
+      String query = searchController.text.toLowerCase();
+      setState(() {
+        filteredEventList = eventList.where((events) {
+          final name = events.event?.toLowerCase() ?? '';
+          final details = events.description?.toLowerCase() ?? '';
+
+          return name.contains(query) || details.contains(query);
+        }).toList();
+      });
+    }
+
 
     @override
     Widget build(BuildContext context) {
@@ -344,6 +361,7 @@ import 'package:flutter/material.dart';
         eventList = (resource.data as List)
             .map((x) => EventListModel.fromJson(x))
             .toList();
+        filteredEventList = eventList;
 
         setState(() {
           isLoading = false;
