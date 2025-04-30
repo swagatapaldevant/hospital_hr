@@ -11,7 +11,6 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 import '../../../../core/utils/helper/screen_utils.dart';
 
-
 class UserHomeScreen extends StatefulWidget {
   const UserHomeScreen({super.key});
 
@@ -37,7 +36,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     AppDimensions.init(context);
@@ -45,12 +43,13 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
       canPop: false,
       onPopInvoked: (didPop) {
         DateTime now = DateTime.now();
-        if (didPop || currentBackPressTime == null ||
+        if (didPop ||
+            currentBackPressTime == null ||
             now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
           currentBackPressTime = now;
           Fluttertoast.showToast(msg: 'Tap back again to Exit');
           // return false;
-        }else{
+        } else {
           SystemNavigator.pop();
         }
       },
@@ -70,7 +69,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         childDecoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              // color:  Colors.blueGrey.withOpacity(0.4),
+                // color:  Colors.blueGrey.withOpacity(0.4),
                 color: AppColors.darkBlue.withOpacity(0.2),
                 offset: const Offset(0.0, 3.0),
                 blurRadius: 8.0)
@@ -90,10 +89,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   child: GradientText(
                     "Hospital User",
                     style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      fontSize: ScreenUtils().screenWidth(context) * 0.07,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: "Philosopher",
-                    ),
+                          fontSize: ScreenUtils().screenWidth(context) * 0.07,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "Philosopher",
+                        ),
                     gradientType: GradientType.linear,
                     gradientDirection: GradientDirection.ttb,
                     radius: 2.5,
@@ -117,7 +116,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       MenuItem(
                         title: 'Dashboard',
                         icon: Icons.home,
@@ -125,7 +123,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             "/UserHomeScreen",
-                                (Route<dynamic> route) => false,
+                            (Route<dynamic> route) => false,
                           );
 
                           //Navigator.pushNamed(context, "/UserHomeScreen");
@@ -164,7 +162,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         title: 'Attendance',
                         icon: Icons.groups,
                         onClicked: () {
-                          Navigator.pushNamed(context, "/DashboardAttendanceUser");
+                          Navigator.pushNamed(
+                              context, "/DashboardAttendanceUser");
                         },
                       ),
                       MenuItem(
@@ -179,7 +178,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         icon: Icons.note_alt,
                         onClicked: () {
                           Navigator.pushNamed(context, "/DashboardNotice");
-
                         },
                       ),
                       MenuItem(
@@ -190,7 +188,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               icon: Icons.logout,
                               title: "Log Out",
                               msg:
-                              "You are about to logout of your account. Please confirm.",
+                                  "You are about to logout of your account. Please confirm.",
                               activeButtonLabel: "Log Out",
                               context: context,
                               activeButtonOnClicked: () {
@@ -198,10 +196,11 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                 Navigator.pushNamedAndRemoveUntil(
                                   context,
                                   "/LogInTypeScreens",
-                                      (Route<dynamic> route) => false,
+                                  (Route<dynamic> route) => false,
                                 );
-
-                              }, activeButtonName: 'Confirm', activeButtonSolidColor: AppColors.colorGreen);
+                              },
+                              activeButtonName: 'Confirm',
+                              activeButtonSolidColor: AppColors.colorGreen);
                         },
                       ),
                     ],
@@ -221,13 +220,15 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     InkWell(
-                        onTap: (){
+                        onTap: () {
                           _advancedDrawerController.showDrawer();
                         },
-                        child: const Icon(Icons.menu, color: AppColors.white,)),
-                    SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
-
-
+                        child: const Icon(
+                          Icons.menu,
+                          color: AppColors.white,
+                        )),
+                    SizedBox(
+                        height: ScreenUtils().screenHeight(context) * 0.01),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -239,7 +240,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                           ),
                           child: CircleAvatar(
                             radius: 60,
-                            backgroundImage:  NetworkImage('https://picsum.photos/200/300?random=2'),
+                            backgroundImage: NetworkImage(
+                                'https://picsum.photos/200/300?random=2'),
                             backgroundColor: Colors.grey.shade200,
                           ),
                         ),
@@ -254,7 +256,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                 letterSpacing: 0.5,
                               ),
                             ),
-                            SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                            SizedBox(
+                                height:
+                                    ScreenUtils().screenHeight(context) * 0.01),
                             const Text(
                               'Software Engineer',
                               style: TextStyle(
@@ -263,9 +267,12 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                 color: Colors.white,
                               ),
                             ),
-                            SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                            SizedBox(
+                                height:
+                                    ScreenUtils().screenHeight(context) * 0.01),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 6),
                               decoration: BoxDecoration(
                                 color: Colors.blue.shade50,
                                 borderRadius: BorderRadius.circular(12),
@@ -281,12 +288,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             ),
                           ],
                         ),
-
-
                       ],
                     ),
-                    SizedBox(height: ScreenUtils().screenHeight(context) * 0.02),
-
+                    SizedBox(
+                        height: ScreenUtils().screenHeight(context) * 0.02),
                     Container(
                       width: double.infinity,
                       padding: EdgeInsets.all(20),
@@ -307,8 +312,11 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                           // Header
                           Row(
                             children: [
-                              Icon(Icons.person_outline, color: AppColors.primaryColor, size: 28),
-                              SizedBox(width: MediaQuery.of(context).size.width * 0.01,),
+                              Icon(Icons.person_outline,
+                                  color: AppColors.primaryColor, size: 28),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.01,
+                              ),
                               Text(
                                 'Personal Details',
                                 style: TextStyle(
@@ -319,19 +327,22 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
+                          SizedBox(
+                              height:
+                                  ScreenUtils().screenHeight(context) * 0.001),
                           Divider(),
                           _detailRow('Joining Date', '12-02-2022'),
                           _detailRow('Blood Group', 'AB+'),
                         ],
                       ),
                     ),
-                    SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
-
+                    SizedBox(
+                        height: ScreenUtils().screenHeight(context) * 0.001),
                     Container(
                       width: double.infinity,
-                      padding: EdgeInsets.all(20),
-                      margin: EdgeInsets.symmetric(vertical: 16),
+                      height: ScreenUtils().screenHeight(context)*0.5,
+
+                      margin: const EdgeInsets.symmetric(vertical: 16),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
@@ -339,7 +350,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                           BoxShadow(
                             color: Colors.black.withOpacity(0.05),
                             blurRadius: 10,
-                            offset: Offset(0, 4),
+                            offset: const Offset(0, 4),
                           ),
                         ],
                       ),
@@ -348,83 +359,51 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Events',
-                              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.primaryColor),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 20, left: 20),
+                              child: Text(
+                                'Events',
+                                style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.primaryColor),
+                              ),
                             ),
-                            SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
+                            SizedBox(
+                                height: ScreenUtils().screenHeight(context) *
+                                    0.001),
 
                             // Tab Bar
-                            TabBar(
-                              labelColor: Colors.black,
-                              unselectedLabelColor: Colors.black54,
-                              // indicator: BoxDecoration(
-                              //   color: Colors.pinkAccent,
-                              //   borderRadius: BorderRadius.circular(10),
-                              // ),
+                             TabBar(
+                              labelStyle: const TextStyle(
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.colorBlack
+                              ),
+
+                             unselectedLabelStyle: TextStyle(
+                                 fontFamily: "Poppins",
+                                 fontSize: 14,
+                                 fontWeight: FontWeight.w600,
+                                 color: AppColors.colorBlack.withOpacity(0.7)
+                             ),
                               tabs: const [
                                 Tab(text: "Upcoming Events"),
                                 Tab(text: "Past Events"),
                               ],
                             ),
-                            SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
+                            SizedBox(
+                                height: ScreenUtils().screenHeight(context) *
+                                    0.001),
 
                             // Tab Views
                             SizedBox(
-                              height: ScreenUtils().screenHeight(context) * 0.01,
+                              height:
+                                  ScreenUtils().screenHeight(context) * 0.01,
                               child: TabBarView(
                                 children: [
-                                  // Upcoming Events
-                                  ListView.builder(
-                                    itemCount: 3,
-                                    itemBuilder: (context, index) {
-                                      return Card(
-                                        elevation: 4,
-                                        margin: EdgeInsets.symmetric(vertical: 8),
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(16.0),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text('Upcoming Event ${index + 1}',
-                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                                              SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
-                                              Text('Details: Sample details of the event.'),
-                                              SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
-                                              Text('Date: 2025-04-${index + 10}'),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
 
-                                  // Past Events
-                                  ListView.builder(
-                                    itemCount: 3,
-                                    itemBuilder: (context, index) {
-                                      return Card(
-                                        elevation: 4,
-                                        margin: EdgeInsets.symmetric(vertical: 8),
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(16.0),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text('Past Event ${index + 1}',
-                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                                              SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
-                                              Text('Details: Sample details of the event.'),
-                                              SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
-                                              Text('Date: 2025-04-${index + 5}'),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
                                 ],
                               ),
                             ),
@@ -432,7 +411,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         ),
                       ),
                     ),
-
                     Container(
                       width: double.infinity,
                       padding: EdgeInsets.all(20),
@@ -453,8 +431,11 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                           // Header
                           Row(
                             children: [
-                              Icon(Icons.notifications_active, color: AppColors.primaryColor, size: 28),
-                              SizedBox(width: MediaQuery.of(context).size.width * 0.01,),
+                              Icon(Icons.notifications_active,
+                                  color: AppColors.primaryColor, size: 28),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.01,
+                              ),
                               Text(
                                 'Notices',
                                 style: TextStyle(
@@ -465,23 +446,31 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                          SizedBox(
+                              height:
+                                  ScreenUtils().screenHeight(context) * 0.01),
 
                           // Scrollable List of Notices
                           Container(
                             height: 160, // You can adjust height as needed
                             child: ListView.separated(
                               itemCount: 4, // Example count
-                              separatorBuilder: (_, __) => Divider(color: Colors.grey[300]),
+                              separatorBuilder: (_, __) =>
+                                  Divider(color: Colors.grey[300]),
                               itemBuilder: (context, index) {
                                 return Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Icon(Icons.circle, size: 8, color: Colors.black54),
-                                    SizedBox(width: MediaQuery.of(context).size.width * 0.01,),
+                                    Icon(Icons.circle,
+                                        size: 8, color: Colors.black54),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.01,
+                                    ),
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             'Notice ${index + 1}',
@@ -491,15 +480,25 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                               color: Colors.black87,
                                             ),
                                           ),
-                                          SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                                          SizedBox(
+                                              height: ScreenUtils()
+                                                      .screenHeight(context) *
+                                                  0.01),
                                           Text(
                                             'This is a sample description of notice ${index + 1}. It can be a bit longer to test scrolling.',
-                                            style: TextStyle(color: Colors.grey[700], fontSize: 14),
+                                            style: TextStyle(
+                                                color: Colors.grey[700],
+                                                fontSize: 14),
                                           ),
-                                          SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                                          SizedBox(
+                                              height: ScreenUtils()
+                                                      .screenHeight(context) *
+                                                  0.01),
                                           Text(
                                             'Date: 2025-04-${10 + index}',
-                                            style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.grey[600]),
                                           ),
                                         ],
                                       ),
@@ -513,7 +512,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-
                     Container(
                       width: double.infinity,
                       padding: EdgeInsets.all(20),
@@ -534,8 +532,11 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                           // Header
                           Row(
                             children: [
-                              Icon(Icons.work_history, color: AppColors.primaryColor, size: 28),
-                              SizedBox(width: ScreenUtils().screenHeight(context) * 0.01),
+                              Icon(Icons.work_history,
+                                  color: AppColors.primaryColor, size: 28),
+                              SizedBox(
+                                  width: ScreenUtils().screenHeight(context) *
+                                      0.01),
                               Text(
                                 'Work',
                                 style: TextStyle(
@@ -546,7 +547,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                          SizedBox(
+                              height:
+                                  ScreenUtils().screenHeight(context) * 0.01),
 
                           Divider(),
                           _detailRow('Work Experience', '2 years'),
@@ -554,8 +557,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
-
+                    SizedBox(
+                        height: ScreenUtils().screenHeight(context) * 0.01),
                     Container(
                       width: double.infinity,
                       padding: EdgeInsets.all(20),
@@ -576,8 +579,11 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                           // Header
                           Row(
                             children: [
-                              Icon(Icons.contact_page, color: AppColors.primaryColor, size: 28),
-                              SizedBox(width: ScreenUtils().screenHeight(context) * 0.01),
+                              Icon(Icons.contact_page,
+                                  color: AppColors.primaryColor, size: 28),
+                              SizedBox(
+                                  width: ScreenUtils().screenHeight(context) *
+                                      0.01),
                               Text(
                                 'Contact',
                                 style: TextStyle(
@@ -588,7 +594,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                          SizedBox(
+                              height:
+                                  ScreenUtils().screenHeight(context) * 0.01),
 
                           Divider(),
                           // Detail Rows
@@ -597,7 +605,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                    SizedBox(
+                        height: ScreenUtils().screenHeight(context) * 0.01),
                   ],
                 ),
               ),
@@ -606,10 +615,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         ),
       ),
     );
-
-
-
   }
+
   Widget _detailRow(String title, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -636,6 +643,4 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
       ),
     );
   }
-
 }
-
