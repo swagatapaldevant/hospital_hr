@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
@@ -8,7 +7,6 @@ import 'package:hospital_hr/core/services/localStorage/shared_pref.dart';
 import 'package:hospital_hr/core/utils/commonWidgets/common_dialog.dart';
 import 'package:hospital_hr/core/utils/commonWidgets/dashboard_drawer_menu.dart';
 import 'package:hospital_hr/core/utils/constants/app_colors.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import '../../../../core/utils/helper/app_dimensions.dart';
 import '../../../../core/utils/helper/screen_utils.dart';
@@ -38,56 +36,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     searchController.dispose();
     super.dispose();
   }
-
-  File? _image;
-  final ImagePicker _picker = ImagePicker();
-
-  get children => null;
-
-  // Function to Pick Image
-  Future<void> _pickImage(ImageSource source) async {
-    final pickedFile = await _picker.pickImage(source: source);
-    if (pickedFile != null) {
-      File imageFile = File(pickedFile.path);
-      int imageSize = await imageFile.length();
-
-      if (imageSize > 800 * 1024) {
-        Fluttertoast.showToast(msg: "Image size is greater than 800KB. Please choose a smaller image.");
-      } else {
-        setState(() {
-          _image = imageFile;
-        });
-      }
-    }
-  }
-
-  // Function to Show Bottom Sheet
-  void _showImagePickerOptions() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => Wrap(
-        children: [
-          ListTile(
-            leading: Icon(Icons.camera_alt, color: Colors.blue),
-            title: Text('Take a Photo'),
-            onTap: () {
-              Navigator.pop(context);
-              _pickImage(ImageSource.camera);
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.photo_library, color: Colors.green),
-            title: Text('Choose from Gallery'),
-            onTap: () {
-              Navigator.pop(context);
-              _pickImage(ImageSource.gallery);
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
 
 
   @override
@@ -276,7 +224,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         onTap: (){
                           _advancedDrawerController.showDrawer();
                         },
-                        child: Icon(Icons.menu, color: AppColors.white,)),
+                        child: const Icon(Icons.menu, color: AppColors.white,)),
                     SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
 
 
