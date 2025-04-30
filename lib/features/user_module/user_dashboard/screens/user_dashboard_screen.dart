@@ -272,111 +272,72 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    //CommonHeader(headerName: 'Dashboard'),
+                    InkWell(
+                        onTap: (){
+                          _advancedDrawerController.showDrawer();
+                        },
+                        child: Icon(Icons.menu, color: AppColors.white,)),
                     SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
 
 
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 30),
-                      margin: EdgeInsets.symmetric(vertical: 16),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Colors.white, Colors.grey[100]!],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // Avatar with Border
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.white, width: 4),
+                          ),
+                          child: CircleAvatar(
+                            radius: 60,
+                            backgroundImage:  NetworkImage('https://picsum.photos/200/300?random=2'),
+                            backgroundColor: Colors.grey.shade200,
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 12,
-                            offset: Offset(0, 6),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          // Avatar with Border
-                          Stack(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(4),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: Colors.blueAccent, width: 2),
-                                ),
-                                child: CircleAvatar(
-                                  radius: 60,
-                                  backgroundImage: _image != null
-                                      ? FileImage(_image!)
-                                      : NetworkImage('https://picsum.photos/200/300?random=2') as ImageProvider,
-                                  backgroundColor: Colors.grey.shade200,
-                                ),
+                        Column(
+                          children: [
+                            const Text(
+                              'Sourav Mondal',
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                letterSpacing: 0.5,
                               ),
-                              Positioned(
-                                bottom: 4,
-                                right: 4,
-                                child: GestureDetector(
-                                  onTap: _showImagePickerOptions,
-                                  child: CircleAvatar(
-                                    radius: 18,
-                                    backgroundColor: Colors.blueAccent,
-                                    child: Icon(
-                                      Icons.camera_alt,
-                                      size: 18,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
+                            ),
+                            SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                            const Text(
+                              'Software Engineer',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
                               ),
-                            ],
-                          ),
-                          SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
-
-                          // User Info
-                          Column(
-                            children: [
-                              Text(
-                                'Sourav Mondal',
+                            ),
+                            SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: Colors.blue.shade50,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Text(
+                                'Emp ID: 2134',
                                 style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blueGrey[900],
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                              SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
-                              Text(
-                                'Software Engineer',
-                                style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.grey[700],
+                                  color: Colors.blue[800],
                                 ),
                               ),
-                              SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                decoration: BoxDecoration(
-                                  color: Colors.blue.shade50,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Text(
-                                  'Emp ID: 2134',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.blue[800],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+
+
+                      ],
                     ),
-                    SizedBox(height: ScreenUtils().screenHeight(context) * 0.001),
+                    SizedBox(height: ScreenUtils().screenHeight(context) * 0.02),
 
                     Container(
                       width: double.infinity,
