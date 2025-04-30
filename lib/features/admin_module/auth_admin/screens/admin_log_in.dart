@@ -119,7 +119,20 @@ class _AdminLogInScreensState extends State<AdminLogInScreens> {
                       )
                     : CommonButton(
                         onTap: () {
-                          loginApi();
+                          if(passwordController.text.isNotEmpty&& emailController.text.isNotEmpty)
+                            {
+                              loginApi();
+                            }
+                          else{
+                            CommonUtils().flutterSnackBar(
+                              context: context,
+                              mes: "Please provide valid email and password",
+                              messageType: 4,
+                            );
+                          }
+
+
+
                         },
                         fontSize: 18,
                         borderRadius: 12,
