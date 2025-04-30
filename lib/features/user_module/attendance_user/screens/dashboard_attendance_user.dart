@@ -111,6 +111,8 @@ class _DashboardAttendanceUserState extends State<DashboardAttendanceUser> {
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
+                            fontFamily: "Poppins"
+
                         ),
                       ),
                     );

@@ -34,6 +34,7 @@ class _ViewPayrollUserState extends State<ViewPayrollUser> {
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                           color: AppColors.white,
+                            fontFamily: "Poppins"
                         ),
                       ),
                       Text(
@@ -42,6 +43,7 @@ class _ViewPayrollUserState extends State<ViewPayrollUser> {
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: AppColors.white,
+                            fontFamily: "Poppins"
                         ),
                       ),
                       Text(
@@ -50,6 +52,7 @@ class _ViewPayrollUserState extends State<ViewPayrollUser> {
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: Colors.grey.shade400,
+                            fontFamily: "Poppins"
                         ),
                       ),
                       Text(
@@ -58,6 +61,7 @@ class _ViewPayrollUserState extends State<ViewPayrollUser> {
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: Colors.grey.shade400,
+                            fontFamily: "Poppins"
                         ),
                       ),
                     ],
@@ -95,6 +99,7 @@ class _ViewPayrollUserState extends State<ViewPayrollUser> {
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
                               color: AppColors.primaryColor,
+                                fontFamily: "Poppins"
                             ),
                           ),
                         ],
@@ -135,6 +140,7 @@ class _ViewPayrollUserState extends State<ViewPayrollUser> {
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: Colors.black87,
+                fontFamily: "Poppins"
             ),
           ),
           Text(
@@ -143,6 +149,7 @@ class _ViewPayrollUserState extends State<ViewPayrollUser> {
               fontSize: 16,
               fontWeight: FontWeight.w500,
               color: AppColors.primaryColor,
+                fontFamily: "Poppins"
             ),
           ),
         ],

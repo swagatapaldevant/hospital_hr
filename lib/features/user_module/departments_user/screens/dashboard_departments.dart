@@ -64,7 +64,7 @@ class _DashboardDepartmentsState extends State<DashboardDepartments> {
                 controller: searchController,
                 decoration: InputDecoration(
                   hintText: 'Search departments...',
-                  hintStyle: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500), // Hint text in black
+                  hintStyle: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500, fontFamily: "Poppins"), // Hint text in black
                   prefixIcon: Icon(Icons.search, color: Colors.black), // Search icon in black
                   filled: true,
                   fillColor: Colors.white, // White background
@@ -103,13 +103,13 @@ class _DashboardDepartmentsState extends State<DashboardDepartments> {
                             children: [
                               Text('Sl. No.: $slno',
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.bold)),
+                                      fontSize: 16, fontWeight: FontWeight.bold, fontFamily: "Poppins")),
                               SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
                               Text('Department Name: $departmentname',
-                                  style: TextStyle(fontSize: 16)),
+                                  style: TextStyle(fontSize: 16, fontFamily: "Poppins")),
                               SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
                               Text('Department Code: $departmentcode',
-                                  style: TextStyle(fontSize: 16)),
+                                  style: TextStyle(fontSize: 16, fontFamily: "Poppins")),
                               SizedBox(height: ScreenUtils().screenHeight(context) * 0.01),
 
                             ],

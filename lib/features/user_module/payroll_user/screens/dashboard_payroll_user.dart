@@ -88,7 +88,7 @@ class _DashboardPayrollUserState extends State<DashboardPayrollUser> {
                   ),
                   child: Text(
                     'Selected: ${formatMonthYear(selectedMonth!)}',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, fontFamily: "Poppins"),
                   ),
                 )
               else
@@ -121,7 +121,7 @@ class _DashboardPayrollUserState extends State<DashboardPayrollUser> {
                                   Text(
                                     'Month: ${selectedMonth != null ? formatMonthYear(selectedMonth!) : 'Not selected'}',
                                     style: const TextStyle(
-                                        fontSize: 16, fontWeight: FontWeight.bold),
+                                        fontSize: 16, fontWeight: FontWeight.bold, fontFamily: "Poppins"),
                                   ),
                                   PopupMenuButton<int>(
                                     icon: const Icon(Icons.more_vert),
