@@ -1,5 +1,4 @@
 
-
 import 'package:flutter/material.dart';
 import 'package:hospital_hr/core/network/apiHelper/locator.dart';
 import 'package:hospital_hr/core/network/apiHelper/resource.dart';
@@ -138,15 +137,19 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
 
                 // Tab Views
                 Expanded(
-                  child: isLoading
-                      ? const Center(child: CircularProgressIndicator(
-                    color: AppColors.white,
-                  ))
-                      : TabBarView(
+                  child:  TabBarView(
                     controller: _tabController,
                     children: [
-                      buildEventList(isUpcoming: true),
-                      buildEventList(isUpcoming: false),
+                      isLoading ? const Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.white,
+                        ),
+                      ) :buildEventList(isUpcoming: true),
+                      isLoading ?const Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.white,
+                        ),
+                      ) :buildEventList(isUpcoming: false),
                     ],
                   ),
                 ),
