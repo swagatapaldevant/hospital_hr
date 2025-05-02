@@ -31,7 +31,7 @@ class _AddDepartmentState extends State<AddDepartment> {
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: TextStyle(fontWeight: FontWeight.w600),
+          labelStyle: TextStyle(fontWeight: FontWeight.w600, fontFamily: "Poppins"),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -127,6 +127,7 @@ class _AddDepartmentState extends State<AddDepartment> {
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: AppColors.primaryColor,
+                    fontFamily: "Poppins"
                 ),
               ),
             ],
@@ -152,6 +153,7 @@ class _AddDepartmentState extends State<AddDepartment> {
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: Colors.black87,
+                fontFamily: "Poppins"
             ),
           ),
           Text(
@@ -160,6 +162,7 @@ class _AddDepartmentState extends State<AddDepartment> {
               fontSize: 16,
               fontWeight: FontWeight.w500,
               color: AppColors.primaryColor,
+                fontFamily: "Poppins"
             ),
           ),
           SizedBox(height: 24),

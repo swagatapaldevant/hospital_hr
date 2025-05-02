@@ -91,7 +91,7 @@ class _DashboardEventState extends State<DashboardEvent> with SingleTickerProvid
                   controller: searchController,
                   decoration: InputDecoration(
                     hintText: 'Search events...',
-                    hintStyle: const TextStyle(color: Colors.grey),
+                    hintStyle: const TextStyle(color: Colors.grey, fontFamily: "Poppins"),
                     prefixIcon: const Icon(Icons.search, color: Colors.black),
                     filled: true,
                     fillColor: Colors.white,
